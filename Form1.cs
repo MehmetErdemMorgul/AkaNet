@@ -1,7 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using AkaNet.Algorithms;
+using AkaNet.Data;
 using AkaNet.Models;
-using AkaNet.Algorithms;
+using System;
+using System.Windows.Forms;
+
 
 namespace AkaNet
 {
@@ -13,13 +15,7 @@ namespace AkaNet
         {
             InitializeComponent();
 
-            g = new Graph();
-            g.AddNode(new Node(1, "A", 0.8, 12, 3));
-            g.AddNode(new Node(2, "B", 0.4, 5, 2));
-            g.AddNode(new Node(3, "C", 0.9, 20, 4));
-
-            g.AddEdge(1, 2);
-            g.AddEdge(2, 3);
+            g = CsvGraphLoader.Load("nodes.csv");
         }
 
         private void btnBfs_Click(object sender, EventArgs e)

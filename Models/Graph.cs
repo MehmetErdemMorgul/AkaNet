@@ -53,6 +53,13 @@ namespace AkaNet.Models
 
         public bool HasNode(int id) => _nodes.Any(n => n.Id == id);
 
+        public bool HasEdge(int from, int to)
+        {
+            return Edges.Any(e =>
+                (e.From == from && e.To == to) ||
+                (e.From == to && e.To == from));
+        }
+
         // ---------- EDGE ----------
         public void AddEdge(int from, int to)
         {

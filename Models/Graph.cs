@@ -1,122 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using AkaNet.Services;
+using AkaNet.Models;
 
 namespace AkaNet.Models
 {
     public class Graph
     {
-        // Basit ve okunur olsun diye List tuttuk
-        private readonly List<Node> _nodes = new List<Node>();
-        private readonly List<Edge> _edges = new List<Edge>();
+        private Dictionary<int, Node> nodes = new Dictionary<int, Node>();
+        private Dictionary<int, List<int>> adj = new Dictionary<int, List<int>>();
 
-        // Algoritmalar için hızlı komşu bulma (cache). Graph kalabalık durmasın diye private.
-        private Dictionary<int, HashSet<int>> _neighborsCache = null;
+        // 🔹 DIJKSTRA bunu istiyor
+        public IEnumerable<Node> Nodes => nodes.Values;
 
-        public IReadOnlyList<Node> Nodes => _nodes;
-        public IReadOnlyList<Edge> Edges => _edges;
-
-        // ---------- NODE ----------
         public void AddNode(Node node)
         {
-            if (node == null) throw new ArgumentNullException(nameof(node));
-
-            // aynı Id ile node eklenmesin
-            if (_nodes.Any(n => n.Id == node.Id))
-                throw new InvalidOperationException("Duplicate node (aynı Id).");
-
-            _nodes.Add(node);
-            _neighborsCache = null; // komşuluk cache bozuldu
+            if (!nodes.ContainsKey(node.Id))
+            {
+                nodes[node.Id] = node;
+                adj[node.Id] = new List<int>();
+            }
         }
 
-        private readonly WeightCalculator _weightCalculator = new WeightCalculator();
-
-        public double GetWeight(int fromId, int toId)
+        public void AddEdge(int from, int to)
         {
-            var from = _nodes.FirstOrDefault(n => n.Id == fromId);
-            var to = _nodes.FirstOrDefault(n => n.Id == toId);
-
-            if (from == null || to == null)
-                throw new System.ArgumentException("Node bulunamadı.");
-
-            return _weightCalculator.Calculate(from, to);
+            if (!adj[from].Contains(to))
+                adj[from].Add(to);
+            if (!adj[to].Contains(from))
+                adj[to].Add(from);
         }
-
-
-        public Node GetNode(int id)
-        {
-            var n = _nodes.FirstOrDefault(x => x.Id == id);
-            if (n == null) throw new KeyNotFoundException("Node bulunamadı: " + id);
-            return n;
-        }
-
-        public bool HasNode(int id) => _nodes.Any(n => n.Id == id);
 
         public bool HasEdge(int from, int to)
         {
-            return Edges.Any(e =>
-                (e.From == from && e.To == to) ||
-                (e.From == to && e.To == from));
+            return adj.ContainsKey(from) && adj[from].Contains(to);
         }
 
-        // ---------- EDGE ----------
-        public void AddEdge(int from, int to)
+        public IEnumerable<int> NeighborsOf(int id)
         {
-            // Edge constructor self-loop kontrolünü zaten yapıyor
-            if (!HasNode(from) || !HasNode(to))
-                throw new InvalidOperationException("Edge eklemek için iki node da önce eklenmeli.");
-
-            // yönsüz duplicate kontrolü
-            bool exists = _edges.Any(e =>
-                (e.From == from && e.To == to) ||
-                (e.From == to && e.To == from));
-
-            if (exists)
-                throw new InvalidOperationException("Duplicate edge.");
-
-            _edges.Add(new Edge(from, to));
-            _neighborsCache = null; // cache bozuldu
+            return adj[id];
         }
 
-        public void RemoveEdge(int from, int to)
+        public Node GetNode(int id)
         {
-            int idx = _edges.FindIndex(e =>
-                (e.From == from && e.To == to) ||
-                (e.From == to && e.To == from));
-
-            if (idx < 0) return;
-
-            _edges.RemoveAt(idx);
-            _neighborsCache = null;
+            return nodes[id];
         }
 
-        // ---------- NEIGHBORS (BFS/DFS/Dijkstra için) ----------
-        public IReadOnlyCollection<int> NeighborsOf(int id)
+        // 🔥 RAPORDAKİ FORMÜL BURADA
+        public double GetWeight(int fromId, int toId)
         {
-            var map = GetOrBuildNeighbors();
-            if (!map.ContainsKey(id))
-                throw new KeyNotFoundException("Node bulunamadı: " + id);
+            var a = nodes[fromId];
+            var b = nodes[toId];
 
-            return map[id].ToList().AsReadOnly();
-        }
+            double diff =
+                Math.Pow(a.Activity - b.Activity, 2) +
+                Math.Pow(a.Interaction - b.Interaction, 2) +
+                Math.Pow(a.ConnectionCount - b.ConnectionCount, 2);
 
-        private Dictionary<int, HashSet<int>> GetOrBuildNeighbors()
-        {
-            if (_neighborsCache != null) return _neighborsCache;
-
-            var map = new Dictionary<int, HashSet<int>>();
-            foreach (var n in _nodes)
-                map[n.Id] = new HashSet<int>();
-
-            foreach (var e in _edges)
-            {
-                map[e.From].Add(e.To);
-                map[e.To].Add(e.From);
-            }
-
-            _neighborsCache = map;
-            return _neighborsCache;
+            return 1.0 / (1.0 + diff);
         }
     }
 }
+

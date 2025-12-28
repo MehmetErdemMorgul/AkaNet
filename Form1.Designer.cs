@@ -30,6 +30,7 @@
         {
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.btnBfs = new System.Windows.Forms.Button();
+            this.btnDfs = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBox1
@@ -51,16 +52,28 @@
             this.btnBfs.UseVisualStyleBackColor = true;
             this.btnBfs.Click += new System.EventHandler(this.btnBfs_Click);
             // 
+            // btnDfs
+            // 
+            this.btnDfs.Location = new System.Drawing.Point(366, 12);
+            this.btnDfs.Name = "btnDfs";
+            this.btnDfs.Size = new System.Drawing.Size(120, 30);
+            this.btnDfs.TabIndex = 2;
+            this.btnDfs.Text = "DFS";
+            this.btnDfs.UseVisualStyleBackColor = true;
+            this.btnDfs.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(512, 327);
+            this.Controls.Add(this.btnDfs);
             this.Controls.Add(this.btnBfs);
             this.Controls.Add(this.listBox1);
             this.Name = "Form1";
             this.Text = "AkaNet";
             this.ResumeLayout(false);
+
         }
 
 
@@ -68,6 +81,7 @@
 
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button btnBfs;
+        private System.Windows.Forms.Button btnDfs;
     }
 }
 

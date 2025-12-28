@@ -32,5 +32,16 @@ namespace AkaNet
             foreach (var id in res.VisitOrder)
                 listBox1.Items.Add(id);
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Clear();
+
+            var dfs = new DfsAlgorithm();
+            var res = dfs.Run(g, 1);
+
+            foreach (var id in res.VisitOrder)
+                listBox1.Items.Add(id);
+        }
     }
 }

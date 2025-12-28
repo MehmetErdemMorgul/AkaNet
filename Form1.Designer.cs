@@ -20,14 +20,19 @@
             this.btnBfs = new System.Windows.Forms.Button();
             this.btnDfs = new System.Windows.Forms.Button();
             this.btnDijkstra = new System.Windows.Forms.Button();
+            this.cmbStart = new System.Windows.Forms.ComboBox();
+            this.cmbTarget = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 16;
             this.listBox1.Location = new System.Drawing.Point(12, 12);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(200, 251);
+            this.listBox1.Size = new System.Drawing.Size(200, 244);
             this.listBox1.TabIndex = 0;
             // 
             // btnBfs
@@ -60,16 +65,62 @@
             this.btnDijkstra.UseVisualStyleBackColor = true;
             this.btnDijkstra.Click += new System.EventHandler(this.btnDijkstra_Click);
             // 
+            // cmbStart
+            // 
+            this.cmbStart.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbStart.FormattingEnabled = true;
+            this.cmbStart.Location = new System.Drawing.Point(230, 156);
+            this.cmbStart.Name = "cmbStart";
+            this.cmbStart.Size = new System.Drawing.Size(120, 24);
+            this.cmbStart.TabIndex = 4;
+            // 
+            // cmbTarget
+            // 
+            this.cmbTarget.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTarget.FormattingEnabled = true;
+            this.cmbTarget.Location = new System.Drawing.Point(230, 186);
+            this.cmbTarget.Name = "cmbTarget";
+            this.cmbTarget.Size = new System.Drawing.Size(120, 24);
+            this.cmbTarget.TabIndex = 5;
+            this.cmbTarget.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(249, 159);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(71, 16);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Start Node";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(249, 189);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(84, 16);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Target Node";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
+            // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(380, 280);
+            this.ClientSize = new System.Drawing.Size(394, 280);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.cmbTarget);
+            this.Controls.Add(this.cmbStart);
             this.Controls.Add(this.btnDijkstra);
             this.Controls.Add(this.btnDfs);
             this.Controls.Add(this.btnBfs);
             this.Controls.Add(this.listBox1);
             this.Name = "Form1";
             this.Text = "AkaNet";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
@@ -78,5 +129,9 @@
         private System.Windows.Forms.Button btnBfs;
         private System.Windows.Forms.Button btnDfs;
         private System.Windows.Forms.Button btnDijkstra;
+        private System.Windows.Forms.ComboBox cmbStart;
+        private System.Windows.Forms.ComboBox cmbTarget;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }

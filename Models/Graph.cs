@@ -12,6 +12,10 @@ namespace AkaNet.Models
         // 🔹 DIJKSTRA bunu istiyor
         public IEnumerable<Node> Nodes => nodes.Values;
 
+        public IEnumerable<Node> GetNodes()
+        {
+            return nodes.Values;
+        }
         public void AddNode(Node node)
         {
             if (!nodes.ContainsKey(node.Id))
@@ -38,6 +42,12 @@ namespace AkaNet.Models
         {
             return adj[id];
         }
+
+        public IEnumerable<int> GetNeighbors(int id)
+        {
+            return adj[id];
+        }
+
 
         public Node GetNode(int id)
         {

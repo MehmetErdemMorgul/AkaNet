@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\AStarAlgorithm.cs" />
     <Compile Include="Algorithms\BfsAlgorithm.cs" />
     <Compile Include="Algorithms\DfsAlgorithm.cs" />
     <Compile Include="Algorithms\DijkstraAlgorithm.cs" />

@@ -16,13 +16,45 @@ namespace AkaNet
 
             string path = "nodes.csv"; // bin/Debug içine koyduysan yeterli
             g = CsvGraphLoader.Load(path);
+
+            foreach (var node in g.Nodes)
+            {
+                cmbStart.Items.Add(node.Id);
+                cmbTarget.Items.Add(node.Id);
+            }
+
+            // Varsayılan seçim
+            cmbStart.SelectedIndex = 0;
+            cmbTarget.SelectedIndex = 0;
+        }
+
+        private void btnAStar_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Clear();
+
+            int start = (int)cmbStart.SelectedItem;
+            int target = (int)cmbTarget.SelectedItem;
+
+            var astar = new AStarAlgorithm();
+            var res = astar.Run(g, start, target);
+
+            if (!res.Found)
+            {
+                listBox1.Items.Add("Path not found");
+                return;
+            }
+
+            listBox1.Items.Add("A* Path: " + string.Join(" -> ", res.Path));
+            listBox1.Items.Add("Total cost: " + res.TotalCost.ToString("0.0000"));
+            listBox1.Items.Add("Visited nodes: " + res.VisitedCount);
         }
 
         private void btnBfs_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
             var bfs = new BfsAlgorithm();
-            var res = bfs.Run(g, 1);
+            int startId = (int)cmbStart.SelectedItem;
+            var res = bfs.Run(g, startId);
 
             foreach (var id in res.VisitOrder)
                 listBox1.Items.Add(id);
@@ -32,7 +64,8 @@ namespace AkaNet
         {
             listBox1.Items.Clear();
             var dfs = new DfsAlgorithm();
-            var res = dfs.Run(g, 1);
+            int startId = (int)cmbStart.SelectedItem;
+            var res = dfs.Run(g, startId);
 
             foreach (var id in res.VisitOrder)
                 listBox1.Items.Add(id);
@@ -42,11 +75,12 @@ namespace AkaNet
         {
             listBox1.Items.Clear();
 
-            int startId = 1;   // sizde sabitse böyle kalsın (sonra ComboBox yaparız)
-            int targetId = 3;
+            int startId = (int)cmbStart.SelectedItem;
+            int targetId = (int)cmbTarget.SelectedItem;
 
             var dij = new DijkstraAlgorithm();
             var res = dij.Run(g, startId, targetId);
+
 
             if (!res.Found || res.Path == null || res.Path.Count == 0)
             {
@@ -84,5 +118,24 @@ namespace AkaNet
             listBox1.Items.Add($"Total (algorithm): {res.TotalCost:0.0000}");
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

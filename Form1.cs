@@ -1,9 +1,8 @@
-﻿using AkaNet.Algorithms;
-using AkaNet.Data;
-using AkaNet.Models;
-using System;
+﻿using System;
 using System.Windows.Forms;
-
+using AkaNet.Models;
+using AkaNet.Algorithms;
+using AkaNet.Data;
 
 namespace AkaNet
 {
@@ -15,13 +14,13 @@ namespace AkaNet
         {
             InitializeComponent();
 
-            g = CsvGraphLoader.Load("nodes.csv");
+            string path = "nodes.csv"; // bin/Debug içine koyduysan yeterli
+            g = CsvGraphLoader.Load(path);
         }
 
         private void btnBfs_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
-
             var bfs = new BfsAlgorithm();
             var res = bfs.Run(g, 1);
 
@@ -32,7 +31,6 @@ namespace AkaNet
         private void btnDfs_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
-
             var dfs = new DfsAlgorithm();
             var res = dfs.Run(g, 1);
 
@@ -43,12 +41,8 @@ namespace AkaNet
         private void btnDijkstra_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
-
-            int startId = 1;
-            int targetId = 3;
-
             var dij = new DijkstraAlgorithm();
-            var res = dij.Run(g, startId, targetId);
+            var res = dij.Run(g, 1, 3);
 
             if (!res.Found)
             {

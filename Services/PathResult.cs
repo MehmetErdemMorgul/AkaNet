@@ -12,5 +12,7 @@ namespace AkaNet.Results
         public List<int> Path { get; } = new List<int>();
         public double TotalCost { get; set; }
         public bool Found { get; set; }
+        public int VisitedCount;
+
     }
 }

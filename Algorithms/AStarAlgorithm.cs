@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using AkaNet.Models;
+using AkaNet.Algorithms;
+
 
 namespace AkaNet.Algorithms
 {
@@ -14,46 +16,46 @@ namespace AkaNet.Algorithms
 
     public class AStarAlgorithm
     {
-        public AStarResult Run(Graph graph, int startId, int targetId)
+        public AStarResult Run(Graph graph, int start, int target)
         {
-            var openSet = new HashSet<int>();
+            var result = new AStarResult();
+
+            var openSet = new SimplePriorityQueue<int>();
+
             var cameFrom = new Dictionary<int, int>();
-
             var gScore = new Dictionary<int, double>();
-            var fScore = new Dictionary<int, double>();
 
-            foreach (var node in graph.GetNodes())
-            {
+            foreach (var node in graph.Nodes)
                 gScore[node.Id] = double.PositiveInfinity;
-                fScore[node.Id] = double.PositiveInfinity;
-            }
 
-            gScore[startId] = 0;
-            fScore[startId] = Heuristic(graph, startId, targetId);
+            gScore[start] = 0.0;
 
-            openSet.Add(startId);
+            // f(n) = g(n) + h(n)
+            double startPriority = graph.Heuristic(start, target);
+            openSet.Enqueue(start, startPriority);
 
-            int visited = 0;
+
+            var visited = new HashSet<int>();
 
             while (openSet.Count > 0)
             {
-                int current = GetLowestF(openSet, fScore);
-                visited++;
+                int current = openSet.Dequeue();
 
-                if (current == targetId)
+                if (visited.Contains(current))
+                    continue;
+
+                visited.Add(current);
+
+                if (current == target)
                 {
-                    return new AStarResult
-                    {
-                        Found = true,
-                        Path = ReconstructPath(cameFrom, current),
-                        TotalCost = gScore[current],
-                        VisitedCount = visited
-                    };
+                    result.Found = true;
+                    result.TotalCost = gScore[target];
+                    result.Path = ReconstructPath(cameFrom, start, target);
+                    result.VisitedCount = visited.Count;
+                    return result;
                 }
 
-                openSet.Remove(current);
-
-                foreach (var neighbor in graph.GetNeighbors(current))
+                foreach (var neighbor in graph.NeighborsOf(current))
                 {
                     double tentativeG =
                         gScore[current] + graph.GetWeight(current, neighbor);
@@ -62,58 +64,37 @@ namespace AkaNet.Algorithms
                     {
                         cameFrom[neighbor] = current;
                         gScore[neighbor] = tentativeG;
-                        fScore[neighbor] =
-                            tentativeG + Heuristic(graph, neighbor, targetId);
 
-                        openSet.Add(neighbor);
+                        double fScore =
+                            tentativeG + graph.Heuristic(neighbor, target);
+
+                        openSet.Enqueue(neighbor, fScore);
                     }
                 }
             }
 
-            return new AStarResult { Found = false };
-        }
-
-        private int GetLowestF(HashSet<int> set, Dictionary<int, double> fScore)
-        {
-            double min = double.PositiveInfinity;
-            int best = -1;
-
-            foreach (var id in set)
-            {
-                if (fScore[id] < min)
-                {
-                    min = fScore[id];
-                    best = id;
-                }
-            }
-
-            return best;
+            result.Found = false;
+            result.VisitedCount = visited.Count;
+            return result;
         }
 
         private List<int> ReconstructPath(
-            Dictionary<int, int> cameFrom, int current)
+            Dictionary<int, int> cameFrom,
+            int start,
+            int target)
         {
-            var path = new List<int> { current };
+            var path = new List<int>();
+            int current = target;
 
-            while (cameFrom.ContainsKey(current))
+            while (current != start)
             {
+                path.Add(current);
                 current = cameFrom[current];
-                path.Insert(0, current);
             }
 
+            path.Add(start);
+            path.Reverse();
             return path;
-        }
-
-        private double Heuristic(Graph graph, int a, int b)
-        {
-            var na = graph.GetNode(a);
-            var nb = graph.GetNode(b);
-
-            double da = na.Activity - nb.Activity;
-            double di = na.Interaction - nb.Interaction;
-            double dc = na.ConnectionCount - nb.ConnectionCount;
-
-            return Math.Sqrt(da * da + di * di + dc * dc);
         }
     }
 }

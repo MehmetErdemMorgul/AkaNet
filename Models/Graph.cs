@@ -67,6 +67,19 @@ namespace AkaNet.Models
 
             return 1.0 / (1.0 + diff);
         }
+
+        public double Heuristic(int fromId, int targetId)
+        {
+            var a = nodes[fromId];
+            var b = nodes[targetId];
+
+            return
+                Math.Abs(a.Activity - b.Activity) +
+                Math.Abs(a.Interaction - b.Interaction) +
+                Math.Abs(a.ConnectionCount - b.ConnectionCount);
+        }
+
+
     }
 }
 

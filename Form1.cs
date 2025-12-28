@@ -28,26 +28,7 @@ namespace AkaNet
             cmbTarget.SelectedIndex = 0;
         }
 
-        private void btnAStar_Click(object sender, EventArgs e)
-        {
-            listBox1.Items.Clear();
-
-            int start = (int)cmbStart.SelectedItem;
-            int target = (int)cmbTarget.SelectedItem;
-
-            var astar = new AStarAlgorithm();
-            var res = astar.Run(g, start, target);
-
-            if (!res.Found)
-            {
-                listBox1.Items.Add("Path not found");
-                return;
-            }
-
-            listBox1.Items.Add("A* Path: " + string.Join(" -> ", res.Path));
-            listBox1.Items.Add("Total cost: " + res.TotalCost.ToString("0.0000"));
-            listBox1.Items.Add("Visited nodes: " + res.VisitedCount);
-        }
+        
 
         private void btnBfs_Click(object sender, EventArgs e)
         {
@@ -116,6 +97,8 @@ namespace AkaNet
 
             listBox1.Items.Add($"Total (sum of edges): {sum:0.0000}");
             listBox1.Items.Add($"Total (algorithm): {res.TotalCost:0.0000}");
+            listBox1.Items.Add($"Visited nodes: {res.VisitedCount}");
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -137,5 +120,27 @@ namespace AkaNet
         {
 
         }
+
+        private void btnAStar_Click(object sender, EventArgs e)
+        {
+            listBox1.Items.Clear();
+
+            int start = (int)cmbStart.SelectedItem;
+            int target = (int)cmbTarget.SelectedItem;
+
+            var astar = new AStarAlgorithm();
+            var res = astar.Run(g, start, target);
+
+            if (!res.Found)
+            {
+                listBox1.Items.Add("Path not found");
+                return;
+            }
+
+            listBox1.Items.Add("A* Path: " + string.Join(" -> ", res.Path));
+            listBox1.Items.Add("Total cost: " + res.TotalCost.ToString("0.0000"));
+            listBox1.Items.Add("Visited nodes: " + res.VisitedCount);
+        }
+
     }
 }

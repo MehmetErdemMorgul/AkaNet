@@ -13,6 +13,8 @@ namespace AkaNet.Algorithms
             var dist = new Dictionary<int, double>();
             var prev = new Dictionary<int, int?>();
 
+            int visitedCount = 0;
+
             foreach (var n in graph.Nodes)
             {
                 dist[n.Id] = double.PositiveInfinity;
@@ -27,6 +29,7 @@ namespace AkaNet.Algorithms
             {
                 // unvisited içinden dist'i en küçük olanı seç
                 int current = unvisited.OrderBy(id => dist[id]).First();
+                visitedCount++;
 
                 if (double.IsPositiveInfinity(dist[current]))
                     break; // erişilemeyen bölge
@@ -61,6 +64,7 @@ namespace AkaNet.Algorithms
 
             result.Found = true;
             result.TotalCost = dist[targetId];
+            result.VisitedCount = visitedCount;
 
             int? cur = targetId;
             while (cur != null)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AkaNet.Services;
 
 namespace AkaNet.Models
 {
@@ -28,6 +29,20 @@ namespace AkaNet.Models
             _nodes.Add(node);
             _neighborsCache = null; // komşuluk cache bozuldu
         }
+
+        private readonly WeightCalculator _weightCalculator = new WeightCalculator();
+
+        public double GetWeight(int fromId, int toId)
+        {
+            var from = _nodes.FirstOrDefault(n => n.Id == fromId);
+            var to = _nodes.FirstOrDefault(n => n.Id == toId);
+
+            if (from == null || to == null)
+                throw new System.ArgumentException("Node bulunamadı.");
+
+            return _weightCalculator.Calculate(from, to);
+        }
+
 
         public Node GetNode(int id)
         {

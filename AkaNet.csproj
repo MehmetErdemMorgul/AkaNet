@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Algorithms\BfsAlgorithm.cs" />
     <Compile Include="Algorithms\DfsAlgorithm.cs" />
+    <Compile Include="Algorithms\DijkstraAlgorithm.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,6 +61,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\TraversalResult.cs" />
+    <Compile Include="Services\PathResult.cs" />
+    <Compile Include="Services\WeightCalculator.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

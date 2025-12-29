@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AkaNet.Models;
 
 namespace AkaNet.Models
@@ -9,26 +10,37 @@ namespace AkaNet.Models
         private Dictionary<int, Node> nodes = new Dictionary<int, Node>();
         private Dictionary<int, List<int>> adj = new Dictionary<int, List<int>>();
 
-        // 🔹 DIJKSTRA bunu istiyor
+        // Dijkstra bunu istiyor
         public IEnumerable<Node> Nodes => nodes.Values;
 
         public IEnumerable<Node> GetNodes()
         {
             return nodes.Values;
         }
+
         public void AddNode(Node node)
         {
+            if (node == null) return;
+
             if (!nodes.ContainsKey(node.Id))
-            {
                 nodes[node.Id] = node;
+
+            // ✅ kritik: adjacency her zaman açılsın
+            if (!adj.ContainsKey(node.Id))
                 adj[node.Id] = new List<int>();
-            }
         }
 
         public void AddEdge(int from, int to)
         {
+            if (from == to) return; // self-loop engelle
+
+            // ✅ node yoksa bile patlamasın
+            EnsureAdj(from);
+            EnsureAdj(to);
+
             if (!adj[from].Contains(to))
                 adj[from].Add(to);
+
             if (!adj[to].Contains(from))
                 adj[to].Add(from);
         }
@@ -40,23 +52,67 @@ namespace AkaNet.Models
 
         public IEnumerable<int> NeighborsOf(int id)
         {
-            return adj[id];
+            // ✅ yoksa boş döndür
+            return adj.TryGetValue(id, out var list) ? list : Enumerable.Empty<int>();
         }
 
         public IEnumerable<int> GetNeighbors(int id)
         {
-            return adj[id];
+            return NeighborsOf(id);
         }
-
 
         public Node GetNode(int id)
         {
-            return nodes[id];
+            // ✅ yoksa null döndür (Form1 tarafında null kontrolü yap)
+            return nodes.TryGetValue(id, out var n) ? n : null;
         }
 
-        // 🔥 RAPORDAKİ FORMÜL BURADA
+        // ✅ Silme için gerekli
+        public bool RemoveNode(int id)
+        {
+            if (!nodes.ContainsKey(id)) return false;
+
+            // bağlı kenarları temizle
+            if (adj.TryGetValue(id, out var neigh))
+            {
+                foreach (var v in neigh.ToList())
+                {
+                    if (adj.TryGetValue(v, out var listV))
+                        listV.Remove(id);
+                }
+            }
+
+            adj.Remove(id);
+            nodes.Remove(id);
+            return true;
+        }
+
+        public bool RemoveEdge(int from, int to)
+        {
+            bool removed = false;
+
+            if (adj.TryGetValue(from, out var a))
+                removed |= a.Remove(to);
+
+            if (adj.TryGetValue(to, out var b))
+                removed |= b.Remove(from);
+
+            return removed;
+        }
+
+        private void EnsureAdj(int id)
+        {
+            if (!adj.ContainsKey(id))
+                adj[id] = new List<int>();
+        }
+
+        // RAPORDAKİ FORMÜL BURADA
         public double GetWeight(int fromId, int toId)
         {
+            // güvenli: node yoksa büyük maliyet gibi davran
+            if (!nodes.ContainsKey(fromId) || !nodes.ContainsKey(toId))
+                return 0.0;
+
             var a = nodes[fromId];
             var b = nodes[toId];
 
@@ -70,6 +126,9 @@ namespace AkaNet.Models
 
         public double Heuristic(int fromId, int targetId)
         {
+            if (!nodes.ContainsKey(fromId) || !nodes.ContainsKey(targetId))
+                return double.PositiveInfinity;
+
             var a = nodes[fromId];
             var b = nodes[targetId];
 
@@ -78,8 +137,5 @@ namespace AkaNet.Models
                 Math.Abs(a.Interaction - b.Interaction) +
                 Math.Abs(a.ConnectionCount - b.ConnectionCount);
         }
-
-
     }
 }
-

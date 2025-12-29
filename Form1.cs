@@ -380,6 +380,18 @@ namespace AkaNet
             if (cmbStart.Items.Count > 0) cmbStart.SelectedIndex = 0;
             if (cmbTarget.Items.Count > 0) cmbTarget.SelectedIndex = 0;
 
+            cmbEdgeA.Items.Clear();
+            cmbEdgeB.Items.Clear();
+
+            foreach (var node in g.Nodes.OrderBy(n => n.Id))
+            {
+                cmbEdgeA.Items.Add(node.Id);
+                cmbEdgeB.Items.Add(node.Id);
+            }
+
+            if (cmbEdgeA.Items.Count > 0) cmbEdgeA.SelectedIndex = 0;
+            if (cmbEdgeB.Items.Count > 0) cmbEdgeB.SelectedIndex = 0;
+
             // eski çizimleri temizle
             currentPath.Clear();
             pathEdges.Clear();
@@ -432,6 +444,8 @@ namespace AkaNet
             int id = FindNodeAt(e.Location);
             if (id < 0) return;
 
+            FillNodePanel(id);
+
             var n = g.GetNode(id);
             var neigh = g.NeighborsOf(id).OrderBy(x => x).ToList();
 
@@ -441,7 +455,22 @@ namespace AkaNet
                 $"Conn: {n.ConnectionCount}\n" +
                 $"Neigh: {(neigh.Count == 0 ? "-" : string.Join(", ", neigh))}";
 
-            tip.Show(msg, pnlCanvas, e.Location.X + 10, e.Location.Y + 10, 2500); // 2.5 sn
+            tip.Show(msg, pnlCanvas, e.Location.X + 10, e.Location.Y + 10, 2500);
+        }
+
+
+        private void FillNodePanel(int id)
+        {
+            var n = g.GetNode(id);
+            if (n == null) return;
+
+            selectedNodeId = id;
+
+            txtId.Text = n.Id.ToString();
+            txtName.Text = n.Name;
+            txtInteraction.Text = n.Interaction.ToString();
+            txtActivity.Text = n.Activity.ToString();
+             txtConnCount.Text = n.ConnectionCount.ToString();
         }
 
         private ToolTip tip = new ToolTip();
@@ -449,5 +478,84 @@ namespace AkaNet
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e) { }
         private void label1_Click(object sender, EventArgs e) { }
         private void label2_Click(object sender, EventArgs e) { }
+        private int selectedNodeId = -1;
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnClearNode_Click(object sender, EventArgs e)
+        {
+            selectedNodeId = -1;
+            txtId.Clear();
+            txtName.Clear();
+            txtInteraction.Clear();
+            txtActivity.Clear();
+            txtConnCount.Clear();
+        }
+        private void btnAddNode_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int id = int.Parse(txtId.Text.Trim());
+
+                string name = string.IsNullOrWhiteSpace(txtName.Text)
+                    ? $"N{id}"
+                    : txtName.Text.Trim();
+
+                double interaction = double.Parse(
+                    txtInteraction.Text.Trim().Replace(',', '.'),
+                    System.Globalization.CultureInfo.InvariantCulture
+                );
+
+                double activity = double.Parse(
+                    txtActivity.Text.Trim().Replace(',', '.'),
+                    System.Globalization.CultureInfo.InvariantCulture
+                );
+
+                // ConnCount bence otomatik olmalı; yeni node için 0 bırakıyoruz
+                int cc = 0;
+
+                if (g.GetNode(id) != null)
+                {
+                    MessageBox.Show("Bu ID zaten var!");
+                    return;
+                }
+
+                g.AddNode(new Node(id, name, activity, interaction, cc));
+
+                // UI yenile
+                ReloadUIAfterGraphLoad();
+
+                MessageBox.Show($"Node eklendi: {id}");
+
+                btnClearNode_Click(null, null);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ekleme hatası: " + ex.Message);
+            }
+        }
+        private void btnAddEdge_Click(object sender, EventArgs e)
+        {
+            int a = (int)cmbEdgeA.SelectedItem;
+            int b = (int)cmbEdgeB.SelectedItem;
+
+            if (a == b)
+            {
+                MessageBox.Show("Aynı node’a edge eklenmez.");
+                return;
+            }
+
+            if (!g.HasEdge(a, b))
+                g.AddEdge(a, b);
+
+            // ConnCount'ları da güncelle (istersen)
+            var na = g.GetNode(a); if (na != null) na.ConnectionCount = g.NeighborsOf(a).Count();
+            var nb = g.GetNode(b); if (nb != null) nb.ConnectionCount = g.NeighborsOf(b).Count();
+
+            pnlCanvas.Invalidate();
+        }
+
     }
 }

@@ -25,15 +25,17 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnAStar = new System.Windows.Forms.Button();
+            this.btnComponents = new System.Windows.Forms.Button();
+            this.btnCentrality = new System.Windows.Forms.Button();
+            this.btnColoring = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 16;
             this.listBox1.Location = new System.Drawing.Point(12, 12);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(200, 452);
+            this.listBox1.Size = new System.Drawing.Size(200, 446);
             this.listBox1.TabIndex = 0;
             // 
             // btnBfs
@@ -72,7 +74,7 @@
             this.cmbStart.FormattingEnabled = true;
             this.cmbStart.Location = new System.Drawing.Point(230, 151);
             this.cmbStart.Name = "cmbStart";
-            this.cmbStart.Size = new System.Drawing.Size(309, 24);
+            this.cmbStart.Size = new System.Drawing.Size(309, 21);
             this.cmbStart.TabIndex = 4;
             // 
             // cmbTarget
@@ -81,7 +83,7 @@
             this.cmbTarget.FormattingEnabled = true;
             this.cmbTarget.Location = new System.Drawing.Point(230, 181);
             this.cmbTarget.Name = "cmbTarget";
-            this.cmbTarget.Size = new System.Drawing.Size(309, 24);
+            this.cmbTarget.Size = new System.Drawing.Size(309, 21);
             this.cmbTarget.TabIndex = 5;
             this.cmbTarget.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
@@ -90,7 +92,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(350, 154);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 16);
+            this.label1.Size = new System.Drawing.Size(58, 13);
             this.label1.TabIndex = 6;
             this.label1.Text = "Start Node";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -100,7 +102,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(350, 184);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(84, 16);
+            this.label2.Size = new System.Drawing.Size(67, 13);
             this.label2.TabIndex = 7;
             this.label2.Text = "Target Node";
             this.label2.Click += new System.EventHandler(this.label2_Click);
@@ -115,9 +117,42 @@
             this.btnAStar.UseVisualStyleBackColor = true;
             this.btnAStar.Click += new System.EventHandler(this.btnAStar_Click);
             // 
+            // btnComponents
+            // 
+            this.btnComponents.Location = new System.Drawing.Point(230, 208);
+            this.btnComponents.Name = "btnComponents";
+            this.btnComponents.Size = new System.Drawing.Size(309, 23);
+            this.btnComponents.TabIndex = 10;
+            this.btnComponents.Text = "Components";
+            this.btnComponents.UseVisualStyleBackColor = true;
+            this.btnComponents.Click += new System.EventHandler(this.btnComponents_Click);
+            // 
+            // btnCentrality
+            // 
+            this.btnCentrality.Location = new System.Drawing.Point(230, 237);
+            this.btnCentrality.Name = "btnCentrality";
+            this.btnCentrality.Size = new System.Drawing.Size(309, 23);
+            this.btnCentrality.TabIndex = 11;
+            this.btnCentrality.Text = "Top5 Centrality";
+            this.btnCentrality.UseVisualStyleBackColor = true;
+            this.btnCentrality.Click += new System.EventHandler(this.btnCentrality_Click);
+            // 
+            // btnColoring
+            // 
+            this.btnColoring.Location = new System.Drawing.Point(230, 266);
+            this.btnColoring.Name = "btnColoring";
+            this.btnColoring.Size = new System.Drawing.Size(309, 23);
+            this.btnColoring.TabIndex = 12;
+            this.btnColoring.Text = "Welsh-Powell";
+            this.btnColoring.UseVisualStyleBackColor = true;
+            this.btnColoring.Click += new System.EventHandler(this.btnColoring_Click);
+            // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(896, 556);
+            this.Controls.Add(this.btnColoring);
+            this.Controls.Add(this.btnCentrality);
+            this.Controls.Add(this.btnComponents);
             this.Controls.Add(this.btnAStar);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -146,5 +181,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnAStar;
+        private System.Windows.Forms.Button btnComponents;
+        private System.Windows.Forms.Button btnCentrality;
+        private System.Windows.Forms.Button btnColoring;
     }
 }

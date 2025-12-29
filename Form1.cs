@@ -1,8 +1,9 @@
-﻿using System;
-using System.Windows.Forms;
-using AkaNet.Models;
-using AkaNet.Algorithms;
+﻿using AkaNet.Algorithms;
 using AkaNet.Data;
+using AkaNet.Models;
+using System;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace AkaNet
 {
@@ -51,6 +52,48 @@ namespace AkaNet
             foreach (var id in res.VisitOrder)
                 listBox1.Items.Add(id);
         }
+        private void btnComponents_Click(object sender, System.EventArgs e)
+        {
+            listBox1.Items.Clear();
+            var alg = new ConnectedComponentsAlgorithm();
+            var comps = alg.FindComponents(g);
+
+            listBox1.Items.Add($"Component count: {comps.Count}");
+            for (int i = 0; i < comps.Count; i++)
+                listBox1.Items.Add($"C{i + 1}: " + string.Join(", ", comps[i]));
+        }
+
+        private void btnCentrality_Click(object sender, System.EventArgs e)
+        {
+            listBox1.Items.Clear();
+            var alg = new DegreeCentralityAlgorithm();
+            var top5 = alg.TopK(g, 5);
+
+            listBox1.Items.Add("Top 5 Degree Centrality (NodeId | Degree)");
+            foreach (var row in top5)
+                listBox1.Items.Add($"{row.NodeId} | {row.Degree}");
+        }
+
+        private void btnColoring_Click(object sender, System.EventArgs e)
+        {
+            listBox1.Items.Clear();
+
+            var cc = new ConnectedComponentsAlgorithm();
+            var comps = cc.FindComponents(g);
+
+            var wp = new WelshPowellColoring();
+
+            for (int i = 0; i < comps.Count; i++)
+            {
+                var colorMap = wp.Color(g, comps[i]);
+
+                listBox1.Items.Add($"Component C{i + 1} coloring (NodeId -> Color):");
+                foreach (var kv in colorMap.OrderBy(x => x.Key))
+                    listBox1.Items.Add($"{kv.Key} -> {kv.Value}");
+                listBox1.Items.Add("-----");
+            }
+        }
+
 
         private void btnDijkstra_Click(object sender, EventArgs e)
         {
@@ -142,5 +185,6 @@ namespace AkaNet
             listBox1.Items.Add("Visited nodes: " + res.VisitedCount);
         }
 
+        
     }
 }

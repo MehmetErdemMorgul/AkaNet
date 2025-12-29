@@ -157,6 +157,7 @@
             this.pnlCanvas.Size = new System.Drawing.Size(1488, 539);
             this.pnlCanvas.TabIndex = 13;
             this.pnlCanvas.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlCanvas_Paint);
+            this.pnlCanvas.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnlCanvas_MouseClick);
             // 
             // btnLoadCsv
             // 

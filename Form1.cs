@@ -413,7 +413,38 @@ namespace AkaNet
                 }
             }
         }
+        private int FindNodeAt(Point p)
+        {
+            const int r = 15; // node yarıçap (30x30 çiziyorduk)
+            foreach (var kv in nodePos)
+            {
+                float cx = kv.Value.X + r;
+                float cy = kv.Value.Y + r;
+                float dx = p.X - cx;
+                float dy = p.Y - cy;
+                if (dx * dx + dy * dy <= r * r)
+                    return kv.Key;
+            }
+            return -1;
+        }
+        private void pnlCanvas_MouseClick(object sender, MouseEventArgs e)
+        {
+            int id = FindNodeAt(e.Location);
+            if (id < 0) return;
 
+            var n = g.GetNode(id);
+            var neigh = g.NeighborsOf(id).OrderBy(x => x).ToList();
+
+            string msg =
+                $"Node {n.Id}\n" +
+                $"Act: {n.Activity}  Int: {n.Interaction}\n" +
+                $"Conn: {n.ConnectionCount}\n" +
+                $"Neigh: {(neigh.Count == 0 ? "-" : string.Join(", ", neigh))}";
+
+            tip.Show(msg, pnlCanvas, e.Location.X + 10, e.Location.Y + 10, 2500); // 2.5 sn
+        }
+
+        private ToolTip tip = new ToolTip();
         private void Form1_Load(object sender, EventArgs e) { }
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e) { }
         private void label1_Click(object sender, EventArgs e) { }

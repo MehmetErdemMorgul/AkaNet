@@ -55,6 +55,7 @@
             this.btnDeleteEdge = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
             this.grpNode.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -385,7 +386,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(471, 632);
+            this.label10.Location = new System.Drawing.Point(471, 629);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(79, 13);
             this.label10.TabIndex = 23;
@@ -428,6 +429,15 @@
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(471, 629);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(79, 13);
+            this.label13.TabIndex = 23;
+            this.label13.Text = "Merkez Düğüm";
+            // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(1594, 843);
@@ -435,6 +445,7 @@
             this.Controls.Add(this.label12);
             this.Controls.Add(this.btnDeleteEdge);
             this.Controls.Add(this.label11);
+            this.Controls.Add(this.label13);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.btnAddEdge);
             this.Controls.Add(this.label9);
@@ -507,5 +518,6 @@
         private System.Windows.Forms.Button btnDeleteEdge;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.Label label13;
     }
 }

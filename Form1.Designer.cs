@@ -28,21 +28,23 @@
             this.btnComponents = new System.Windows.Forms.Button();
             this.btnCentrality = new System.Windows.Forms.Button();
             this.btnColoring = new System.Windows.Forms.Button();
+            this.pnlCanvas = new System.Windows.Forms.Panel();
+            this.btnLoadCsv = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(12, 12);
+            this.listBox1.Location = new System.Drawing.Point(643, 575);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(200, 446);
+            this.listBox1.Size = new System.Drawing.Size(200, 173);
             this.listBox1.TabIndex = 0;
             // 
             // btnBfs
             // 
-            this.btnBfs.Location = new System.Drawing.Point(230, 12);
+            this.btnBfs.Location = new System.Drawing.Point(862, 605);
             this.btnBfs.Name = "btnBfs";
-            this.btnBfs.Size = new System.Drawing.Size(309, 30);
+            this.btnBfs.Size = new System.Drawing.Size(300, 30);
             this.btnBfs.TabIndex = 1;
             this.btnBfs.Text = "BFS";
             this.btnBfs.UseVisualStyleBackColor = true;
@@ -50,9 +52,9 @@
             // 
             // btnDfs
             // 
-            this.btnDfs.Location = new System.Drawing.Point(230, 48);
+            this.btnDfs.Location = new System.Drawing.Point(1200, 605);
             this.btnDfs.Name = "btnDfs";
-            this.btnDfs.Size = new System.Drawing.Size(309, 30);
+            this.btnDfs.Size = new System.Drawing.Size(300, 30);
             this.btnDfs.TabIndex = 2;
             this.btnDfs.Text = "DFS";
             this.btnDfs.UseVisualStyleBackColor = true;
@@ -60,9 +62,9 @@
             // 
             // btnDijkstra
             // 
-            this.btnDijkstra.Location = new System.Drawing.Point(230, 84);
+            this.btnDijkstra.Location = new System.Drawing.Point(1200, 677);
             this.btnDijkstra.Name = "btnDijkstra";
-            this.btnDijkstra.Size = new System.Drawing.Size(309, 30);
+            this.btnDijkstra.Size = new System.Drawing.Size(300, 30);
             this.btnDijkstra.TabIndex = 3;
             this.btnDijkstra.Text = "Dijkstra";
             this.btnDijkstra.UseVisualStyleBackColor = true;
@@ -72,25 +74,25 @@
             // 
             this.cmbStart.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStart.FormattingEnabled = true;
-            this.cmbStart.Location = new System.Drawing.Point(230, 151);
+            this.cmbStart.Location = new System.Drawing.Point(862, 575);
             this.cmbStart.Name = "cmbStart";
-            this.cmbStart.Size = new System.Drawing.Size(309, 21);
+            this.cmbStart.Size = new System.Drawing.Size(300, 21);
             this.cmbStart.TabIndex = 4;
             // 
             // cmbTarget
             // 
             this.cmbTarget.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTarget.FormattingEnabled = true;
-            this.cmbTarget.Location = new System.Drawing.Point(230, 181);
+            this.cmbTarget.Location = new System.Drawing.Point(1200, 575);
             this.cmbTarget.Name = "cmbTarget";
-            this.cmbTarget.Size = new System.Drawing.Size(309, 21);
+            this.cmbTarget.Size = new System.Drawing.Size(300, 21);
             this.cmbTarget.TabIndex = 5;
             this.cmbTarget.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(350, 154);
+            this.label1.Location = new System.Drawing.Point(981, 578);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(58, 13);
             this.label1.TabIndex = 6;
@@ -100,7 +102,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(350, 184);
+            this.label2.Location = new System.Drawing.Point(1314, 578);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(67, 13);
             this.label2.TabIndex = 7;
@@ -109,9 +111,9 @@
             // 
             // btnAStar
             // 
-            this.btnAStar.Location = new System.Drawing.Point(230, 118);
+            this.btnAStar.Location = new System.Drawing.Point(1200, 641);
             this.btnAStar.Name = "btnAStar";
-            this.btnAStar.Size = new System.Drawing.Size(309, 27);
+            this.btnAStar.Size = new System.Drawing.Size(300, 30);
             this.btnAStar.TabIndex = 9;
             this.btnAStar.Text = "A*";
             this.btnAStar.UseVisualStyleBackColor = true;
@@ -119,9 +121,9 @@
             // 
             // btnComponents
             // 
-            this.btnComponents.Location = new System.Drawing.Point(230, 208);
+            this.btnComponents.Location = new System.Drawing.Point(862, 677);
             this.btnComponents.Name = "btnComponents";
-            this.btnComponents.Size = new System.Drawing.Size(309, 23);
+            this.btnComponents.Size = new System.Drawing.Size(300, 30);
             this.btnComponents.TabIndex = 10;
             this.btnComponents.Text = "Components";
             this.btnComponents.UseVisualStyleBackColor = true;
@@ -129,9 +131,9 @@
             // 
             // btnCentrality
             // 
-            this.btnCentrality.Location = new System.Drawing.Point(230, 237);
+            this.btnCentrality.Location = new System.Drawing.Point(862, 717);
             this.btnCentrality.Name = "btnCentrality";
-            this.btnCentrality.Size = new System.Drawing.Size(309, 23);
+            this.btnCentrality.Size = new System.Drawing.Size(300, 30);
             this.btnCentrality.TabIndex = 11;
             this.btnCentrality.Text = "Top5 Centrality";
             this.btnCentrality.UseVisualStyleBackColor = true;
@@ -139,17 +141,38 @@
             // 
             // btnColoring
             // 
-            this.btnColoring.Location = new System.Drawing.Point(230, 266);
+            this.btnColoring.Location = new System.Drawing.Point(1200, 717);
             this.btnColoring.Name = "btnColoring";
-            this.btnColoring.Size = new System.Drawing.Size(309, 23);
+            this.btnColoring.Size = new System.Drawing.Size(300, 30);
             this.btnColoring.TabIndex = 12;
             this.btnColoring.Text = "Welsh-Powell";
             this.btnColoring.UseVisualStyleBackColor = true;
             this.btnColoring.Click += new System.EventHandler(this.btnColoring_Click);
             // 
+            // pnlCanvas
+            // 
+            this.pnlCanvas.BackColor = System.Drawing.Color.Gainsboro;
+            this.pnlCanvas.Location = new System.Drawing.Point(12, 12);
+            this.pnlCanvas.Name = "pnlCanvas";
+            this.pnlCanvas.Size = new System.Drawing.Size(1488, 539);
+            this.pnlCanvas.TabIndex = 13;
+            this.pnlCanvas.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlCanvas_Paint);
+            // 
+            // btnLoadCsv
+            // 
+            this.btnLoadCsv.Location = new System.Drawing.Point(862, 641);
+            this.btnLoadCsv.Name = "btnLoadCsv";
+            this.btnLoadCsv.Size = new System.Drawing.Size(300, 30);
+            this.btnLoadCsv.TabIndex = 14;
+            this.btnLoadCsv.Text = "Load CSV Folder";
+            this.btnLoadCsv.UseVisualStyleBackColor = true;
+            this.btnLoadCsv.Click += new System.EventHandler(this.btnLoadCsv_Click);
+            // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(896, 556);
+            this.ClientSize = new System.Drawing.Size(1512, 779);
+            this.Controls.Add(this.btnLoadCsv);
+            this.Controls.Add(this.pnlCanvas);
             this.Controls.Add(this.btnColoring);
             this.Controls.Add(this.btnCentrality);
             this.Controls.Add(this.btnComponents);
@@ -184,5 +207,7 @@
         private System.Windows.Forms.Button btnComponents;
         private System.Windows.Forms.Button btnCentrality;
         private System.Windows.Forms.Button btnColoring;
+        private System.Windows.Forms.Panel pnlCanvas;
+        private System.Windows.Forms.Button btnLoadCsv;
     }
 }

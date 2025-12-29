@@ -16,55 +16,103 @@ namespace AkaNet.Data
             var graph = new Graph();
             var lines = File.ReadAllLines(fileName);
 
-            // Node'ları tutmak için
-            var nodes = new Dictionary<int, Node>();
+            if (lines.Length < 2)
+                throw new Exception("CSV boş veya sadece header var.");
 
-            // 🔹 1) NODE OKUMA (header atlanır)
+            // Header’a göre kolon ayıracı seç (',' mi ';' mi?)
+            char colSep = DetectColumnSeparator(lines[0]);
+
+            // 1) NODE OKUMA (header atlanır)
             for (int i = 1; i < lines.Length; i++)
             {
-                if (string.IsNullOrWhiteSpace(lines[i]))
-                    continue;
+                var line = lines[i];
+                if (string.IsNullOrWhiteSpace(line)) continue;
 
-                // 🔥 CSV satırı , ile ayrılıyor
-                var parts = lines[i].Split(',');
+                try
+                {
+                    var parts = SplitCols(line, colSep);
 
-                int id = int.Parse(parts[0].Trim());
-                double activity = double.Parse(parts[1].Trim(), CultureInfo.InvariantCulture);
-                double interaction = double.Parse(parts[2].Trim(), CultureInfo.InvariantCulture);
-                int connectionCount = int.Parse(parts[3].Trim());
+                    if (parts.Length < 4)
+                        throw new Exception($"Beklenen en az 4 kolon var (Id,Activity,Interaction,ConnectionCount). Bulunan: {parts.Length}");
 
-                var node = new Node(id, $"N{id}", activity, interaction, connectionCount);
-                nodes[id] = node;
-                graph.AddNode(node);
+                    int id = ParseInt(parts[0]);
+                    double activity = ParseDouble(parts[1]);
+                    double interaction = ParseDouble(parts[2]);
+                    int connectionCount = ParseInt(parts[3]);
+
+                    var node = new Node(id, $"N{id}", activity, interaction, connectionCount);
+                    graph.AddNode(node);
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"CSV NODE parse hatası (satır {i + 1}): '{line}' -> {ex.Message}");
+                }
             }
 
-            // 🔹 2) EDGE OKUMA (Neighbors)
+            // 2) EDGE OKUMA (Neighbors)
             for (int i = 1; i < lines.Length; i++)
             {
-                if (string.IsNullOrWhiteSpace(lines[i]))
-                    continue;
+                var line = lines[i];
+                if (string.IsNullOrWhiteSpace(line)) continue;
 
-                var parts = lines[i].Split(',');
-
-                int fromId = int.Parse(parts[0].Trim());
-
-                if (parts.Length < 5 || string.IsNullOrWhiteSpace(parts[4]))
-                    continue;
-
-                // 🔥 Komşular ; ile ayrılıyor
-                var neighbors = parts[4].Split(';');
-
-                foreach (var n in neighbors)
+                try
                 {
-                    int toId = int.Parse(n.Trim());
+                    var parts = SplitCols(line, colSep);
 
-                    // Çift kenarı engelle
-                    if (!graph.HasEdge(fromId, toId))
-                        graph.AddEdge(fromId, toId);
+                    int fromId = ParseInt(parts[0]);
+
+                    // 5. kolon yoksa komşu yok
+                    if (parts.Length < 5 || string.IsNullOrWhiteSpace(parts[4]))
+                        continue;
+
+                    var neighbors = SplitNeighbors(parts[4]);
+
+                    foreach (var n in neighbors)
+                    {
+                        int toId = ParseInt(n);
+
+                        if (toId == fromId) continue; // self-loop engelle
+
+                        if (!graph.HasEdge(fromId, toId))
+                            graph.AddEdge(fromId, toId);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"CSV EDGE parse hatası (satır {i + 1}): '{line}' -> {ex.Message}");
                 }
             }
 
             return graph;
+        }
+
+        private static char DetectColumnSeparator(string headerLine)
+        {
+            int comma = headerLine.Split(',').Length;
+            int semi = headerLine.Split(';').Length;
+            return (semi > comma) ? ';' : ',';
+        }
+
+        private static string[] SplitCols(string line, char colSep)
+        {
+            // Basit split (quote’lu CSV kullanmıyorsanız yeterli)
+            return line.Split(colSep);
+        }
+
+        private static string[] SplitNeighbors(string s)
+        {
+            return s.Split(new[] { ';', '|', ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        private static int ParseInt(string s)
+        {
+            return int.Parse(s.Trim(), CultureInfo.InvariantCulture);
+        }
+
+        private static double ParseDouble(string s)
+        {
+            s = s.Trim().Replace(',', '.'); // 0,8 -> 0.8
+            return double.Parse(s, CultureInfo.InvariantCulture);
         }
     }
 }

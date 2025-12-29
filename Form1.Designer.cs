@@ -31,8 +31,8 @@
             this.pnlCanvas = new System.Windows.Forms.Panel();
             this.btnLoadCsv = new System.Windows.Forms.Button();
             this.grpNode = new System.Windows.Forms.Panel();
-            this.btnClearNode = new System.Windows.Forms.Button();
             this.btnDeleteNode = new System.Windows.Forms.Button();
+            this.btnClearNode = new System.Windows.Forms.Button();
             this.btnUpdateNode = new System.Windows.Forms.Button();
             this.btnAddNode = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
@@ -52,20 +52,23 @@
             this.btnAddEdge = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.btnDeleteEdge = new System.Windows.Forms.Button();
+            this.label12 = new System.Windows.Forms.Label();
+            this.btnReset = new System.Windows.Forms.Button();
             this.grpNode.SuspendLayout();
             this.SuspendLayout();
             // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(646, 575);
+            this.listBox1.Location = new System.Drawing.Point(646, 629);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(200, 173);
             this.listBox1.TabIndex = 0;
             // 
             // btnBfs
             // 
-            this.btnBfs.Location = new System.Drawing.Point(862, 605);
+            this.btnBfs.Location = new System.Drawing.Point(862, 659);
             this.btnBfs.Name = "btnBfs";
             this.btnBfs.Size = new System.Drawing.Size(300, 30);
             this.btnBfs.TabIndex = 1;
@@ -75,7 +78,7 @@
             // 
             // btnDfs
             // 
-            this.btnDfs.Location = new System.Drawing.Point(1200, 605);
+            this.btnDfs.Location = new System.Drawing.Point(1200, 659);
             this.btnDfs.Name = "btnDfs";
             this.btnDfs.Size = new System.Drawing.Size(300, 30);
             this.btnDfs.TabIndex = 2;
@@ -85,7 +88,7 @@
             // 
             // btnDijkstra
             // 
-            this.btnDijkstra.Location = new System.Drawing.Point(1200, 677);
+            this.btnDijkstra.Location = new System.Drawing.Point(1200, 731);
             this.btnDijkstra.Name = "btnDijkstra";
             this.btnDijkstra.Size = new System.Drawing.Size(300, 30);
             this.btnDijkstra.TabIndex = 3;
@@ -97,7 +100,7 @@
             // 
             this.cmbStart.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStart.FormattingEnabled = true;
-            this.cmbStart.Location = new System.Drawing.Point(862, 575);
+            this.cmbStart.Location = new System.Drawing.Point(862, 629);
             this.cmbStart.Name = "cmbStart";
             this.cmbStart.Size = new System.Drawing.Size(300, 21);
             this.cmbStart.TabIndex = 4;
@@ -106,7 +109,7 @@
             // 
             this.cmbTarget.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTarget.FormattingEnabled = true;
-            this.cmbTarget.Location = new System.Drawing.Point(1200, 575);
+            this.cmbTarget.Location = new System.Drawing.Point(1200, 629);
             this.cmbTarget.Name = "cmbTarget";
             this.cmbTarget.Size = new System.Drawing.Size(300, 21);
             this.cmbTarget.TabIndex = 5;
@@ -115,7 +118,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(981, 578);
+            this.label1.Location = new System.Drawing.Point(981, 632);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(58, 13);
             this.label1.TabIndex = 6;
@@ -125,7 +128,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1314, 578);
+            this.label2.Location = new System.Drawing.Point(1314, 632);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(67, 13);
             this.label2.TabIndex = 7;
@@ -134,7 +137,7 @@
             // 
             // btnAStar
             // 
-            this.btnAStar.Location = new System.Drawing.Point(1200, 641);
+            this.btnAStar.Location = new System.Drawing.Point(1200, 695);
             this.btnAStar.Name = "btnAStar";
             this.btnAStar.Size = new System.Drawing.Size(300, 30);
             this.btnAStar.TabIndex = 9;
@@ -144,7 +147,7 @@
             // 
             // btnComponents
             // 
-            this.btnComponents.Location = new System.Drawing.Point(862, 677);
+            this.btnComponents.Location = new System.Drawing.Point(862, 731);
             this.btnComponents.Name = "btnComponents";
             this.btnComponents.Size = new System.Drawing.Size(300, 30);
             this.btnComponents.TabIndex = 10;
@@ -154,7 +157,7 @@
             // 
             // btnCentrality
             // 
-            this.btnCentrality.Location = new System.Drawing.Point(862, 717);
+            this.btnCentrality.Location = new System.Drawing.Point(862, 771);
             this.btnCentrality.Name = "btnCentrality";
             this.btnCentrality.Size = new System.Drawing.Size(300, 30);
             this.btnCentrality.TabIndex = 11;
@@ -164,7 +167,7 @@
             // 
             // btnColoring
             // 
-            this.btnColoring.Location = new System.Drawing.Point(1200, 717);
+            this.btnColoring.Location = new System.Drawing.Point(1200, 771);
             this.btnColoring.Name = "btnColoring";
             this.btnColoring.Size = new System.Drawing.Size(300, 30);
             this.btnColoring.TabIndex = 12;
@@ -177,14 +180,14 @@
             this.pnlCanvas.BackColor = System.Drawing.Color.Gainsboro;
             this.pnlCanvas.Location = new System.Drawing.Point(12, 12);
             this.pnlCanvas.Name = "pnlCanvas";
-            this.pnlCanvas.Size = new System.Drawing.Size(1488, 539);
+            this.pnlCanvas.Size = new System.Drawing.Size(1488, 593);
             this.pnlCanvas.TabIndex = 13;
             this.pnlCanvas.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlCanvas_Paint);
             this.pnlCanvas.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnlCanvas_MouseClick);
             // 
             // btnLoadCsv
             // 
-            this.btnLoadCsv.Location = new System.Drawing.Point(862, 641);
+            this.btnLoadCsv.Location = new System.Drawing.Point(862, 695);
             this.btnLoadCsv.Name = "btnLoadCsv";
             this.btnLoadCsv.Size = new System.Drawing.Size(300, 30);
             this.btnLoadCsv.TabIndex = 14;
@@ -194,8 +197,8 @@
             // 
             // grpNode
             // 
-            this.grpNode.Controls.Add(this.btnClearNode);
             this.grpNode.Controls.Add(this.btnDeleteNode);
+            this.grpNode.Controls.Add(this.btnClearNode);
             this.grpNode.Controls.Add(this.btnUpdateNode);
             this.grpNode.Controls.Add(this.btnAddNode);
             this.grpNode.Controls.Add(this.label8);
@@ -208,10 +211,20 @@
             this.grpNode.Controls.Add(this.txtInteraction);
             this.grpNode.Controls.Add(this.txtName);
             this.grpNode.Controls.Add(this.txtId);
-            this.grpNode.Location = new System.Drawing.Point(12, 575);
+            this.grpNode.Location = new System.Drawing.Point(12, 629);
             this.grpNode.Name = "grpNode";
             this.grpNode.Size = new System.Drawing.Size(444, 173);
             this.grpNode.TabIndex = 15;
+            // 
+            // btnDeleteNode
+            // 
+            this.btnDeleteNode.Location = new System.Drawing.Point(266, 93);
+            this.btnDeleteNode.Name = "btnDeleteNode";
+            this.btnDeleteNode.Size = new System.Drawing.Size(78, 71);
+            this.btnDeleteNode.TabIndex = 12;
+            this.btnDeleteNode.Text = "Sil";
+            this.btnDeleteNode.UseVisualStyleBackColor = true;
+            this.btnDeleteNode.Click += new System.EventHandler(this.btnDeleteNode_Click);
             // 
             // btnClearNode
             // 
@@ -223,15 +236,6 @@
             this.btnClearNode.UseVisualStyleBackColor = true;
             this.btnClearNode.Click += new System.EventHandler(this.btnClearNode_Click);
             // 
-            // btnDeleteNode
-            // 
-            this.btnDeleteNode.Location = new System.Drawing.Point(266, 93);
-            this.btnDeleteNode.Name = "btnDeleteNode";
-            this.btnDeleteNode.Size = new System.Drawing.Size(78, 71);
-            this.btnDeleteNode.TabIndex = 12;
-            this.btnDeleteNode.Text = "Sil";
-            this.btnDeleteNode.UseVisualStyleBackColor = true;
-            // 
             // btnUpdateNode
             // 
             this.btnUpdateNode.Location = new System.Drawing.Point(360, 3);
@@ -240,6 +244,7 @@
             this.btnUpdateNode.TabIndex = 11;
             this.btnUpdateNode.Text = "Güncelle";
             this.btnUpdateNode.UseVisualStyleBackColor = true;
+            this.btnUpdateNode.Click += new System.EventHandler(this.btnUpdateNode_Click);
             // 
             // btnAddNode
             // 
@@ -334,7 +339,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(78, 554);
+            this.label3.Location = new System.Drawing.Point(78, 608);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(76, 13);
             this.label3.TabIndex = 16;
@@ -343,7 +348,7 @@
             // cmbEdgeA
             // 
             this.cmbEdgeA.FormattingEnabled = true;
-            this.cmbEdgeA.Location = new System.Drawing.Point(474, 601);
+            this.cmbEdgeA.Location = new System.Drawing.Point(474, 655);
             this.cmbEdgeA.Name = "cmbEdgeA";
             this.cmbEdgeA.Size = new System.Drawing.Size(121, 21);
             this.cmbEdgeA.TabIndex = 17;
@@ -351,7 +356,7 @@
             // cmbEdgeB
             // 
             this.cmbEdgeB.FormattingEnabled = true;
-            this.cmbEdgeB.Location = new System.Drawing.Point(474, 654);
+            this.cmbEdgeB.Location = new System.Drawing.Point(474, 708);
             this.cmbEdgeB.Name = "cmbEdgeB";
             this.cmbEdgeB.Size = new System.Drawing.Size(121, 21);
             this.cmbEdgeB.TabIndex = 20;
@@ -359,15 +364,15 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(471, 554);
+            this.label9.Location = new System.Drawing.Point(471, 608);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(69, 13);
+            this.label9.Size = new System.Drawing.Size(92, 13);
             this.label9.TabIndex = 21;
-            this.label9.Text = "Bağlantı Ekle";
+            this.label9.Text = "Bağlantı Durumları";
             // 
             // btnAddEdge
             // 
-            this.btnAddEdge.Location = new System.Drawing.Point(474, 702);
+            this.btnAddEdge.Location = new System.Drawing.Point(474, 746);
             this.btnAddEdge.Name = "btnAddEdge";
             this.btnAddEdge.Size = new System.Drawing.Size(121, 23);
             this.btnAddEdge.TabIndex = 22;
@@ -377,24 +382,55 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(471, 578);
+            this.label10.Location = new System.Drawing.Point(471, 632);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(41, 13);
+            this.label10.Size = new System.Drawing.Size(79, 13);
             this.label10.TabIndex = 23;
             this.label10.Text = "Merkez Düğüm";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(471, 636);
+            this.label11.Location = new System.Drawing.Point(471, 690);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(41, 13);
+            this.label11.Size = new System.Drawing.Size(69, 13);
             this.label11.TabIndex = 24;
-            this.label11.Text = "Bağlanacak Düğüm";
+            this.label11.Text = "Diğer Düğüm";
+            // 
+            // btnDeleteEdge
+            // 
+            this.btnDeleteEdge.Location = new System.Drawing.Point(474, 779);
+            this.btnDeleteEdge.Name = "btnDeleteEdge";
+            this.btnDeleteEdge.Size = new System.Drawing.Size(121, 23);
+            this.btnDeleteEdge.TabIndex = 25;
+            this.btnDeleteEdge.Text = "Bağlantı Sil";
+            this.btnDeleteEdge.Click += new System.EventHandler(this.btnDeleteEdge_Click);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(1506, 12);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(49, 13);
+            this.label12.TabIndex = 26;
+            this.label12.Text = "Tool Box";
+            // 
+            // btnReset
+            // 
+            this.btnReset.Location = new System.Drawing.Point(1506, 37);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(75, 23);
+            this.btnReset.TabIndex = 27;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = true;
+            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(1512, 779);
+            this.ClientSize = new System.Drawing.Size(1594, 843);
+            this.Controls.Add(this.btnReset);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.btnDeleteEdge);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.btnAddEdge);
@@ -465,5 +501,8 @@
         private System.Windows.Forms.Button btnAddEdge;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button btnDeleteEdge;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button btnReset;
     }
 }

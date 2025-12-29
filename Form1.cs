@@ -33,24 +33,19 @@ namespace AkaNet
         {
             InitializeComponent();
 
-            string path = "nodes.csv";
-            g = CsvGraphLoader.Load(path);
+            g = new Graph();
+            ReloadUIAfterGraphLoad(); // bu zaten comboboxları temizler/doldurur (şu an boş olacak)
 
-            // ComboBox doldur
-            foreach (var node in g.Nodes)
-            {
-                cmbStart.Items.Add(node.Id);
-                cmbTarget.Items.Add(node.Id);
-            }
-            cmbStart.SelectedIndex = 0;
-            cmbTarget.SelectedIndex = 0;
+            // Boşsa SelectedIndex verme!
+            if (cmbStart.Items.Count > 0) cmbStart.SelectedIndex = 0;
+            if (cmbTarget.Items.Count > 0) cmbTarget.SelectedIndex = 0;
 
             BuildLayout();
             pnlCanvas.Invalidate();
 
-            // Resize event (panel büyüyüp küçülünce layout yenilensin)
             pnlCanvas.Resize += pnlCanvas_Resize;
         }
+
 
         private void BuildLayout()
         {
@@ -536,6 +531,72 @@ namespace AkaNet
                 MessageBox.Show("Ekleme hatası: " + ex.Message);
             }
         }
+        private void btnUpdateNode_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int id = selectedNodeId >= 0 ? selectedNodeId : int.Parse(txtId.Text.Trim());
+
+                var n = g.GetNode(id);
+                if (n == null)
+                {
+                    MessageBox.Show("Node bulunamadı.");
+                    return;
+                }
+
+                // değerleri güncelle
+                n.Name = string.IsNullOrWhiteSpace(txtName.Text) ? n.Name : txtName.Text.Trim();
+
+                n.Interaction = double.Parse(txtInteraction.Text.Trim().Replace(',', '.'),
+                    System.Globalization.CultureInfo.InvariantCulture);
+
+                n.Activity = double.Parse(txtActivity.Text.Trim().Replace(',', '.'),
+                    System.Globalization.CultureInfo.InvariantCulture);
+
+                // ConnCount'u elle alma; otomatik kalsın (istersen açıkça güncelle)
+                n.ConnectionCount = g.NeighborsOf(id).Count();
+
+                // weight'ler bu alanlardan beslendiği için çizim + algoritmalar artık güncel
+                pnlCanvas.Invalidate();
+
+                MessageBox.Show($"Node güncellendi: {id}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Güncelleme hatası: " + ex.Message);
+            }
+        }
+        private void btnDeleteNode_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int id = selectedNodeId >= 0 ? selectedNodeId : int.Parse(txtId.Text.Trim());
+
+                bool ok = g.RemoveNode(id);
+                if (!ok)
+                {
+                    MessageBox.Show("Silinecek node bulunamadı.");
+                    return;
+                }
+
+                // çizimleri temizle
+                ClearPath();
+                ClearColoring();
+
+                // seçimi temizle
+                btnClearNode_Click(null, null);
+
+                // UI + canvas yenile
+                ReloadUIAfterGraphLoad();
+
+                MessageBox.Show($"Node silindi: {id}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Silme hatası: " + ex.Message);
+            }
+        }
+
         private void btnAddEdge_Click(object sender, EventArgs e)
         {
             int a = (int)cmbEdgeA.SelectedItem;
@@ -556,6 +617,75 @@ namespace AkaNet
 
             pnlCanvas.Invalidate();
         }
+        private void btnDeleteEdge_Click(object sender, EventArgs e)
+        {
+            int a = (int)cmbEdgeA.SelectedItem;
+            int b = (int)cmbEdgeB.SelectedItem;
+
+            if (a == b)
+            {
+                MessageBox.Show("Aynı node seçilemez.");
+                return;
+            }
+
+            bool ok = g.RemoveEdge(a, b);
+            if (!ok)
+            {
+                MessageBox.Show("Bu iki node arasında edge yok.");
+                return;
+            }
+
+            // ConnCount güncelle
+            var na = g.GetNode(a); if (na != null) na.ConnectionCount = g.NeighborsOf(a).Count();
+            var nb = g.GetNode(b); if (nb != null) nb.ConnectionCount = g.NeighborsOf(b).Count();
+
+            // Path ve renklendirmeyi temizle
+            ClearPath();
+            ClearColoring();
+
+            pnlCanvas.Invalidate();
+            MessageBox.Show("Edge silindi.");
+        }
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            var result = MessageBox.Show(
+                "Tüm graph sıfırlanacak. Emin misiniz?",
+                "Reset",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (result != DialogResult.Yes)
+                return;
+
+            // 1) Yeni boş graph
+            g = new Graph();
+
+            // 2) Çizim ve algoritma durumlarını temizle
+            nodePos.Clear();
+            currentPath.Clear();
+            pathEdges.Clear();
+            nodeColors.Clear();
+
+            // 3) ComboBox'ları temizle
+            cmbStart.Items.Clear();
+            cmbTarget.Items.Clear();
+            cmbEdgeA.Items.Clear();
+            cmbEdgeB.Items.Clear();
+
+            // 4) Sağ paneli temizle
+            btnClearNode_Click(null, null);
+
+            // 5) Canvas yeniden çiz
+            BuildLayout();
+            pnlCanvas.Invalidate();
+
+            // 6) Bilgi mesajı (opsiyonel ama güzel)
+            listBox1.Items.Clear();
+            listBox1.Items.Add("Graph resetlendi. Yeni bir graph oluşturabilirsiniz.");
+        }
+
+
 
     }
 }

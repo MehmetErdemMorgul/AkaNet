@@ -12,7 +12,9 @@ namespace AkaNet
     public partial class Form1 : Form
     {
         private Graph g;
-
+        private int draggingNodeId = -1;
+        private bool isDragging = false;
+        private Point lastMouse;
         private Dictionary<int, PointF> nodePos = new Dictionary<int, PointF>();
 
         private List<int> currentPath = new List<int>();
@@ -392,7 +394,8 @@ namespace AkaNet
             pathEdges.Clear();
             nodeColors.Clear();
 
-            BuildLayout();
+            if (nodePos.Count == 0)
+                BuildLayout();
             pnlCanvas.Invalidate();
         }
         private void btnLoadCsv_Click(object sender, EventArgs e)
@@ -685,7 +688,40 @@ namespace AkaNet
             listBox1.Items.Add("Graph resetlendi. Yeni bir graph oluşturabilirsiniz.");
         }
 
+        private void pnlCanvas_MouseDown(object sender, MouseEventArgs e)
+        {
+            lastMouse = e.Location;
 
+            int id = FindNodeAt(e.Location);
+            if (id >= 0)
+            {
+                draggingNodeId = id;
+                isDragging = true;
 
+                // node’a tıklayınca panel dolsun
+                FillNodePanel(id);
+            }
+        }
+
+        private void pnlCanvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!isDragging || draggingNodeId < 0)
+                return;
+
+            int dx = e.X - lastMouse.X;
+            int dy = e.Y - lastMouse.Y;
+
+            var p = nodePos[draggingNodeId];
+            nodePos[draggingNodeId] = new PointF(p.X + dx, p.Y + dy);
+
+            lastMouse = e.Location;
+            pnlCanvas.Invalidate();
+        }
+
+        private void pnlCanvas_MouseUp(object sender, MouseEventArgs e)
+        {
+            isDragging = false;
+            draggingNodeId = -1;
+        }
     }
 }

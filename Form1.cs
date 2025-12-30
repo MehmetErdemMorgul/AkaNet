@@ -328,7 +328,7 @@ namespace AkaNet
                     }
 
                     // ağırlık yazısı
-                    double w = g.GetWeight(u, v);
+                    double w = g.GetEdgeWeight(u, v);
                     string txt = w.ToString("0.###");
 
                     float mx = (pu.X + pv.X) / 2f;

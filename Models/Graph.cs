@@ -10,6 +10,10 @@ namespace AkaNet.Models
         private Dictionary<int, Node> nodes = new Dictionary<int, Node>();
         private Dictionary<int, List<int>> adj = new Dictionary<int, List<int>>();
 
+        private Dictionary<(int, int), double> edgeWeights
+           = new Dictionary<(int, int), double>();
+
+
         // Dijkstra bunu istiyor
         public IEnumerable<Node> Nodes => nodes.Values;
 
@@ -30,20 +34,34 @@ namespace AkaNet.Models
                 adj[node.Id] = new List<int>();
         }
 
-        public void AddEdge(int from, int to)
+        public void AddEdge(int from, int to, double weight = 1.0)
         {
-            if (from == to) return; // self-loop engelle
-
-            // ✅ node yoksa bile patlamasın
             EnsureAdj(from);
             EnsureAdj(to);
 
             if (!adj[from].Contains(to))
                 adj[from].Add(to);
-
             if (!adj[to].Contains(from))
                 adj[to].Add(from);
+
+            edgeWeights[(from, to)] = weight;
+            edgeWeights[(to, from)] = weight;
         }
+
+
+        public double GetEdgeWeight(int from, int to)
+        {
+            if (edgeWeights.TryGetValue((from, to), out var w))
+                return w;
+            return 1.0;
+        }
+
+        public void SetEdgeWeight(int from, int to, double w)
+        {
+            edgeWeights[(from, to)] = w;
+            edgeWeights[(to, from)] = w;
+        }
+
 
         public bool HasEdge(int from, int to)
         {

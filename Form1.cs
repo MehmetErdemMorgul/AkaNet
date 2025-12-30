@@ -17,7 +17,8 @@ namespace AkaNet
         private int edgeStartNodeId = -1;
         private Point currentMouse;
 
-        private (int, int)? hoveredEdge = null;
+        private (int from, int to)? hoveredEdge = null;
+
 
         private Graph g;
         private int draggingNodeId = -1;
@@ -476,40 +477,12 @@ namespace AkaNet
         private void pnlCanvas_MouseClick(object sender, MouseEventArgs e)
         {
 
+            if (e.Button == MouseButtons.Right)
+                return;
+
             // ===============================
             // SAĞ TIK → EDGE SİLME
             // ===============================
-            if (e.Button == MouseButtons.Right)
-            {
-                var edge = FindEdgeAt(e.Location);
-                if (edge != null)
-                {
-                    var (a, b) = edge.Value;
-
-                    var res = MessageBox.Show(
-                        $"{a} - {b} edge silinsin mi?",
-                        "Edge Sil",
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Warning
-                    );
-
-                    if (res == DialogResult.Yes)
-                    {
-                        g.RemoveEdge(a, b);
-
-                        // ConnCount güncelle
-                        var na = g.GetNode(a);
-                        var nb = g.GetNode(b);
-                        if (na != null) na.ConnectionCount = g.NeighborsOf(a).Count();
-                        if (nb != null) nb.ConnectionCount = g.NeighborsOf(b).Count();
-
-                        ClearPath();
-                        ClearColoring();
-                        pnlCanvas.Invalidate();
-                    }
-                    return; // SAĞ TIK burada bitsin
-                }
-            }
 
 
             if (isDragging)
@@ -805,6 +778,14 @@ namespace AkaNet
         {
             lastMouse = e.Location;
 
+            // 👉 SAĞ TIK → EDGE SİL (TEK YER)
+            if (e.Button == MouseButtons.Right)
+            {
+                HandleRightClickDelete(e.Location);
+                return; // 🔥 ÇOK ÖNEMLİ
+            }
+
+
             // 1️⃣ SHIFT BASILIYSA → EDGE ÇİZME MODU
             if (ModifierKeys == Keys.Shift)
             {
@@ -859,6 +840,11 @@ namespace AkaNet
 
         private void pnlCanvas_MouseUp(object sender, MouseEventArgs e)
         {
+
+            
+
+
+
             // 1️⃣ EDGE BIRAKMA
             if (isEdgeDrawing)
             {
@@ -868,13 +854,17 @@ namespace AkaNet
                     targetId != edgeStartNodeId &&
                     !g.HasEdge(edgeStartNodeId, targetId))
                 {
-                    g.AddEdge(edgeStartNodeId, targetId);
+                    // 👉 AĞIRLIK SOR
+                    var w = AskEdgeWeight(edgeStartNodeId, targetId);
 
-                    // ConnCount güncelle
-                    var a = g.GetNode(edgeStartNodeId);
-                    var b = g.GetNode(targetId);
-                    if (a != null) a.ConnectionCount = g.NeighborsOf(a.Id).Count();
-                    if (b != null) b.ConnectionCount = g.NeighborsOf(b.Id).Count();
+                    if (w.HasValue)
+                    {
+                        // ConnCount güncelle
+                        var a = g.GetNode(edgeStartNodeId);
+                        var b = g.GetNode(targetId);
+                        if (a != null) a.ConnectionCount = g.NeighborsOf(a.Id).Count();
+                        if (b != null) b.ConnectionCount = g.NeighborsOf(b.Id).Count();
+                    }
                 }
 
                 isEdgeDrawing = false;
@@ -883,10 +873,12 @@ namespace AkaNet
                 return;
             }
 
-            // 2️⃣ NORMAL NODE SÜRÜKLEME BIRAKMA
+            // 2️⃣ NODE SÜRÜKLEME BIRAKMA
             isDragging = false;
             draggingNodeId = -1;
         }
+
+
 
 
 
@@ -897,7 +889,7 @@ namespace AkaNet
             listBox1.Items.Add("Node ekleme modu aktif. Canvas'a tıkla.");
         }
 
-        private (int, int)? FindEdgeAt(Point mouse)
+        private (int from, int to)? FindEdgeAt(Point mouse)
         {
             const float threshold = 6f; // ne kadar yakınsa edge sayılacak
 
@@ -947,6 +939,123 @@ namespace AkaNet
             float dy = p.Y - f.Y;
             return (float)Math.Sqrt(dx * dx + dy * dy);
         }
+
+        private double? AskEdgeWeight(int fromId, int toId)
+        {
+            string input = Prompt.ShowDialog("Edge ağırlığını gir:", "Edge Weight");
+
+            if (string.IsNullOrWhiteSpace(input))
+                return null;
+
+            if (double.TryParse(input, out double weight))
+            {
+                g.AddEdge(fromId, toId, weight);
+                return weight;
+            }
+
+            MessageBox.Show("Geçerli bir sayı gir!");
+            return null;
+        }
+
+
+        public static class Prompt
+        {
+            public static string ShowDialog(string text, string caption)
+            {
+                Form prompt = new Form()
+                {
+                    Width = 280,
+                    Height = 150,
+                    Text = caption,
+                    StartPosition = FormStartPosition.CenterScreen
+                };
+                Label textLabel = new Label() { Left = 10, Top = 20, Text = text };
+                TextBox textBox = new TextBox() { Left = 10, Top = 50, Width = 240 };
+                Button confirmation = new Button() { Text = "OK", Left = 160, Width = 90, Top = 80 };
+                confirmation.Click += (sender, e) => { prompt.Close(); };
+
+                prompt.Controls.Add(textBox);
+                prompt.Controls.Add(confirmation);
+                prompt.Controls.Add(textLabel);
+                prompt.AcceptButton = confirmation;
+
+                prompt.ShowDialog();
+                return textBox.Text;
+            }
+        }
+
+        private void TryDeleteEdgeAt(Point location)
+        {
+            var edge = FindEdgeAt(location);
+            if (edge == null) return;
+
+            var (a, b) = edge.Value;
+
+            var res = MessageBox.Show(
+                $"{a} - {b} edge silinsin mi?",
+                "Edge Sil",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (res != DialogResult.Yes) return;
+
+            g.RemoveEdge(a, b);
+
+            var na = g.GetNode(a);
+            var nb = g.GetNode(b);
+            if (na != null) na.ConnectionCount = g.NeighborsOf(a).Count();
+            if (nb != null) nb.ConnectionCount = g.NeighborsOf(b).Count();
+
+            ClearPath();
+            ClearColoring();
+            pnlCanvas.Invalidate();
+        }
+
+        private void HandleRightClickDelete(Point location)
+        {
+            // EDGE VAR MI?
+            var edge = FindEdgeAt(location);
+            if (edge != null)
+            {
+                var res = MessageBox.Show(
+                    "Bu edge silinsin mi?",
+                    "Onay",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (res == DialogResult.Yes)
+                {
+                    g.RemoveEdge(edge.Value.from, edge.Value.to);
+                    pnlCanvas.Invalidate();
+                }
+
+                return; // 🔥 ikinci soruyu ENGELLER
+            }
+
+            // NODE VAR MI?
+            int nodeId = FindNodeAt(location);
+            if (nodeId >= 0)
+            {
+                var res = MessageBox.Show(
+                    "Bu node silinsin mi?",
+                    "Onay",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
+
+                if (res == DialogResult.Yes)
+                {
+                    g.RemoveNode(nodeId);
+                    nodePos.Remove(nodeId);
+                    pnlCanvas.Invalidate();
+                }
+
+                return;
+            }
+        }
+
 
 
     }

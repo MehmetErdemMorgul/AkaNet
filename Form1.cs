@@ -53,6 +53,11 @@ namespace AkaNet
             g = new Graph();
             ReloadUIAfterGraphLoad(); // bu zaten comboboxları temizler/doldurur (şu an boş olacak)
 
+            nextNodeId = g.Nodes.Any()
+    ? g.Nodes.Max(n => n.Id) + 1
+    : 0;
+
+
             // Boşsa SelectedIndex verme!
             if (cmbStart.Items.Count > 0) cmbStart.SelectedIndex = 0;
             if (cmbTarget.Items.Count > 0) cmbTarget.SelectedIndex = 0;
@@ -431,8 +436,7 @@ namespace AkaNet
             pathEdges.Clear();
             nodeColors.Clear();
 
-            if (nodePos.Count == 0)
-                BuildLayout();
+            BuildLayout();
             pnlCanvas.Invalidate();
         }
         private void btnLoadCsv_Click(object sender, EventArgs e)
@@ -448,7 +452,24 @@ namespace AkaNet
                 try
                 {
                     g = CsvGraphLoader.Load(ofd.FileName);
+
+                    // 🔥 ÇOK ÖNEMLİ: eski çizimleri sıfırla
+                    nodePos.Clear();
+                    currentPath.Clear();
+                    pathEdges.Clear();
+                    nodeColors.Clear();
+
+                    // 🔥 nextNodeId CSV’ye göre ayarla
+                    nextNodeId = g.Nodes.Any()
+                        ? g.Nodes.Max(n => n.Id) + 1
+                        : 0;
+
+                    // 🔥 node pozisyonlarını yeniden üret
+                    BuildLayout();
+
+                    // UI yenile
                     ReloadUIAfterGraphLoad();
+
                     listBox1.Items.Clear();
                     listBox1.Items.Add("Yüklendi: " + System.IO.Path.GetFileName(ofd.FileName));
                     listBox1.Items.Add("Node sayısı: " + g.Nodes.Count());
@@ -532,13 +553,7 @@ namespace AkaNet
             var n = g.GetNode(clickedId);
             var neigh = g.NeighborsOf(clickedId).OrderBy(x => x).ToList();
 
-            string msg =
-                $"Node {n.Id}\n" +
-                $"Act: {n.Activity}  Int: {n.Interaction}\n" +
-                $"Conn: {n.ConnectionCount}\n" +
-                $"Neigh: {(neigh.Count == 0 ? "-" : string.Join(", ", neigh))}";
-
-            tip.Show(msg, pnlCanvas, e.Location.X + 10, e.Location.Y + 10, 2500);
+            
         }
 
 
@@ -581,7 +596,8 @@ namespace AkaNet
         {
             try
             {
-                int id = int.Parse(txtId.Text.Trim());
+                int id = nextNodeId++;
+
 
                 string name = string.IsNullOrWhiteSpace(txtName.Text)
                     ? $"N{id}"
@@ -750,6 +766,8 @@ namespace AkaNet
             // 1) Yeni boş graph
             g = new Graph();
 
+            nextNodeId = 0;
+
             // 2) Çizim ve algoritma durumlarını temizle
             nodePos.Clear();
             currentPath.Clear();
@@ -776,6 +794,28 @@ namespace AkaNet
 
         private void pnlCanvas_MouseDown(object sender, MouseEventArgs e)
         {
+
+            if (e.Button == MouseButtons.Left && ModifierKeys == Keys.None)
+            {
+                int id = FindNodeAt(e.Location);
+                if (id >= 0)
+                {
+                    var n = g.GetNode(id);
+                    if (n != null)
+                    {
+                        var neigh = g.NeighborsOf(id).OrderBy(x => x).ToList();
+                        string msg =
+                            $"Node {n.Id}\n" +
+                            $"Act: {n.Activity}  Int: {n.Interaction}\n" +
+                            $"Conn: {n.ConnectionCount}\n" +
+                            $"Neigh: {(neigh.Count == 0 ? "-" : string.Join(", ", neigh))}";
+
+                        tip.Show(msg, pnlCanvas, e.Location.X + 10, e.Location.Y + 10, 2500);
+                    }
+                }
+            }
+
+
             lastMouse = e.Location;
 
             // 👉 SAĞ TIK → EDGE SİL (TEK YER)
@@ -868,6 +908,32 @@ namespace AkaNet
                 edgeStartNodeId = -1;
                 pnlCanvas.Invalidate();
                 return;
+
+                // drag bitişleri zaten burada
+                isDragging = false;
+                draggingNodeId = -1;
+
+                // 👉 SADECE SOL TIK ve DRAG YOKSA popup göster
+                if (e.Button != MouseButtons.Left)
+                    return;
+
+                int id = FindNodeAt(e.Location);
+                if (id < 0) return;
+
+                var n = g.GetNode(id);
+                if (n == null) return;
+
+                var neigh = g.NeighborsOf(id).OrderBy(x => x).ToList();
+
+                string msg =
+                    $"Node {n.Id}\n" +
+                    $"Act: {n.Activity}\n" +
+                    $"Int: {n.Interaction}\n" +
+                    $"Conn: {n.ConnectionCount}\n" +
+                    $"Neigh: {(neigh.Count == 0 ? "-" : string.Join(", ", neigh))}";
+
+                tip.Show(msg, pnlCanvas, e.Location.X + 10, e.Location.Y + 10, 2500);
+
             }
 
             // 2️⃣ NODE SÜRÜKLEME BIRAKMA

@@ -328,7 +328,7 @@ namespace AkaNet
                     }
 
                     // ağırlık yazısı
-                    double w = g.GetEdgeWeight(u, v);
+                    double w = g.GetWeight(u, v);
                     string txt = w.ToString("0.###");
 
                     float mx = (pu.X + pv.X) / 2f;
@@ -851,21 +851,18 @@ namespace AkaNet
                 int targetId = FindNodeAt(e.Location);
 
                 if (targetId >= 0 &&
-                    targetId != edgeStartNodeId &&
-                    !g.HasEdge(edgeStartNodeId, targetId))
+    targetId != edgeStartNodeId &&
+    !g.HasEdge(edgeStartNodeId, targetId))
                 {
-                    // 👉 AĞIRLIK SOR
-                    var w = AskEdgeWeight(edgeStartNodeId, targetId);
+                    g.AddEdge(edgeStartNodeId, targetId);
 
-                    if (w.HasValue)
-                    {
-                        // ConnCount güncelle
-                        var a = g.GetNode(edgeStartNodeId);
-                        var b = g.GetNode(targetId);
-                        if (a != null) a.ConnectionCount = g.NeighborsOf(a.Id).Count();
-                        if (b != null) b.ConnectionCount = g.NeighborsOf(b.Id).Count();
-                    }
+                    var a = g.GetNode(edgeStartNodeId);
+                    var b = g.GetNode(targetId);
+
+                    if (a != null) a.ConnectionCount = g.NeighborsOf(a.Id).Count();
+                    if (b != null) b.ConnectionCount = g.NeighborsOf(b.Id).Count();
                 }
+
 
                 isEdgeDrawing = false;
                 edgeStartNodeId = -1;
@@ -940,49 +937,10 @@ namespace AkaNet
             return (float)Math.Sqrt(dx * dx + dy * dy);
         }
 
-        private double? AskEdgeWeight(int fromId, int toId)
-        {
-            string input = Prompt.ShowDialog("Edge ağırlığını gir:", "Edge Weight");
-
-            if (string.IsNullOrWhiteSpace(input))
-                return null;
-
-            if (double.TryParse(input, out double weight))
-            {
-                g.AddEdge(fromId, toId, weight);
-                return weight;
-            }
-
-            MessageBox.Show("Geçerli bir sayı gir!");
-            return null;
-        }
+        
 
 
-        public static class Prompt
-        {
-            public static string ShowDialog(string text, string caption)
-            {
-                Form prompt = new Form()
-                {
-                    Width = 280,
-                    Height = 150,
-                    Text = caption,
-                    StartPosition = FormStartPosition.CenterScreen
-                };
-                Label textLabel = new Label() { Left = 10, Top = 20, Text = text };
-                TextBox textBox = new TextBox() { Left = 10, Top = 50, Width = 240 };
-                Button confirmation = new Button() { Text = "OK", Left = 160, Width = 90, Top = 80 };
-                confirmation.Click += (sender, e) => { prompt.Close(); };
-
-                prompt.Controls.Add(textBox);
-                prompt.Controls.Add(confirmation);
-                prompt.Controls.Add(textLabel);
-                prompt.AcceptButton = confirmation;
-
-                prompt.ShowDialog();
-                return textBox.Text;
-            }
-        }
+        
 
         private void TryDeleteEdgeAt(Point location)
         {

@@ -34,6 +34,10 @@ namespace AkaNet
         public Form1()
         {
             InitializeComponent();
+            pnlCanvas.MouseDown += pnlCanvas_MouseDown;
+            pnlCanvas.MouseMove += pnlCanvas_MouseMove;
+            pnlCanvas.MouseUp += pnlCanvas_MouseUp;
+
 
             g = new Graph();
             ReloadUIAfterGraphLoad(); // bu zaten comboboxları temizler/doldurur (şu an boş olacak)
@@ -48,6 +52,10 @@ namespace AkaNet
             pnlCanvas.Resize += pnlCanvas_Resize;
         }
 
+        private bool addNodeMode = false;
+        private int nextNodeId = 0; // otomatik ID için
+
+        
 
         private void BuildLayout()
         {
@@ -439,13 +447,49 @@ namespace AkaNet
         }
         private void pnlCanvas_MouseClick(object sender, MouseEventArgs e)
         {
-            int id = FindNodeAt(e.Location);
-            if (id < 0) return;
+            // ===============================
+            // NODE EKLEME MODU
+            // ===============================
+            if (addNodeMode)
+            {
+                int newId = nextNodeId++;
 
-            FillNodePanel(id);
+                var node = new Node(
+                    newId,
+                    $"N{newId}",
+                    0, // Activity
+                    0, // Interaction
+                    0  // ConnectionCount
+                );
 
-            var n = g.GetNode(id);
-            var neigh = g.NeighborsOf(id).OrderBy(x => x).ToList();
+                g.AddNode(node);
+
+                // Tıklanan yere node koy
+                nodePos[newId] = new PointF(e.X - 15, e.Y - 15);
+
+                ReloadUIAfterGraphLoad();
+                pnlCanvas.Invalidate();
+
+                addNodeMode = false;
+                Cursor = Cursors.Default;
+
+                // Sağ paneli doldurt
+                FillNodePanel(newId);
+
+                MessageBox.Show("Node eklendi. Bilgileri doldurman gerekiyor.");
+                return;
+            }
+
+            // ===============================
+            // NORMAL NODE SEÇME DAVRANIŞI
+            // ===============================
+            int clickedId = FindNodeAt(e.Location);
+            if (clickedId < 0) return;
+
+            FillNodePanel(clickedId);
+
+            var n = g.GetNode(clickedId);
+            var neigh = g.NeighborsOf(clickedId).OrderBy(x => x).ToList();
 
             string msg =
                 $"Node {n.Id}\n" +
@@ -455,6 +499,7 @@ namespace AkaNet
 
             tip.Show(msg, pnlCanvas, e.Location.X + 10, e.Location.Y + 10, 2500);
         }
+
 
 
         private void FillNodePanel(int id)
@@ -723,5 +768,13 @@ namespace AkaNet
             isDragging = false;
             draggingNodeId = -1;
         }
+
+        private void btnNodeAddMode_Click(object sender, EventArgs e)
+        {
+            addNodeMode = true;
+            Cursor = Cursors.Cross;
+            listBox1.Items.Add("Node ekleme modu aktif. Canvas'a tıkla.");
+        }
+
     }
 }

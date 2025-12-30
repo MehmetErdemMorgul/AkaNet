@@ -37,6 +37,8 @@ namespace AkaNet
             pnlCanvas.MouseDown += pnlCanvas_MouseDown;
             pnlCanvas.MouseMove += pnlCanvas_MouseMove;
             pnlCanvas.MouseUp += pnlCanvas_MouseUp;
+            pnlCanvas.MouseClick += pnlCanvas_MouseClick;
+
 
 
             g = new Graph();
@@ -447,6 +449,10 @@ namespace AkaNet
         }
         private void pnlCanvas_MouseClick(object sender, MouseEventArgs e)
         {
+
+            if (isDragging)
+                return;
+
             // ===============================
             // NODE EKLEME MODU
             // ===============================

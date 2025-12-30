@@ -11,6 +11,14 @@ namespace AkaNet
 {
     public partial class Form1 : Form
     {
+
+        // EDGE ÇİZME DURUMU
+        private bool isEdgeDrawing = false;
+        private int edgeStartNodeId = -1;
+        private Point currentMouse;
+
+        private (int, int)? hoveredEdge = null;
+
         private Graph g;
         private int draggingNodeId = -1;
         private bool isDragging = false;
@@ -330,6 +338,8 @@ namespace AkaNet
                         mx - size.Width / 2f,
                         my - size.Height / 2f - 4);
                 }
+
+
             }
 
             // 2) PATH'İ EN ÜSTE KIRMIZI/KALIN ÇİZ
@@ -371,6 +381,22 @@ namespace AkaNet
 
                 gr.DrawString(id.ToString(), this.Font, Brushes.White, p.X + 8, p.Y + 6);
             }
+
+            // EDGE ÇİZME PREVIEW (SHIFT BASILIYKEN)
+            // EDGE ÇİZME PREVIEW (SHIFT BASILIYKEN)
+            if (isEdgeDrawing && edgeStartNodeId >= 0 && nodePos.ContainsKey(edgeStartNodeId))
+            {
+                PointF start = nodePos[edgeStartNodeId];
+                start = new PointF(start.X + 15, start.Y + 15);
+
+                using (var pen = new Pen(Color.Gray, 2f))
+                {
+                    pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+                    e.Graphics.DrawLine(pen, start, currentMouse);
+                }
+            }
+
+
         }
         private void ReloadUIAfterGraphLoad()
         {
@@ -449,6 +475,42 @@ namespace AkaNet
         }
         private void pnlCanvas_MouseClick(object sender, MouseEventArgs e)
         {
+
+            // ===============================
+            // SAĞ TIK → EDGE SİLME
+            // ===============================
+            if (e.Button == MouseButtons.Right)
+            {
+                var edge = FindEdgeAt(e.Location);
+                if (edge != null)
+                {
+                    var (a, b) = edge.Value;
+
+                    var res = MessageBox.Show(
+                        $"{a} - {b} edge silinsin mi?",
+                        "Edge Sil",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning
+                    );
+
+                    if (res == DialogResult.Yes)
+                    {
+                        g.RemoveEdge(a, b);
+
+                        // ConnCount güncelle
+                        var na = g.GetNode(a);
+                        var nb = g.GetNode(b);
+                        if (na != null) na.ConnectionCount = g.NeighborsOf(a).Count();
+                        if (nb != null) nb.ConnectionCount = g.NeighborsOf(b).Count();
+
+                        ClearPath();
+                        ClearColoring();
+                        pnlCanvas.Invalidate();
+                    }
+                    return; // SAĞ TIK burada bitsin
+                }
+            }
+
 
             if (isDragging)
                 return;
@@ -743,19 +805,42 @@ namespace AkaNet
         {
             lastMouse = e.Location;
 
-            int id = FindNodeAt(e.Location);
-            if (id >= 0)
+            // 1️⃣ SHIFT BASILIYSA → EDGE ÇİZME MODU
+            if (ModifierKeys == Keys.Shift)
             {
-                draggingNodeId = id;
-                isDragging = true;
+                int id = FindNodeAt(e.Location);
+                if (id >= 0)
+                {
+                    isEdgeDrawing = true;
+                    edgeStartNodeId = id;
+                    currentMouse = e.Location;
+                }
+                return; // 👈 ÇOK ÖNEMLİ (drag'e girmesin)
+            }
 
-                // node’a tıklayınca panel dolsun
-                FillNodePanel(id);
+            // 2️⃣ NORMAL → NODE SÜRÜKLEME
+            int dragId = FindNodeAt(e.Location);
+            if (dragId >= 0)
+            {
+                draggingNodeId = dragId;
+                isDragging = true;
+                FillNodePanel(dragId);
             }
         }
 
+
+
         private void pnlCanvas_MouseMove(object sender, MouseEventArgs e)
         {
+            // 1️⃣ EDGE ÇİZME PREVIEW
+            if (isEdgeDrawing)
+            {
+                currentMouse = e.Location;
+                pnlCanvas.Invalidate();
+                return;
+            }
+
+            // 2️⃣ NORMAL NODE SÜRÜKLEME
             if (!isDragging || draggingNodeId < 0)
                 return;
 
@@ -769,11 +854,41 @@ namespace AkaNet
             pnlCanvas.Invalidate();
         }
 
+
+
+
         private void pnlCanvas_MouseUp(object sender, MouseEventArgs e)
         {
+            // 1️⃣ EDGE BIRAKMA
+            if (isEdgeDrawing)
+            {
+                int targetId = FindNodeAt(e.Location);
+
+                if (targetId >= 0 &&
+                    targetId != edgeStartNodeId &&
+                    !g.HasEdge(edgeStartNodeId, targetId))
+                {
+                    g.AddEdge(edgeStartNodeId, targetId);
+
+                    // ConnCount güncelle
+                    var a = g.GetNode(edgeStartNodeId);
+                    var b = g.GetNode(targetId);
+                    if (a != null) a.ConnectionCount = g.NeighborsOf(a.Id).Count();
+                    if (b != null) b.ConnectionCount = g.NeighborsOf(b.Id).Count();
+                }
+
+                isEdgeDrawing = false;
+                edgeStartNodeId = -1;
+                pnlCanvas.Invalidate();
+                return;
+            }
+
+            // 2️⃣ NORMAL NODE SÜRÜKLEME BIRAKMA
             isDragging = false;
             draggingNodeId = -1;
         }
+
+
 
         private void btnNodeAddMode_Click(object sender, EventArgs e)
         {
@@ -781,6 +896,58 @@ namespace AkaNet
             Cursor = Cursors.Cross;
             listBox1.Items.Add("Node ekleme modu aktif. Canvas'a tıkla.");
         }
+
+        private (int, int)? FindEdgeAt(Point mouse)
+        {
+            const float threshold = 6f; // ne kadar yakınsa edge sayılacak
+
+            foreach (var node in g.Nodes)
+            {
+                int u = node.Id;
+                foreach (var v in g.NeighborsOf(u))
+                {
+                    if (v <= u) continue; // çift çizimi engelle
+
+                    if (!nodePos.ContainsKey(u) || !nodePos.ContainsKey(v))
+                        continue;
+
+                    PointF a = nodePos[u];
+                    PointF b = nodePos[v];
+                    a = new PointF(a.X + 15, a.Y + 15);
+                    b = new PointF(b.X + 15, b.Y + 15);
+
+                    float dist = DistancePointToSegment(mouse, a, b);
+                    if (dist <= threshold)
+                        return (u, v);
+                }
+            }
+            return null;
+        }
+
+        private float DistancePointToSegment(Point p, PointF a, PointF b)
+        {
+            float dx = b.X - a.X;
+            float dy = b.Y - a.Y;
+
+            if (dx == 0 && dy == 0)
+                return Distance(p, a);
+
+            float t = ((p.X - a.X) * dx + (p.Y - a.Y) * dy) / (dx * dx + dy * dy);
+            t = Math.Max(0, Math.Min(1, t));
+
+            float px = a.X + t * dx;
+            float py = a.Y + t * dy;
+
+            return Distance(p, new PointF(px, py));
+        }
+
+        private float Distance(Point p, PointF f)
+        {
+            float dx = p.X - f.X;
+            float dy = p.Y - f.Y;
+            return (float)Math.Sqrt(dx * dx + dy * dy);
+        }
+
 
     }
 }

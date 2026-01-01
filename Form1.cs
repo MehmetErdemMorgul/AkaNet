@@ -4,8 +4,11 @@ using AkaNet.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
+using System.IO;
 
 namespace AkaNet
 {
@@ -1141,8 +1144,10 @@ namespace AkaNet
             if (path == null || path.Count < 2) return "";
 
             var sb = new System.Text.StringBuilder();
-            sb.AppendLine("Seçilen yolun sebebi (edge bazlı):");
-            sb.AppendLine("----------------------------------");
+            sb.AppendLine("Seçilen yol neden bu şekilde oluştu?");
+            sb.AppendLine("Algoritma, her adımda en düşük maliyetli edge'i tercih eder.");
+            sb.AppendLine("------------------------------------------------------------");
+            sb.AppendLine();
 
             for (int i = 0; i < path.Count - 1; i++)
             {
@@ -1176,10 +1181,65 @@ namespace AkaNet
             // otomatik açıklama üret
             lastPathExplanation = BuildPathExplanation(currentPath);
 
-            var f = new PathExplanationForm();
-            f.SetText(lastPathExplanation);
-            f.Show(); // ShowDialog(this) da yapabilirsin
+            var f = new PathExplanationForm(g, currentPath);
+            f.Show();
+
         }
+
+        private void grpNode_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void btnExportCsv_Click(object sender, EventArgs e)
+        {
+            if (g == null || !g.Nodes.Any())
+            {
+                MessageBox.Show("Kaydedilecek graph yok.");
+                return;
+            }
+
+            using (SaveFileDialog sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "CSV Files (*.csv)|*.csv";
+                sfd.Title = "Graph CSV olarak kaydet";
+                sfd.FileName = "graph.csv";
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    ExportGraphToCsv(sfd.FileName);
+                    MessageBox.Show("Graph başarıyla CSV olarak kaydedildi.");
+                }
+            }
+        }
+
+        
+
+        private void ExportGraphToCsv(string filePath)
+        {
+            var sb = new StringBuilder();
+
+            // Header (import ile birebir)
+            sb.AppendLine("DugumId;Aktivite;Etkilesim;BaglantiSayisi;Komsular");
+
+            foreach (var node in g.Nodes.OrderBy(n => n.Id))
+            {
+                var neighbors = g.GetNeighbors(node.Id);
+                string komsular = string.Join("|", neighbors);
+
+                // 🔥 Türkçe format: 0,8 gibi
+                sb.AppendLine(
+                    $"{node.Id};" +
+                    $"{node.Activity.ToString("0.###", CultureInfo.GetCultureInfo("tr-TR"))};" +
+                    $"{node.Interaction};" +
+                    $"{node.ConnectionCount};" +
+                    $"{komsular}"
+                );
+            }
+
+            File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8);
+        }
+
 
     }
 }

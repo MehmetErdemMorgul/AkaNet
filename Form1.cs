@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Threading.Tasks;
+using AkaNet.Visuals;
 
 namespace AkaNet
 {
@@ -22,6 +24,11 @@ namespace AkaNet
 
         private (int from, int to)? hoveredEdge = null;
 
+        // === PATH ANİMASYONU İÇİN ===
+        private List<int> animatedPath = new List<int>();
+        private int animationIndex = -1;
+        private System.Windows.Forms.Timer pathTimer;
+        private HashSet<int> animatedNodes = new HashSet<int>();
 
         private Graph g;
         private int draggingNodeId = -1;
@@ -203,13 +210,15 @@ namespace AkaNet
             pnlCanvas.Invalidate(); // ✅ renklere göre yeniden çiz
         }
 
-        private void btnDijkstra_Click(object sender, EventArgs e)
+        private async void btnDijkstra_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
             ClearColoring();
 
             int startId = (int)cmbStart.SelectedItem;
             int targetId = (int)cmbTarget.SelectedItem;
+
+
 
             var dij = new DijkstraAlgorithm();
             var res = dij.Run(g, startId, targetId);
@@ -251,8 +260,17 @@ namespace AkaNet
             listBox1.Items.Add($"Visited nodes: {res.VisitedCount}");
 
             SetPath(res.Path);
-            OpenExplainPath();
-            lastPathExplanation = BuildPathExplanation(res.Path);
+
+            animatedPath = res.Path.ToList();
+            animatedNodes.Clear();
+            animationIndex = 0;
+
+            pathTimer = new Timer();
+            pathTimer.Interval = 1000;
+            // 2 saniye
+            pathTimer.Tick += PathTimer_Tick;
+            pathTimer.Start();
+
 
         }
 
@@ -263,7 +281,7 @@ namespace AkaNet
             pnlCanvas.Invalidate();
         }
 
-        private void btnAStar_Click(object sender, EventArgs e)
+        private async void btnAStar_Click(object sender, EventArgs e)
         {
             listBox1.Items.Clear();
             ClearColoring();
@@ -288,8 +306,18 @@ namespace AkaNet
             listBox1.Items.Add("Visited nodes: " + res.VisitedCount);
 
             SetPath(res.Path);
-            OpenExplainPath();
-            lastPathExplanation = BuildPathExplanation(res.Path);
+
+            animatedPath = res.Path.ToList();
+            animatedNodes.Clear();
+            animationIndex = 0;
+
+            pathTimer = new Timer();
+            pathTimer.Interval = 1000;
+            // 2 saniye
+            pathTimer.Tick += PathTimer_Tick;
+            pathTimer.Start();
+
+
 
         }
 
@@ -386,7 +414,28 @@ namespace AkaNet
                 PointF p = kv.Value;
 
                 int cidx = nodeColors.ContainsKey(id) ? nodeColors[id] : -1;
-                Color c = (cidx >= 0) ? palette[cidx % palette.Length] : Color.Blue;
+                Color c = Color.DodgerBlue;
+
+                // 🔥 1️⃣ Path animasyonu varsa EN ÖNCE O
+                if (animatedNodes.Contains(id))
+                {
+                    c = Color.Red;
+                }
+                // 2️⃣ Yoksa Welsh–Powell
+                else if (nodeColors.ContainsKey(id))
+                {
+                    int idx = nodeColors[id] % palette.Length;
+                    c = palette[idx];
+                }
+
+
+                using (var br = new SolidBrush(c))
+                {
+                    gr.FillEllipse(br, p.X, p.Y, 30, 30);
+                }
+
+
+
 
                 using (var br = new SolidBrush(c))
                 {
@@ -1213,7 +1262,28 @@ namespace AkaNet
             }
         }
 
-        
+
+        private void PathTimer_Tick(object sender, EventArgs e)
+        {
+            if (animationIndex >= animatedPath.Count)
+            {
+                pathTimer.Stop();
+
+                // 🔥 Popup SADECE BURADA, 1 KEZ
+                OpenExplainPath();
+                return;
+            }
+
+            int nodeId = animatedPath[animationIndex];
+            animatedNodes.Add(nodeId); // 👈 node’u animasyona ekle
+            animationIndex++;
+
+            pnlCanvas.Invalidate();
+        }
+
+
+
+
 
         private void ExportGraphToCsv(string filePath)
         {
@@ -1239,6 +1309,11 @@ namespace AkaNet
 
             File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8);
         }
+
+        // === ALGORTİHMA YARDIMCI METODLARI ===
+        
+
+
 
 
     }

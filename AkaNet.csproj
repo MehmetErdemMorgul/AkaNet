@@ -54,6 +54,7 @@
     <Compile Include="Algorithms\DijkstraAlgorithm.cs" />
     <Compile Include="Algorithms\SimplePriorityQueue.cs" />
     <Compile Include="Algorithms\WelshPowellColoring.cs" />
+    <Compile Include="Coloring.cs" />
     <Compile Include="Data\CsvGraphLoader.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

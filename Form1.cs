@@ -248,6 +248,9 @@ namespace AkaNet
             listBox1.Items.Add($"Visited nodes: {res.VisitedCount}");
 
             SetPath(res.Path);
+            OpenExplainPath();
+            lastPathExplanation = BuildPathExplanation(res.Path);
+
         }
 
         private void ClearPath()
@@ -282,6 +285,9 @@ namespace AkaNet
             listBox1.Items.Add("Visited nodes: " + res.VisitedCount);
 
             SetPath(res.Path);
+            OpenExplainPath();
+            lastPathExplanation = BuildPathExplanation(res.Path);
+
         }
 
         private void SetPath(List<int> path)
@@ -1126,6 +1132,53 @@ namespace AkaNet
             lblEdgeCount.Text = eCount.ToString();
             lblAvgDegree.Text = avgDegree.ToString("0.###");
             lblAvgWeight.Text = avgWeight.ToString("0.###");
+        }
+        private string lastPathExplanation = "";
+        
+
+        private string BuildPathExplanation(List<int> path)
+        {
+            if (path == null || path.Count < 2) return "";
+
+            var sb = new System.Text.StringBuilder();
+            sb.AppendLine("Seçilen yolun sebebi (edge bazlı):");
+            sb.AppendLine("----------------------------------");
+
+            for (int i = 0; i < path.Count - 1; i++)
+            {
+                int u = path[i];
+                int v = path[i + 1];
+
+                var a = g.GetNode(u);
+                var b = g.GetNode(v);
+                if (a == null || b == null) continue;
+
+                double dAct = Math.Abs(a.Activity - b.Activity);
+                double dInt = Math.Abs(a.Interaction - b.Interaction);
+                double dConn = Math.Abs(a.ConnectionCount - b.ConnectionCount);
+                double w = g.GetWeight(u, v);
+
+                sb.AppendLine($"{u} → {v} seçildi çünkü:");
+                sb.AppendLine($"  ΔActivity = {dAct:0.###}, ΔInteraction = {dInt:0.###}, ΔConn = {dConn:0.###}");
+                sb.AppendLine($"  Weight = {w:0.####}");
+                sb.AppendLine();
+            }
+
+            sb.AppendLine("Not: Dijkstra/A* toplam maliyeti minimize edecek şekilde seçim yapar.");
+            return sb.ToString();
+        }
+
+        private void OpenExplainPath()
+        {
+            if (currentPath == null || currentPath.Count < 2)
+                return;
+
+            // otomatik açıklama üret
+            lastPathExplanation = BuildPathExplanation(currentPath);
+
+            var f = new PathExplanationForm();
+            f.SetText(lastPathExplanation);
+            f.Show(); // ShowDialog(this) da yapabilirsin
         }
 
     }

@@ -22,7 +22,6 @@
             this.btnDijkstra = new System.Windows.Forms.Button();
             this.cmbStart = new System.Windows.Forms.ComboBox();
             this.cmbTarget = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnAStar = new System.Windows.Forms.Button();
             this.btnComponents = new System.Windows.Forms.Button();
@@ -32,7 +31,6 @@
             this.btnDeleteEdge = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.btnAddEdge = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.cmbEdgeB = new System.Windows.Forms.ComboBox();
@@ -54,7 +52,6 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.txtId = new System.Windows.Forms.TextBox();
             this.btnLoadCsv = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnNodeAddMode = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -66,26 +63,39 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
             this.btnExportCsv = new System.Windows.Forms.Button();
+            this.pnlRight = new System.Windows.Forms.Panel();
+            this.pnlRightContent = new System.Windows.Forms.Panel();
+            this.pnlToolbox = new System.Windows.Forms.Panel();
+            this.pnlAlgorithms = new System.Windows.Forms.Panel();
+            this.label19 = new System.Windows.Forms.Label();
+            this.pnlRightTop = new System.Windows.Forms.Panel();
+            this.btnShowAlgorithms = new System.Windows.Forms.Button();
+            this.btnShowToolbox = new System.Windows.Forms.Button();
             this.grpNode.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            this.pnlRight.SuspendLayout();
+            this.pnlRightContent.SuspendLayout();
+            this.pnlToolbox.SuspendLayout();
+            this.pnlAlgorithms.SuspendLayout();
+            this.pnlRightTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 16;
-            this.listBox1.Location = new System.Drawing.Point(634, 534);
+            this.listBox1.Location = new System.Drawing.Point(649, 526);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(223, 164);
+            this.listBox1.Size = new System.Drawing.Size(223, 180);
             this.listBox1.TabIndex = 0;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // btnBfs
             // 
-            this.btnBfs.Location = new System.Drawing.Point(863, 564);
+            this.btnBfs.Location = new System.Drawing.Point(0, 36);
             this.btnBfs.Name = "btnBfs";
-            this.btnBfs.Size = new System.Drawing.Size(300, 30);
+            this.btnBfs.Size = new System.Drawing.Size(200, 30);
             this.btnBfs.TabIndex = 1;
             this.btnBfs.Text = "BFS";
             this.btnBfs.UseVisualStyleBackColor = true;
@@ -93,9 +103,9 @@
             // 
             // btnDfs
             // 
-            this.btnDfs.Location = new System.Drawing.Point(1201, 564);
+            this.btnDfs.Location = new System.Drawing.Point(0, 0);
             this.btnDfs.Name = "btnDfs";
-            this.btnDfs.Size = new System.Drawing.Size(300, 30);
+            this.btnDfs.Size = new System.Drawing.Size(200, 30);
             this.btnDfs.TabIndex = 2;
             this.btnDfs.Text = "DFS";
             this.btnDfs.UseVisualStyleBackColor = true;
@@ -103,9 +113,9 @@
             // 
             // btnDijkstra
             // 
-            this.btnDijkstra.Location = new System.Drawing.Point(1201, 636);
+            this.btnDijkstra.Location = new System.Drawing.Point(0, 109);
             this.btnDijkstra.Name = "btnDijkstra";
-            this.btnDijkstra.Size = new System.Drawing.Size(300, 30);
+            this.btnDijkstra.Size = new System.Drawing.Size(200, 30);
             this.btnDijkstra.TabIndex = 3;
             this.btnDijkstra.Text = "Dijkstra";
             this.btnDijkstra.UseVisualStyleBackColor = true;
@@ -115,46 +125,37 @@
             // 
             this.cmbStart.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStart.FormattingEnabled = true;
-            this.cmbStart.Location = new System.Drawing.Point(863, 534);
+            this.cmbStart.Location = new System.Drawing.Point(0, 296);
             this.cmbStart.Name = "cmbStart";
-            this.cmbStart.Size = new System.Drawing.Size(300, 24);
+            this.cmbStart.Size = new System.Drawing.Size(200, 24);
             this.cmbStart.TabIndex = 4;
             // 
             // cmbTarget
             // 
             this.cmbTarget.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTarget.FormattingEnabled = true;
-            this.cmbTarget.Location = new System.Drawing.Point(1201, 534);
+            this.cmbTarget.Location = new System.Drawing.Point(0, 326);
             this.cmbTarget.Name = "cmbTarget";
-            this.cmbTarget.Size = new System.Drawing.Size(300, 24);
+            this.cmbTarget.Size = new System.Drawing.Size(200, 24);
             this.cmbTarget.TabIndex = 5;
             this.cmbTarget.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(982, 537);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(71, 16);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Start Node";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1311, 537);
+            this.label2.BackColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(45, 299);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(84, 16);
+            this.label2.Size = new System.Drawing.Size(114, 16);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Target Node";
+            this.label2.Text = "Başlangıç Node\'u";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // btnAStar
             // 
-            this.btnAStar.Location = new System.Drawing.Point(1201, 600);
+            this.btnAStar.Location = new System.Drawing.Point(0, 72);
             this.btnAStar.Name = "btnAStar";
-            this.btnAStar.Size = new System.Drawing.Size(300, 30);
+            this.btnAStar.Size = new System.Drawing.Size(200, 30);
             this.btnAStar.TabIndex = 9;
             this.btnAStar.Text = "A*";
             this.btnAStar.UseVisualStyleBackColor = true;
@@ -162,9 +163,9 @@
             // 
             // btnComponents
             // 
-            this.btnComponents.Location = new System.Drawing.Point(863, 636);
+            this.btnComponents.Location = new System.Drawing.Point(0, 182);
             this.btnComponents.Name = "btnComponents";
-            this.btnComponents.Size = new System.Drawing.Size(300, 30);
+            this.btnComponents.Size = new System.Drawing.Size(200, 30);
             this.btnComponents.TabIndex = 10;
             this.btnComponents.Text = "Components";
             this.btnComponents.UseVisualStyleBackColor = true;
@@ -172,9 +173,9 @@
             // 
             // btnCentrality
             // 
-            this.btnCentrality.Location = new System.Drawing.Point(863, 676);
+            this.btnCentrality.Location = new System.Drawing.Point(0, 218);
             this.btnCentrality.Name = "btnCentrality";
-            this.btnCentrality.Size = new System.Drawing.Size(300, 30);
+            this.btnCentrality.Size = new System.Drawing.Size(200, 30);
             this.btnCentrality.TabIndex = 11;
             this.btnCentrality.Text = "Top5 Centrality";
             this.btnCentrality.UseVisualStyleBackColor = true;
@@ -182,9 +183,9 @@
             // 
             // btnColoring
             // 
-            this.btnColoring.Location = new System.Drawing.Point(1201, 676);
+            this.btnColoring.Location = new System.Drawing.Point(0, 146);
             this.btnColoring.Name = "btnColoring";
-            this.btnColoring.Size = new System.Drawing.Size(300, 30);
+            this.btnColoring.Size = new System.Drawing.Size(200, 30);
             this.btnColoring.TabIndex = 12;
             this.btnColoring.Text = "Welsh-Powell";
             this.btnColoring.UseVisualStyleBackColor = true;
@@ -205,16 +206,19 @@
             // 
             // btnDeleteEdge
             // 
-            this.btnDeleteEdge.Location = new System.Drawing.Point(486, 676);
+            this.btnDeleteEdge.BackColor = System.Drawing.SystemColors.Control;
+            this.btnDeleteEdge.Location = new System.Drawing.Point(478, 641);
             this.btnDeleteEdge.Name = "btnDeleteEdge";
             this.btnDeleteEdge.Size = new System.Drawing.Size(121, 23);
             this.btnDeleteEdge.TabIndex = 25;
             this.btnDeleteEdge.Text = "Bağlantı Sil";
+            this.btnDeleteEdge.UseVisualStyleBackColor = false;
             this.btnDeleteEdge.Click += new System.EventHandler(this.btnDeleteEdge_Click);
             // 
             // label11
             // 
             this.label11.AutoSize = true;
+            this.label11.BackColor = System.Drawing.Color.White;
             this.label11.Location = new System.Drawing.Point(483, 587);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(86, 16);
@@ -224,34 +228,29 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(483, 526);
+            this.label13.BackColor = System.Drawing.SystemColors.Control;
+            this.label13.Location = new System.Drawing.Point(483, 557);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(97, 16);
             this.label13.TabIndex = 23;
             this.label13.Text = "Merkez Düğüm";
             // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(483, 526);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(97, 16);
-            this.label10.TabIndex = 23;
-            this.label10.Text = "Merkez Düğüm";
-            // 
             // btnAddEdge
             // 
-            this.btnAddEdge.Location = new System.Drawing.Point(486, 643);
+            this.btnAddEdge.BackColor = System.Drawing.SystemColors.Control;
+            this.btnAddEdge.Location = new System.Drawing.Point(478, 614);
             this.btnAddEdge.Name = "btnAddEdge";
             this.btnAddEdge.Size = new System.Drawing.Size(121, 23);
             this.btnAddEdge.TabIndex = 22;
             this.btnAddEdge.Text = "Bağlantı Ekle";
+            this.btnAddEdge.UseVisualStyleBackColor = false;
             this.btnAddEdge.Click += new System.EventHandler(this.btnAddEdge_Click);
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(483, 505);
+            this.label9.BackColor = System.Drawing.SystemColors.Control;
+            this.label9.Location = new System.Drawing.Point(483, 526);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(116, 16);
             this.label9.TabIndex = 21;
@@ -260,7 +259,7 @@
             // cmbEdgeB
             // 
             this.cmbEdgeB.FormattingEnabled = true;
-            this.cmbEdgeB.Location = new System.Drawing.Point(486, 605);
+            this.cmbEdgeB.Location = new System.Drawing.Point(478, 584);
             this.cmbEdgeB.Name = "cmbEdgeB";
             this.cmbEdgeB.Size = new System.Drawing.Size(121, 24);
             this.cmbEdgeB.TabIndex = 20;
@@ -268,7 +267,7 @@
             // cmbEdgeA
             // 
             this.cmbEdgeA.FormattingEnabled = true;
-            this.cmbEdgeA.Location = new System.Drawing.Point(486, 552);
+            this.cmbEdgeA.Location = new System.Drawing.Point(478, 554);
             this.cmbEdgeA.Name = "cmbEdgeA";
             this.cmbEdgeA.Size = new System.Drawing.Size(121, 24);
             this.cmbEdgeA.TabIndex = 17;
@@ -276,7 +275,8 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(55, 499);
+            this.label3.BackColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(12, 507);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(97, 16);
             this.label3.TabIndex = 16;
@@ -284,6 +284,7 @@
             // 
             // grpNode
             // 
+            this.grpNode.BackColor = System.Drawing.Color.White;
             this.grpNode.Controls.Add(this.btnDeleteNode);
             this.grpNode.Controls.Add(this.btnClearNode);
             this.grpNode.Controls.Add(this.btnUpdateNode);
@@ -298,7 +299,7 @@
             this.grpNode.Controls.Add(this.txtInteraction);
             this.grpNode.Controls.Add(this.txtName);
             this.grpNode.Controls.Add(this.txtId);
-            this.grpNode.Location = new System.Drawing.Point(33, 518);
+            this.grpNode.Location = new System.Drawing.Point(12, 526);
             this.grpNode.Name = "grpNode";
             this.grpNode.Size = new System.Drawing.Size(444, 180);
             this.grpNode.TabIndex = 15;
@@ -426,28 +427,20 @@
             // 
             // btnLoadCsv
             // 
-            this.btnLoadCsv.Location = new System.Drawing.Point(863, 600);
+            this.btnLoadCsv.Location = new System.Drawing.Point(0, 58);
             this.btnLoadCsv.Name = "btnLoadCsv";
-            this.btnLoadCsv.Size = new System.Drawing.Size(300, 30);
+            this.btnLoadCsv.Size = new System.Drawing.Size(197, 23);
             this.btnLoadCsv.TabIndex = 14;
-            this.btnLoadCsv.Text = "Load CSV Folder";
+            this.btnLoadCsv.Text = "Dosya Yükle";
             this.btnLoadCsv.UseVisualStyleBackColor = true;
             this.btnLoadCsv.Click += new System.EventHandler(this.btnLoadCsv_Click);
             // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(1304, 340);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(61, 16);
-            this.label12.TabIndex = 26;
-            this.label12.Text = "Tool Box";
-            // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(1304, 365);
+            this.btnReset.ForeColor = System.Drawing.Color.Black;
+            this.btnReset.Location = new System.Drawing.Point(0, 0);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(159, 23);
+            this.btnReset.Size = new System.Drawing.Size(200, 23);
             this.btnReset.TabIndex = 27;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -455,9 +448,9 @@
             // 
             // btnNodeAddMode
             // 
-            this.btnNodeAddMode.Location = new System.Drawing.Point(1304, 403);
+            this.btnNodeAddMode.Location = new System.Drawing.Point(0, 29);
             this.btnNodeAddMode.Name = "btnNodeAddMode";
-            this.btnNodeAddMode.Size = new System.Drawing.Size(159, 23);
+            this.btnNodeAddMode.Size = new System.Drawing.Size(200, 23);
             this.btnNodeAddMode.TabIndex = 28;
             this.btnNodeAddMode.Text = "Node Ekle (Tıkla)";
             this.btnNodeAddMode.UseVisualStyleBackColor = true;
@@ -465,6 +458,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
             this.groupBox1.Controls.Add(this.lblAvgWeight);
             this.groupBox1.Controls.Add(this.lblAvgDegree);
             this.groupBox1.Controls.Add(this.lblEdgeCount);
@@ -473,9 +467,9 @@
             this.groupBox1.Controls.Add(this.label16);
             this.groupBox1.Controls.Add(this.label15);
             this.groupBox1.Controls.Add(this.label14);
-            this.groupBox1.Location = new System.Drawing.Point(1291, 6);
+            this.groupBox1.Location = new System.Drawing.Point(906, 526);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(231, 143);
+            this.groupBox1.Size = new System.Drawing.Size(231, 180);
             this.groupBox1.TabIndex = 29;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Graph İstatistikleri";
@@ -552,57 +546,132 @@
             this.label14.TabIndex = 0;
             this.label14.Text = "Node Sayısı:";
             // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(1301, 340);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(61, 16);
-            this.label18.TabIndex = 26;
-            this.label18.Text = "Tool Box";
-            // 
             // btnExportCsv
             // 
-            this.btnExportCsv.Location = new System.Drawing.Point(1307, 432);
+            this.btnExportCsv.Location = new System.Drawing.Point(0, 87);
             this.btnExportCsv.Name = "btnExportCsv";
-            this.btnExportCsv.Size = new System.Drawing.Size(159, 23);
+            this.btnExportCsv.Size = new System.Drawing.Size(200, 23);
             this.btnExportCsv.TabIndex = 30;
-            this.btnExportCsv.Text = "CSV Dışa Aktar";
+            this.btnExportCsv.Text = "Dosya Kaydet";
             this.btnExportCsv.UseVisualStyleBackColor = true;
             this.btnExportCsv.Click += new System.EventHandler(this.btnExportCsv_Click);
             // 
+            // pnlRight
+            // 
+            this.pnlRight.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.pnlRight.Controls.Add(this.pnlRightContent);
+            this.pnlRight.Controls.Add(this.pnlRightTop);
+            this.pnlRight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pnlRight.Location = new System.Drawing.Point(1287, 0);
+            this.pnlRight.Name = "pnlRight";
+            this.pnlRight.Size = new System.Drawing.Size(200, 909);
+            this.pnlRight.TabIndex = 31;
+            // 
+            // pnlRightContent
+            // 
+            this.pnlRightContent.Controls.Add(this.pnlToolbox);
+            this.pnlRightContent.Controls.Add(this.pnlAlgorithms);
+            this.pnlRightContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlRightContent.Location = new System.Drawing.Point(0, 62);
+            this.pnlRightContent.Name = "pnlRightContent";
+            this.pnlRightContent.Size = new System.Drawing.Size(200, 847);
+            this.pnlRightContent.TabIndex = 1;
+            // 
+            // pnlToolbox
+            // 
+            this.pnlToolbox.BackColor = System.Drawing.Color.Brown;
+            this.pnlToolbox.Controls.Add(this.btnReset);
+            this.pnlToolbox.Controls.Add(this.btnExportCsv);
+            this.pnlToolbox.Controls.Add(this.btnNodeAddMode);
+            this.pnlToolbox.Controls.Add(this.btnLoadCsv);
+            this.pnlToolbox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlToolbox.Location = new System.Drawing.Point(0, 0);
+            this.pnlToolbox.Name = "pnlToolbox";
+            this.pnlToolbox.Size = new System.Drawing.Size(200, 847);
+            this.pnlToolbox.TabIndex = 15;
+            this.pnlToolbox.Visible = false;
+            // 
+            // pnlAlgorithms
+            // 
+            this.pnlAlgorithms.BackColor = System.Drawing.Color.Brown;
+            this.pnlAlgorithms.Controls.Add(this.btnDfs);
+            this.pnlAlgorithms.Controls.Add(this.label19);
+            this.pnlAlgorithms.Controls.Add(this.btnAStar);
+            this.pnlAlgorithms.Controls.Add(this.btnDijkstra);
+            this.pnlAlgorithms.Controls.Add(this.btnColoring);
+            this.pnlAlgorithms.Controls.Add(this.btnComponents);
+            this.pnlAlgorithms.Controls.Add(this.label2);
+            this.pnlAlgorithms.Controls.Add(this.btnCentrality);
+            this.pnlAlgorithms.Controls.Add(this.btnBfs);
+            this.pnlAlgorithms.Controls.Add(this.cmbStart);
+            this.pnlAlgorithms.Controls.Add(this.cmbTarget);
+            this.pnlAlgorithms.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlAlgorithms.Location = new System.Drawing.Point(0, 0);
+            this.pnlAlgorithms.Name = "pnlAlgorithms";
+            this.pnlAlgorithms.Size = new System.Drawing.Size(200, 847);
+            this.pnlAlgorithms.TabIndex = 0;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.BackColor = System.Drawing.Color.White;
+            this.label19.Location = new System.Drawing.Point(66, 329);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(81, 16);
+            this.label19.TabIndex = 32;
+            this.label19.Text = "Hedef Node";
+            // 
+            // pnlRightTop
+            // 
+            this.pnlRightTop.Controls.Add(this.btnShowAlgorithms);
+            this.pnlRightTop.Controls.Add(this.btnShowToolbox);
+            this.pnlRightTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlRightTop.Location = new System.Drawing.Point(0, 0);
+            this.pnlRightTop.Name = "pnlRightTop";
+            this.pnlRightTop.Size = new System.Drawing.Size(200, 62);
+            this.pnlRightTop.TabIndex = 0;
+            this.pnlRightTop.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlRightTop_Paint);
+            // 
+            // btnShowAlgorithms
+            // 
+            this.btnShowAlgorithms.BackColor = System.Drawing.Color.IndianRed;
+            this.btnShowAlgorithms.Location = new System.Drawing.Point(99, 0);
+            this.btnShowAlgorithms.Name = "btnShowAlgorithms";
+            this.btnShowAlgorithms.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnShowAlgorithms.Size = new System.Drawing.Size(101, 62);
+            this.btnShowAlgorithms.TabIndex = 1;
+            this.btnShowAlgorithms.Text = "Algoritmalar";
+            this.btnShowAlgorithms.UseVisualStyleBackColor = false;
+            this.btnShowAlgorithms.Click += new System.EventHandler(this.btnShowAlgorithms_Click);
+            // 
+            // btnShowToolbox
+            // 
+            this.btnShowToolbox.BackColor = System.Drawing.Color.IndianRed;
+            this.btnShowToolbox.Location = new System.Drawing.Point(0, 0);
+            this.btnShowToolbox.Name = "btnShowToolbox";
+            this.btnShowToolbox.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnShowToolbox.Size = new System.Drawing.Size(101, 62);
+            this.btnShowToolbox.TabIndex = 0;
+            this.btnShowToolbox.Text = "Toolbox";
+            this.btnShowToolbox.UseVisualStyleBackColor = false;
+            this.btnShowToolbox.Click += new System.EventHandler(this.btnShowToolbox_Click);
+            // 
             // Form1
             // 
-            this.ClientSize = new System.Drawing.Size(1898, 909);
-            this.Controls.Add(this.btnExportCsv);
+            this.BackColor = System.Drawing.Color.Brown;
+            this.ClientSize = new System.Drawing.Size(1487, 909);
+            this.Controls.Add(this.pnlRight);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnDfs);
-            this.Controls.Add(this.btnNodeAddMode);
             this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.btnReset);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnDeleteEdge);
-            this.Controls.Add(this.btnBfs);
-            this.Controls.Add(this.label18);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.btnDijkstra);
             this.Controls.Add(this.pnlCanvas);
-            this.Controls.Add(this.cmbStart);
-            this.Controls.Add(this.cmbTarget);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.btnAStar);
             this.Controls.Add(this.grpNode);
-            this.Controls.Add(this.btnComponents);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.btnCentrality);
             this.Controls.Add(this.label13);
-            this.Controls.Add(this.btnColoring);
             this.Controls.Add(this.cmbEdgeA);
-            this.Controls.Add(this.btnLoadCsv);
             this.Controls.Add(this.cmbEdgeB);
-            this.Controls.Add(this.label10);
             this.Controls.Add(this.btnAddEdge);
             this.Name = "Form1";
             this.Text = "AkaNet";
@@ -611,6 +680,12 @@
             this.grpNode.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.pnlRight.ResumeLayout(false);
+            this.pnlRightContent.ResumeLayout(false);
+            this.pnlToolbox.ResumeLayout(false);
+            this.pnlAlgorithms.ResumeLayout(false);
+            this.pnlAlgorithms.PerformLayout();
+            this.pnlRightTop.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -624,7 +699,6 @@
         private System.Windows.Forms.Button btnDijkstra;
         private System.Windows.Forms.ComboBox cmbStart;
         private System.Windows.Forms.ComboBox cmbTarget;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnAStar;
         private System.Windows.Forms.Button btnComponents;
@@ -652,10 +726,8 @@
         private System.Windows.Forms.ComboBox cmbEdgeB;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnAddEdge;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnDeleteEdge;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button btnNodeAddMode;
@@ -664,11 +736,18 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label lblAvgWeight;
         private System.Windows.Forms.Label lblAvgDegree;
         private System.Windows.Forms.Label lblEdgeCount;
         private System.Windows.Forms.Label lblNodeCount;
         private System.Windows.Forms.Button btnExportCsv;
+        private System.Windows.Forms.Panel pnlRight;
+        private System.Windows.Forms.Panel pnlRightContent;
+        private System.Windows.Forms.Panel pnlRightTop;
+        private System.Windows.Forms.Panel pnlAlgorithms;
+        private System.Windows.Forms.Panel pnlToolbox;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button btnShowAlgorithms;
+        private System.Windows.Forms.Button btnShowToolbox;
     }
 }

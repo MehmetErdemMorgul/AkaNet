@@ -54,8 +54,7 @@ namespace AkaNet
             ReloadUIAfterGraphLoad(); // bu zaten comboboxları temizler/doldurur (şu an boş olacak)
 
             nextNodeId = g.Nodes.Any()
-    ? g.Nodes.Max(n => n.Id) + 1
-    : 0;
+            ? g.Nodes.Max(n => n.Id) + 1 : 0;
 
 
             // Boşsa SelectedIndex verme!
@@ -438,6 +437,7 @@ namespace AkaNet
 
             BuildLayout();
             pnlCanvas.Invalidate();
+            UpdateStatsUI();
         }
         private void btnLoadCsv_Click(object sender, EventArgs e)
         {
@@ -635,6 +635,7 @@ namespace AkaNet
             {
                 MessageBox.Show("Ekleme hatası: " + ex.Message);
             }
+            UpdateStatsUI();
         }
         private void btnUpdateNode_Click(object sender, EventArgs e)
         {
@@ -670,6 +671,7 @@ namespace AkaNet
             {
                 MessageBox.Show("Güncelleme hatası: " + ex.Message);
             }
+            UpdateStatsUI();
         }
         private void btnDeleteNode_Click(object sender, EventArgs e)
         {
@@ -700,6 +702,7 @@ namespace AkaNet
             {
                 MessageBox.Show("Silme hatası: " + ex.Message);
             }
+            UpdateStatsUI();
         }
 
         private void btnAddEdge_Click(object sender, EventArgs e)
@@ -720,7 +723,8 @@ namespace AkaNet
             var na = g.GetNode(a); if (na != null) na.ConnectionCount = g.NeighborsOf(a).Count();
             var nb = g.GetNode(b); if (nb != null) nb.ConnectionCount = g.NeighborsOf(b).Count();
 
-            pnlCanvas.Invalidate();
+            UpdateStatsUI();
+            pnlCanvas.Invalidate(); 
         }
         private void btnDeleteEdge_Click(object sender, EventArgs e)
         {
@@ -750,6 +754,7 @@ namespace AkaNet
 
             pnlCanvas.Invalidate();
             MessageBox.Show("Edge silindi.");
+            UpdateStatsUI();
         }
         private void btnReset_Click(object sender, EventArgs e)
         {
@@ -790,6 +795,7 @@ namespace AkaNet
             // 6) Bilgi mesajı (opsiyonel ama güzel)
             listBox1.Items.Clear();
             listBox1.Items.Add("Graph resetlendi. Yeni bir graph oluşturabilirsiniz.");
+            UpdateStatsUI();
         }
 
         private void pnlCanvas_MouseDown(object sender, MouseEventArgs e)
@@ -891,8 +897,8 @@ namespace AkaNet
                 int targetId = FindNodeAt(e.Location);
 
                 if (targetId >= 0 &&
-    targetId != edgeStartNodeId &&
-    !g.HasEdge(edgeStartNodeId, targetId))
+                targetId != edgeStartNodeId &&
+                !g.HasEdge(edgeStartNodeId, targetId))
                 {
                     g.AddEdge(edgeStartNodeId, targetId);
 
@@ -1079,8 +1085,48 @@ namespace AkaNet
                 return;
             }
         }
+        // Graph istatistiklerini hesapla ve UI'ı güncelle
+        private void UpdateStatsUI()
+        {
+            if (g == null)
+            {
+                lblNodeCount.Text = "0";
+                lblEdgeCount.Text = "0";
+                lblAvgDegree.Text = "0";
+                lblAvgWeight.Text = "0";
+                return;
+            }
 
+            int n = g.Nodes.Count();
 
+            // Undirected edge sayısını tek saymak için (u < v)
+            int eCount = 0;
+            double weightSum = 0.0;
+            int weightEdgeCount = 0;
+
+            foreach (var node in g.Nodes)
+            {
+                int u = node.Id;
+                foreach (var v in g.NeighborsOf(u))
+                {
+                    if (v <= u) continue; // sadece u < v say
+                    eCount++;
+
+                    // Otomatik weight istiyorsanız:
+                    double w = g.GetWeight(u, v);
+                    weightSum += w;
+                    weightEdgeCount++;
+                }
+            }
+
+            double avgDegree = (n == 0) ? 0.0 : (2.0 * eCount) / n;       // 2E/N
+            double avgWeight = (weightEdgeCount == 0) ? 0.0 : weightSum / weightEdgeCount;
+
+            lblNodeCount.Text = n.ToString();
+            lblEdgeCount.Text = eCount.ToString();
+            lblAvgDegree.Text = avgDegree.ToString("0.###");
+            lblAvgWeight.Text = avgWeight.ToString("0.###");
+        }
 
     }
 }

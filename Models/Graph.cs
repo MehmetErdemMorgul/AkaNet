@@ -1,25 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AkaNet.Models;
 
 namespace AkaNet.Models
 {
     public class Graph
     {
-        private Dictionary<int, Node> nodes = new Dictionary<int, Node>();
-        private Dictionary<int, List<int>> adj = new Dictionary<int, List<int>>();
+        private readonly Dictionary<int, Node> nodes = new Dictionary<int, Node>();
+        private readonly Dictionary<int, List<int>> adj = new Dictionary<int, List<int>>();
 
-        
-
-        // Dijkstra bunu istiyor
+        // -------------------------
+        // Temel erişimler
+        // -------------------------
         public IEnumerable<Node> Nodes => nodes.Values;
 
-        public IEnumerable<Node> GetNodes()
+        public int NodeCount => nodes.Count;
+
+        public IEnumerable<Node> GetNodes() => nodes.Values;
+
+        public Node GetNode(int id)
         {
-            return nodes.Values;
+            return nodes.TryGetValue(id, out var n) ? n : null;
         }
 
+        public IEnumerable<int> NeighborsOf(int id)
+        {
+            return adj.TryGetValue(id, out var list) ? list : Enumerable.Empty<int>();
+        }
+
+        public IEnumerable<int> GetNeighbors(int id) => NeighborsOf(id);
+
+        // -------------------------
+        // Node / Edge ekleme
+        // -------------------------
         public void AddNode(Node node)
         {
             if (node == null) return;
@@ -27,16 +40,14 @@ namespace AkaNet.Models
             if (!nodes.ContainsKey(node.Id))
                 nodes[node.Id] = node;
 
-            // ✅ kritik: adjacency her zaman açılsın
             if (!adj.ContainsKey(node.Id))
                 adj[node.Id] = new List<int>();
         }
 
-
-
-
         public void AddEdge(int from, int to)
         {
+            if (from == to) return;
+
             EnsureAdj(from);
             EnsureAdj(to);
 
@@ -47,35 +58,18 @@ namespace AkaNet.Models
                 adj[to].Add(from);
         }
 
-
         public bool HasEdge(int from, int to)
         {
             return adj.ContainsKey(from) && adj[from].Contains(to);
         }
 
-        public IEnumerable<int> NeighborsOf(int id)
-        {
-            // ✅ yoksa boş döndür
-            return adj.TryGetValue(id, out var list) ? list : Enumerable.Empty<int>();
-        }
-
-        public IEnumerable<int> GetNeighbors(int id)
-        {
-            return NeighborsOf(id);
-        }
-
-        public Node GetNode(int id)
-        {
-            // ✅ yoksa null döndür (Form1 tarafında null kontrolü yap)
-            return nodes.TryGetValue(id, out var n) ? n : null;
-        }
-
-        // ✅ Silme için gerekli
+        // -------------------------
+        // Silme
+        // -------------------------
         public bool RemoveNode(int id)
         {
             if (!nodes.ContainsKey(id)) return false;
 
-            // bağlı kenarları temizle
             if (adj.TryGetValue(id, out var neigh))
             {
                 foreach (var v in neigh.ToList())
@@ -109,10 +103,12 @@ namespace AkaNet.Models
                 adj[id] = new List<int>();
         }
 
-        // RAPORDAKİ FORMÜL BURADA
+        // -------------------------
+        // Ağırlık (OTOMATİK FORMÜL)
+        // -------------------------
+        // RAPORDAKİ FORMÜL: 1 / (1 + diff)
         public double GetWeight(int fromId, int toId)
         {
-            // güvenli: node yoksa büyük maliyet gibi davran
             if (!nodes.ContainsKey(fromId) || !nodes.ContainsKey(toId))
                 return 0.0;
 
@@ -139,6 +135,60 @@ namespace AkaNet.Models
                 Math.Abs(a.Activity - b.Activity) +
                 Math.Abs(a.Interaction - b.Interaction) +
                 Math.Abs(a.ConnectionCount - b.ConnectionCount);
+        }
+
+        // -------------------------
+        // İstatistikler
+        // -------------------------
+        public int EdgeCount
+        {
+            get
+            {
+                int count = 0;
+                foreach (var kv in adj)
+                {
+                    int u = kv.Key;
+                    foreach (var v in kv.Value)
+                    {
+                        if (v > u) count++; // unique edge sayımı
+                    }
+                }
+                return count;
+            }
+        }
+
+        public double AverageDegree
+        {
+            get
+            {
+                int n = NodeCount;
+                if (n == 0) return 0.0;
+                return (2.0 * EdgeCount) / n;
+            }
+        }
+
+        // Otomatik formüle göre edge ağırlık ortalaması
+        public double AverageWeight
+        {
+            get
+            {
+                int e = 0;
+                double sum = 0.0;
+
+                foreach (var kv in adj)
+                {
+                    int u = kv.Key;
+                    foreach (var v in kv.Value)
+                    {
+                        if (v <= u) continue; // unique edge
+                        sum += GetWeight(u, v);
+                        e++;
+                    }
+                }
+
+                if (e == 0) return 0.0;
+                return sum / e;
+            }
         }
     }
 }

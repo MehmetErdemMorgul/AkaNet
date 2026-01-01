@@ -1310,8 +1310,13 @@ namespace AkaNet
             File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8);
         }
 
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
         // === ALGORTİHMA YARDIMCI METODLARI ===
-        
+
 
 
 

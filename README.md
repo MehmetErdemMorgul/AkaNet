@@ -198,31 +198,16 @@ A* algoritması, 1968 yılında Peter Hart, Nils Nilsson ve Bertram Raphael tara
 **Akış Diyagramı (Mermaid):**
 ```mermaid
 flowchart TD
-    A[Başlangıç: Start ve Target Node] --> B[OpenSet Priority Queue Oluştur]
-    B --> C[Start Node'u OpenSet'e Ekle: f = g + h]
-    C --> D[GScore Dictionary: Start = 0, Diğerleri = ∞]
-    D --> E[Visited Set Oluştur]
-    E --> F{OpenSet Boş mu?}
-    F -->|Evet| G[Yol Bulunamadı - Bitiş]
-    F -->|Hayır| H[OpenSet'ten En Düşük f(n) Değerine Sahip Düğümü Çıkar]
-    H --> I{Düğüm Visited mi?}
-    I -->|Evet| F
-    I -->|Hayır| J[Düğümü Visited Set'e Ekle]
-    J --> K{Düğüm Target mı?}
-    K -->|Evet| L[Path Reconstruct: CameFrom Map'i Takip Et]
-    L --> M[Bitiş: En Kısa Yol Bulundu]
-    K -->|Hayır| N[Düğümün Komşularını Dolaş]
-    N --> O[Tentative G Score Hesapla: gScore[current] + weight]
-    O --> P{Tentative G < Mevcut gScore?}
-    P -->|Hayır| N
-    P -->|Evet| Q[CameFrom[neighbor] = current]
-    Q --> R[gScore[neighbor] = tentativeG]
-    R --> S[fScore = gScore[neighbor] + Heuristic[neighbor, target]]
-    S --> T[Neighbor'ı OpenSet'e Ekle: fScore ile]
-    T --> N
-    N --> U{Tüm Komşular Dolaşıldı mı?}
-    U -->|Hayır| N
-    U -->|Evet| F
+    A["Başlangıç: Start Node"] --> B["Düğümü Ziyaret Et"]
+    B --> C["Düğümü Visited Set'e Ekle"]
+    C --> D["Düğümü Visit Order'a Ekle"]
+    D --> E{"Düğümün Komşularını Dolaş"}
+    E --> F{"Ziyaret Edilmemiş Komşu Var mı?"}
+    F -->|Evet| G["Komşu Düğümü Seç"]
+    G --> B
+     F -->|Hayır| H["Geri Dön - Backtrack"]
+    H --> I{"Tüm Düğümler Ziyaret Edildi mi?"}
+    I -->|Evet| J["Bitiş"]
 ```
 
 ---
@@ -582,7 +567,7 @@ Ağırlık(i,j) = 1 / (1 + (Activity_i - Activity_j)² + (Interaction_i - Intera
 
 ---
 
-## 5. Uygulama Açıklamaları, Test Senaryoları ve Sonuçlar
+## 5. Uygulama Açıklamaları ve Sonuçlar
 
 ### 5.1 Uygulama Özellikleri
 
@@ -605,63 +590,11 @@ Ağırlık(i,j) = 1 / (1 + (Activity_i - Activity_j)² + (Interaction_i - Intera
 - Komşuluk listesi otomatik oluşturulur
 - Graf istatistikleri (düğüm sayısı, kenar sayısı, ortalama derece, ortalama ağırlık) gösterilir
 
-### 5.2 Test Senaryoları
 
-#### Test Senaryosu 1: Küçük Ölçekli Graf (10-20 Düğüm)
 
-**Test Verisi:** 15 düğümlü, 25 kenarlı bir graf
+### 5.2 Ekran Görüntüleri
 
-**Test Sonuçları:**
 
-| Algoritma | Çalışma Süresi (ms) | Ziyaret Edilen Düğüm | Sonuç |
-|-----------|---------------------|---------------------|-------|
-| BFS | < 1 | 15 | Tüm düğümler ziyaret edildi |
-| DFS | < 1 | 15 | Tüm düğümler ziyaret edildi |
-| Dijkstra | < 1 | 8 | En kısa yol bulundu |
-| A* | < 1 | 5 | En kısa yol bulundu (Dijkstra'dan daha az ziyaret) |
-| Connected Components | < 1 | 15 | 2 bağlı bileşen bulundu |
-| Degree Centrality | < 1 | - | Top 5 düğüm listelendi |
-| Welsh-Powell | < 1 | - | Her bileşen renklendirildi |
-
-**Gözlemler:**
-- Tüm algoritmalar milisaniyeler içinde tamamlandı
-- A* algoritması, hedefe yönelik arama yaptığı için Dijkstra'dan daha az düğüm ziyaret etti
-- Renklendirme algoritması her bileşen için ayrı ayrı çalıştırıldı
-
-#### Test Senaryosu 2: Orta Ölçekli Graf (50-100 Düğüm)
-
-**Test Verisi:** 75 düğümlü, 150 kenarlı bir graf
-
-**Test Sonuçları:**
-
-| Algoritma | Çalışma Süresi (ms) | Ziyaret Edilen Düğüm | Sonuç |
-|-----------|---------------------|---------------------|-------|
-| BFS | 2-3 | 75 | Tüm düğümler ziyaret edildi |
-| DFS | 2-3 | 75 | Tüm düğümler ziyaret edildi |
-| Dijkstra | 5-8 | 45 | En kısa yol bulundu |
-| A* | 3-5 | 28 | En kısa yol bulundu (Dijkstra'dan %38 daha az ziyaret) |
-| Connected Components | 3-4 | 75 | 3 bağlı bileşen bulundu |
-| Degree Centrality | 1-2 | - | Top 5 düğüm listelendi |
-| Welsh-Powell | 4-6 | - | Her bileşen renklendirildi |
-
-**Gözlemler:**
-- Algoritmalar makul sürelerde çalıştı (birkaç saniye)
-- A* algoritmasının performans avantajı daha belirgin hale geldi
-- Büyük graflarda bile kullanıcı deneyimi akıcı kaldı
-
-#### Test Senaryosu 3: Hata Yönetimi
-
-**Test Senaryoları:**
-- Aynı ID'ye sahip düğüm ekleme denemesi → Engellendi
-- Self-loop oluşturma denemesi → Engellendi
-- Var olmayan düğüm arasında yol bulma → "Path not found" mesajı
-- Boş graf üzerinde algoritma çalıştırma → Uygun hata mesajı
-
-**Sonuç:** Tüm hata durumları uygun şekilde yönetildi.
-
-### 5.3 Ekran Görüntüleri
-
-*Not: Ekran görüntüleri uygulama çalıştırıldığında alınabilir. Aşağıdaki bölümler ekran görüntüleri ile desteklenmelidir:*
 
 1. **Ana Ekran:** Graf görselleştirmesi, algoritma butonları, düğüm yönetim paneli
 2. **BFS/DFS Sonuçları:** Ziyaret sırası listesi

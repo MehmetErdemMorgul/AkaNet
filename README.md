@@ -526,6 +526,96 @@ Tüm algoritmalar ayrı sınıflar halinde modüler olarak tasarlanmıştır:
 - **DegreeCentralityAlgorithm:** Merkezilik analizi yapar
 - **WelshPowellColoring:** Graf renklendirme yapar
 
+**Algorithms Modülü Yapısı ve İlişkileri:**
+
+```mermaid
+graph TB
+    subgraph "Algorithms Modülü"
+        A[Graph Veri Yapısı]
+        
+        subgraph "Traversal Algoritmaları"
+            B1[BfsAlgorithm]
+            B2[DfsAlgorithm]
+        end
+        
+        subgraph "Path Finding Algoritmaları"
+            C1[DijkstraAlgorithm]
+            C2[AStarAlgorithm]
+        end
+        
+        subgraph "Analiz Algoritmaları"
+            D1[ConnectedComponentsAlgorithm]
+            D2[DegreeCentralityAlgorithm]
+        end
+        
+        subgraph "Optimizasyon Algoritmaları"
+            E1[WelshPowellColoring]
+        end
+        
+        subgraph "Yardımcı Sınıflar"
+            F1[SimplePriorityQueue]
+        end
+    end
+    
+    subgraph "Results Modülü"
+        G1[TraversalResult]
+        G2[PathResult]
+        G3[AStarResult]
+    end
+    
+    A --> B1
+    A --> B2
+    A --> C1
+    A --> C2
+    A --> D1
+    A --> D2
+    A --> E1
+    
+    C2 --> F1
+    
+    B1 --> G1
+    B2 --> G1
+    C1 --> G2
+    C2 --> G3
+    
+    style A fill:#fff4e1
+    style B1 fill:#e1f5ff
+    style B2 fill:#e1f5ff
+    style C1 fill:#ffe1f5
+    style C2 fill:#ffe1f5
+    style D1 fill:#e1ffe1
+    style D2 fill:#e1ffe1
+    style E1 fill:#f5e1ff
+    style F1 fill:#ffffe1
+```
+
+**Algoritma Kategorileri ve Kullanım Senaryoları:**
+
+```mermaid
+flowchart LR
+    A[Algorithms Modülü] --> B[Traversal]
+    A --> C[Path Finding]
+    A --> D[Analysis]
+    A --> E[Optimization]
+    
+    B --> B1[BFS<br/>Genişlik Öncelikli]
+    B --> B2[DFS<br/>Derinlik Öncelikli]
+    
+    C --> C1[Dijkstra<br/>En Kısa Yol]
+    C --> C2[A*<br/>Sezgisel Yol]
+    
+    D --> D1[Connected Components<br/>Topluluk Tespiti]
+    D --> D2[Degree Centrality<br/>Merkezilik Analizi]
+    
+    E --> E1[Welsh-Powell<br/>Graf Renklendirme]
+    
+    style A fill:#ffcccc
+    style B fill:#ccffcc
+    style C fill:#ccccff
+    style D fill:#ffffcc
+    style E fill:#ffccff
+```
+
 #### 3.2.3 Data Modülü
 
 **CsvGraphLoader:**  

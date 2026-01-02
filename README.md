@@ -799,9 +799,23 @@ Ağırlık(i,j) = 1 / (1 + (Activity_i - Activity_j)² + (Interaction_i - Intera
 
 
 
-### 5.2 Ekran Görüntüleri
+### 5.2 Küçük Ölçekli Graph Testi ve Uygulama İçi Ekran Görüntüleri
 
-
+Uygulamamızı test etmek adına toplamda 10 düğüm ve 18 kenardan oluşan bir veri yapısı ile testimizi gerçekleştirdik.Yaptığımız işlemlerin yanı sıra uygulamamızın ana sayfasına ve diğer özelliklerine de yer verdik
+Veri yapımızdaki düğümlerin özellikleri aşğıdaki gibidir.
+```
+DugumId;Aktivite;Etkilesim;BaglantiSayisi;Komsular
+1;0,82;14;3;2|3|4
+2;0,63;9;4;1|3|5|6
+3;0,74;12;4;1|2|4|7
+4;0,91;18;4;1|3|7|8
+5;0,55;7;3;2|6|9
+6;0,47;6;4;2|5|7|10
+7;0,86;16;5;3|4|6|8|9
+8;0,39;5;3;4|7|10
+9;0,68;10;3;5|7|10
+10;0,58;8;3;6|8|9
+```
 
  **Ana Ekran:** Graf görselleştirmesi, algoritma butonları, düğüm yönetim paneli
  ![WhatsApp Image 2026-01-02 at 16 12 07](https://github.com/user-attachments/assets/c2082d77-91cc-454f-b1fa-19abf5028bdd)

@@ -1303,34 +1303,10 @@ namespace AkaNet
             File.WriteAllText(filePath, sb.ToString(), Encoding.UTF8);
         }
 
-        private void btnShowAlgorithms_Click(object sender, EventArgs e)
-        {
-            pnlAlgorithms.Visible = true;
-            pnlToolbox.Visible = false;
-            
-            pnlAlgorithms.BringToFront();
-        }
-
-        private void btnShowToolbox_Click(object sender, EventArgs e)
-        {
-            pnlAlgorithms.Visible = false;
-            pnlToolbox.Visible = true;
-            pnlToolbox.BringToFront();
-
-        }
-
-
-
-        private void pnlRightTop_Paint(object sender, PaintEventArgs e)
+        private void pictureBox1_Click(object sender, EventArgs e)
         {
 
         }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
 
         // === ALGORTİHMA YARDIMCI METODLARI ===
 

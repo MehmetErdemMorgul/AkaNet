@@ -6,7 +6,6 @@ namespace AkaNet.Algorithms
 {
     public class WelshPowellColoring
     {
-        // Her node -> renk indexi (0,1,2...)
         public Dictionary<int, int> Color(Graph g, IEnumerable<int> componentNodeIds)
         {
             var nodes = componentNodeIds

@@ -27,13 +27,11 @@ namespace AkaNet.Algorithms
 
             while (unvisited.Count > 0)
             {
-                // unvisited içinden dist'i en küçük olanı seç
                 int current = unvisited.OrderBy(id => dist[id]).First();
                 visitedCount++;
 
                 if (double.IsPositiveInfinity(dist[current]))
-                    break; // erişilemeyen bölge
-
+                    break; 
                 if (current == targetId)
                     break;
 
@@ -43,7 +41,7 @@ namespace AkaNet.Algorithms
                 {
                     if (!unvisited.Contains(nb)) continue;
 
-                    double w = graph.GetWeight(current, nb); // ✅ weight burada kullanılıyor
+                    double w = graph.GetWeight(current, nb); 
                     double alt = dist[current] + w;
 
                     if (alt < dist[nb])
@@ -54,7 +52,7 @@ namespace AkaNet.Algorithms
                 }
             }
 
-            // yolu çıkar
+            // yol
             var result = new PathResult();
             if (!dist.ContainsKey(targetId) || double.IsPositiveInfinity(dist[targetId]))
             {

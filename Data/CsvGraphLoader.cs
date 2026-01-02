@@ -71,7 +71,7 @@ namespace AkaNet.Data
                     {
                         int toId = ParseInt(n);
 
-                        if (toId == fromId) continue; // self-loop engelle
+                        if (toId == fromId) continue; // self-loopu engelleyen kod 
 
                         if (!graph.HasEdge(fromId, toId))
                             graph.AddEdge(fromId, toId);
@@ -95,7 +95,7 @@ namespace AkaNet.Data
 
         private static string[] SplitCols(string line, char colSep)
         {
-            // Basit split (quote’lu CSV kullanmıyorsanız yeterli)
+            // split kodu  
             return line.Split(colSep);
         }
 

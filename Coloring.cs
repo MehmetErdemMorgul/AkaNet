@@ -7,7 +7,7 @@ namespace AkaNet.Visuals
 {
     public class Coloring
     {
-        private readonly Control canvas; // çizim yaptığın panel / picturebox
+        private readonly Control canvas; 
         private readonly Dictionary<int, Rectangle> nodeRects;
 
         public Coloring(Control canvas, Dictionary<int, Rectangle> nodeRects)

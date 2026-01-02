@@ -8,7 +8,6 @@ namespace AkaNet.Algorithms
     {
         public Dictionary<int, int> ComputeDegrees(Graph g)
         {
-            // degree = komşu sayısı
             return g.Nodes.ToDictionary(n => n.Id, n => g.NeighborsOf(n.Id).Count());
         }
 

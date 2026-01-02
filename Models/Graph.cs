@@ -9,9 +9,7 @@ namespace AkaNet.Models
         private readonly Dictionary<int, Node> nodes = new Dictionary<int, Node>();
         private readonly Dictionary<int, List<int>> adj = new Dictionary<int, List<int>>();
 
-        // -------------------------
-        // Temel erişimler
-        // -------------------------
+       
         public IEnumerable<Node> Nodes => nodes.Values;
 
         public int NodeCount => nodes.Count;
@@ -30,9 +28,7 @@ namespace AkaNet.Models
 
         public IEnumerable<int> GetNeighbors(int id) => NeighborsOf(id);
 
-        // -------------------------
-        // Node / Edge ekleme
-        // -------------------------
+       
         public void AddNode(Node node)
         {
             if (node == null) return;
@@ -63,9 +59,7 @@ namespace AkaNet.Models
             return adj.ContainsKey(from) && adj[from].Contains(to);
         }
 
-        // -------------------------
-        // Silme
-        // -------------------------
+        
         public bool RemoveNode(int id)
         {
             if (!nodes.ContainsKey(id)) return false;
@@ -103,10 +97,7 @@ namespace AkaNet.Models
                 adj[id] = new List<int>();
         }
 
-        // -------------------------
-        // Ağırlık (OTOMATİK FORMÜL)
-        // -------------------------
-        // RAPORDAKİ FORMÜL: 1 / (1 + diff)
+        
         public double GetWeight(int fromId, int toId)
         {
             if (!nodes.ContainsKey(fromId) || !nodes.ContainsKey(toId))
@@ -137,9 +128,7 @@ namespace AkaNet.Models
                 Math.Abs(a.ConnectionCount - b.ConnectionCount);
         }
 
-        // -------------------------
-        // İstatistikler
-        // -------------------------
+        
         public int EdgeCount
         {
             get
@@ -150,7 +139,7 @@ namespace AkaNet.Models
                     int u = kv.Key;
                     foreach (var v in kv.Value)
                     {
-                        if (v > u) count++; // unique edge sayımı
+                        if (v > u) count++; // 
                     }
                 }
                 return count;
@@ -167,7 +156,6 @@ namespace AkaNet.Models
             }
         }
 
-        // Otomatik formüle göre edge ağırlık ortalaması
         public double AverageWeight
         {
             get

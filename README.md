@@ -2,11 +2,11 @@
 **Graph Tabanlı Yol Bulma ve Analiz Uygulaması**
 
 ## 👥 Ekip Üyeleri
-- Oğuz Atılkan  
+- Oğuzhan Atılkan  
 - Mehmet Morgül  
 
 ## 📅 Tarih
-Ocak 2026
+2 Ocak 2026
 
 ---
 
@@ -59,3 +59,14 @@ flowchart TD
     D --> E[Komşuları Queue'ya Ekle]
     E --> C
     C -- Evet --> F[Bitiş]
+### 2.2 Depth First Search (DFS)
+**Çalışma Mantığı:** 
+DFS, bir dal boyunca mümkün olduğunca derine iner, çıkmaz sokağa ulaştığında geri döner.
+**Zaman Karmaşıklığı:**  
+O(V + E)
+**Akış Diyagramı (Mermaid):**
+flowchart TD
+    A[Başlangıç] --> B[Düğümü Ziyaret Et]
+    B --> C{Ziyaret Edilmemiş Komşu Var mı?}
+    C -- Evet --> B
+    C -- Hayır --> D[Geri Dön]

@@ -23,7 +23,6 @@
             this.btnDijkstra = new System.Windows.Forms.Button();
             this.cmbStart = new System.Windows.Forms.ComboBox();
             this.cmbTarget = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnAStar = new System.Windows.Forms.Button();
             this.btnComponents = new System.Windows.Forms.Button();
@@ -54,7 +53,6 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.txtId = new System.Windows.Forms.TextBox();
             this.btnLoadCsv = new System.Windows.Forms.Button();
-            this.label12 = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnNodeAddMode = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -66,27 +64,27 @@
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
             this.btnExportCsv = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.grpNode.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(741, 711);
+            this.listBox1.ItemHeight = 16;
+            this.listBox1.Location = new System.Drawing.Point(634, 534);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(399, 186);
+            this.listBox1.Size = new System.Drawing.Size(223, 164);
             this.listBox1.TabIndex = 0;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // btnBfs
             // 
-            this.btnBfs.Location = new System.Drawing.Point(1182, 747);
+            this.btnBfs.Location = new System.Drawing.Point(863, 564);
             this.btnBfs.Name = "btnBfs";
-            this.btnBfs.Size = new System.Drawing.Size(300, 30);
+            this.btnBfs.Size = new System.Drawing.Size(200, 30);
             this.btnBfs.TabIndex = 1;
             this.btnBfs.Text = "BFS";
             this.btnBfs.UseVisualStyleBackColor = true;
@@ -94,9 +92,9 @@
             // 
             // btnDfs
             // 
-            this.btnDfs.Location = new System.Drawing.Point(1520, 747);
+            this.btnDfs.Location = new System.Drawing.Point(1201, 564);
             this.btnDfs.Name = "btnDfs";
-            this.btnDfs.Size = new System.Drawing.Size(300, 30);
+            this.btnDfs.Size = new System.Drawing.Size(200, 30);
             this.btnDfs.TabIndex = 2;
             this.btnDfs.Text = "DFS";
             this.btnDfs.UseVisualStyleBackColor = true;
@@ -104,9 +102,9 @@
             // 
             // btnDijkstra
             // 
-            this.btnDijkstra.Location = new System.Drawing.Point(1520, 819);
+            this.btnDijkstra.Location = new System.Drawing.Point(1201, 636);
             this.btnDijkstra.Name = "btnDijkstra";
-            this.btnDijkstra.Size = new System.Drawing.Size(300, 30);
+            this.btnDijkstra.Size = new System.Drawing.Size(200, 30);
             this.btnDijkstra.TabIndex = 3;
             this.btnDijkstra.Text = "Dijkstra";
             this.btnDijkstra.UseVisualStyleBackColor = true;
@@ -116,27 +114,27 @@
             // 
             this.cmbStart.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStart.FormattingEnabled = true;
-            this.cmbStart.Location = new System.Drawing.Point(1182, 717);
+            this.cmbStart.Location = new System.Drawing.Point(863, 534);
             this.cmbStart.Name = "cmbStart";
-            this.cmbStart.Size = new System.Drawing.Size(300, 21);
+            this.cmbStart.Size = new System.Drawing.Size(300, 24);
             this.cmbStart.TabIndex = 4;
             // 
             // cmbTarget
             // 
             this.cmbTarget.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTarget.FormattingEnabled = true;
-            this.cmbTarget.Location = new System.Drawing.Point(1520, 717);
+            this.cmbTarget.Location = new System.Drawing.Point(1201, 534);
             this.cmbTarget.Name = "cmbTarget";
-            this.cmbTarget.Size = new System.Drawing.Size(300, 21);
+            this.cmbTarget.Size = new System.Drawing.Size(300, 24);
             this.cmbTarget.TabIndex = 5;
             this.cmbTarget.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(1301, 720);
+            this.label1.Location = new System.Drawing.Point(982, 537);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(58, 13);
+            this.label1.Size = new System.Drawing.Size(71, 16);
             this.label1.TabIndex = 6;
             this.label1.Text = "Start Node";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -144,18 +142,18 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(1630, 720);
+            this.label2.Location = new System.Drawing.Point(1311, 537);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 13);
+            this.label2.Size = new System.Drawing.Size(84, 16);
             this.label2.TabIndex = 7;
-            this.label2.Text = "Target Node";
+            this.label2.Text = "Başlangıç Node\'u";
             this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // btnAStar
             // 
-            this.btnAStar.Location = new System.Drawing.Point(1520, 783);
+            this.btnAStar.Location = new System.Drawing.Point(1201, 600);
             this.btnAStar.Name = "btnAStar";
-            this.btnAStar.Size = new System.Drawing.Size(300, 30);
+            this.btnAStar.Size = new System.Drawing.Size(200, 30);
             this.btnAStar.TabIndex = 9;
             this.btnAStar.Text = "A*";
             this.btnAStar.UseVisualStyleBackColor = true;
@@ -163,9 +161,9 @@
             // 
             // btnComponents
             // 
-            this.btnComponents.Location = new System.Drawing.Point(1182, 819);
+            this.btnComponents.Location = new System.Drawing.Point(863, 636);
             this.btnComponents.Name = "btnComponents";
-            this.btnComponents.Size = new System.Drawing.Size(300, 30);
+            this.btnComponents.Size = new System.Drawing.Size(200, 30);
             this.btnComponents.TabIndex = 10;
             this.btnComponents.Text = "Components";
             this.btnComponents.UseVisualStyleBackColor = true;
@@ -173,9 +171,9 @@
             // 
             // btnCentrality
             // 
-            this.btnCentrality.Location = new System.Drawing.Point(1182, 859);
+            this.btnCentrality.Location = new System.Drawing.Point(863, 676);
             this.btnCentrality.Name = "btnCentrality";
-            this.btnCentrality.Size = new System.Drawing.Size(300, 30);
+            this.btnCentrality.Size = new System.Drawing.Size(200, 30);
             this.btnCentrality.TabIndex = 11;
             this.btnCentrality.Text = "Top5 Centrality";
             this.btnCentrality.UseVisualStyleBackColor = true;
@@ -183,9 +181,9 @@
             // 
             // btnColoring
             // 
-            this.btnColoring.Location = new System.Drawing.Point(1520, 859);
+            this.btnColoring.Location = new System.Drawing.Point(1201, 676);
             this.btnColoring.Name = "btnColoring";
-            this.btnColoring.Size = new System.Drawing.Size(300, 30);
+            this.btnColoring.Size = new System.Drawing.Size(200, 30);
             this.btnColoring.TabIndex = 12;
             this.btnColoring.Text = "Welsh-Powell";
             this.btnColoring.UseVisualStyleBackColor = true;
@@ -206,17 +204,18 @@
             // 
             // btnDeleteEdge
             // 
-            this.btnDeleteEdge.Location = new System.Drawing.Point(521, 874);
+            this.btnDeleteEdge.Location = new System.Drawing.Point(486, 676);
             this.btnDeleteEdge.Name = "btnDeleteEdge";
             this.btnDeleteEdge.Size = new System.Drawing.Size(121, 23);
             this.btnDeleteEdge.TabIndex = 25;
             this.btnDeleteEdge.Text = "Bağlantı Sil";
+            this.btnDeleteEdge.UseVisualStyleBackColor = false;
             this.btnDeleteEdge.Click += new System.EventHandler(this.btnDeleteEdge_Click);
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(518, 778);
+            this.label11.Location = new System.Drawing.Point(483, 587);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(69, 13);
             this.label11.TabIndex = 24;
@@ -225,7 +224,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(518, 730);
+            this.label13.Location = new System.Drawing.Point(483, 526);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(79, 13);
             this.label13.TabIndex = 23;
@@ -233,17 +232,18 @@
             // 
             // btnAddEdge
             // 
-            this.btnAddEdge.Location = new System.Drawing.Point(521, 834);
+            this.btnAddEdge.Location = new System.Drawing.Point(486, 643);
             this.btnAddEdge.Name = "btnAddEdge";
             this.btnAddEdge.Size = new System.Drawing.Size(121, 23);
             this.btnAddEdge.TabIndex = 22;
             this.btnAddEdge.Text = "Bağlantı Ekle";
+            this.btnAddEdge.UseVisualStyleBackColor = false;
             this.btnAddEdge.Click += new System.EventHandler(this.btnAddEdge_Click);
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(518, 701);
+            this.label9.Location = new System.Drawing.Point(483, 505);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(92, 13);
             this.label9.TabIndex = 21;
@@ -252,7 +252,7 @@
             // cmbEdgeB
             // 
             this.cmbEdgeB.FormattingEnabled = true;
-            this.cmbEdgeB.Location = new System.Drawing.Point(521, 794);
+            this.cmbEdgeB.Location = new System.Drawing.Point(486, 605);
             this.cmbEdgeB.Name = "cmbEdgeB";
             this.cmbEdgeB.Size = new System.Drawing.Size(121, 21);
             this.cmbEdgeB.TabIndex = 20;
@@ -260,7 +260,7 @@
             // cmbEdgeA
             // 
             this.cmbEdgeA.FormattingEnabled = true;
-            this.cmbEdgeA.Location = new System.Drawing.Point(521, 746);
+            this.cmbEdgeA.Location = new System.Drawing.Point(486, 552);
             this.cmbEdgeA.Name = "cmbEdgeA";
             this.cmbEdgeA.Size = new System.Drawing.Size(121, 21);
             this.cmbEdgeA.TabIndex = 17;
@@ -268,7 +268,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(78, 701);
+            this.label3.Location = new System.Drawing.Point(55, 499);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(76, 13);
             this.label3.TabIndex = 16;
@@ -276,6 +276,7 @@
             // 
             // grpNode
             // 
+            this.grpNode.BackColor = System.Drawing.Color.White;
             this.grpNode.Controls.Add(this.btnDeleteNode);
             this.grpNode.Controls.Add(this.btnClearNode);
             this.grpNode.Controls.Add(this.btnUpdateNode);
@@ -290,7 +291,7 @@
             this.grpNode.Controls.Add(this.txtInteraction);
             this.grpNode.Controls.Add(this.txtName);
             this.grpNode.Controls.Add(this.txtId);
-            this.grpNode.Location = new System.Drawing.Point(12, 717);
+            this.grpNode.Location = new System.Drawing.Point(33, 518);
             this.grpNode.Name = "grpNode";
             this.grpNode.Size = new System.Drawing.Size(444, 180);
             this.grpNode.TabIndex = 15;
@@ -418,28 +419,28 @@
             // 
             // btnLoadCsv
             // 
-            this.btnLoadCsv.Location = new System.Drawing.Point(1182, 783);
+            this.btnLoadCsv.Location = new System.Drawing.Point(863, 600);
             this.btnLoadCsv.Name = "btnLoadCsv";
-            this.btnLoadCsv.Size = new System.Drawing.Size(300, 30);
+            this.btnLoadCsv.Size = new System.Drawing.Size(197, 23);
             this.btnLoadCsv.TabIndex = 14;
-            this.btnLoadCsv.Text = "Load CSV Folder";
+            this.btnLoadCsv.Text = "Dosya Yükle";
             this.btnLoadCsv.UseVisualStyleBackColor = true;
             this.btnLoadCsv.Click += new System.EventHandler(this.btnLoadCsv_Click);
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(1636, 450);
+            this.label12.Location = new System.Drawing.Point(1304, 340);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(49, 13);
+            this.label12.Size = new System.Drawing.Size(61, 16);
             this.label12.TabIndex = 26;
             this.label12.Text = "Tool Box";
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(1636, 475);
+            this.btnReset.Location = new System.Drawing.Point(1304, 365);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(159, 23);
+            this.btnReset.Size = new System.Drawing.Size(200, 23);
             this.btnReset.TabIndex = 27;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -447,9 +448,9 @@
             // 
             // btnNodeAddMode
             // 
-            this.btnNodeAddMode.Location = new System.Drawing.Point(1636, 504);
+            this.btnNodeAddMode.Location = new System.Drawing.Point(1304, 403);
             this.btnNodeAddMode.Name = "btnNodeAddMode";
-            this.btnNodeAddMode.Size = new System.Drawing.Size(159, 23);
+            this.btnNodeAddMode.Size = new System.Drawing.Size(200, 23);
             this.btnNodeAddMode.TabIndex = 28;
             this.btnNodeAddMode.Text = "Node Ekle (Tıkla)";
             this.btnNodeAddMode.UseVisualStyleBackColor = true;
@@ -457,6 +458,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
             this.groupBox1.Controls.Add(this.lblAvgWeight);
             this.groupBox1.Controls.Add(this.lblAvgDegree);
             this.groupBox1.Controls.Add(this.lblEdgeCount);
@@ -465,9 +467,9 @@
             this.groupBox1.Controls.Add(this.label16);
             this.groupBox1.Controls.Add(this.label15);
             this.groupBox1.Controls.Add(this.label14);
-            this.groupBox1.Location = new System.Drawing.Point(1633, 285);
+            this.groupBox1.Location = new System.Drawing.Point(1291, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(231, 143);
+            this.groupBox1.Size = new System.Drawing.Size(231, 180);
             this.groupBox1.TabIndex = 29;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Graph İstatistikleri";
@@ -547,64 +549,36 @@
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(1633, 450);
+            this.label18.Location = new System.Drawing.Point(1301, 340);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(49, 13);
+            this.label18.Size = new System.Drawing.Size(61, 16);
             this.label18.TabIndex = 26;
             this.label18.Text = "Tool Box";
             // 
             // btnExportCsv
             // 
-            this.btnExportCsv.Location = new System.Drawing.Point(1636, 533);
+            this.btnExportCsv.Location = new System.Drawing.Point(1307, 432);
             this.btnExportCsv.Name = "btnExportCsv";
-            this.btnExportCsv.Size = new System.Drawing.Size(159, 23);
+            this.btnExportCsv.Size = new System.Drawing.Size(200, 23);
             this.btnExportCsv.TabIndex = 30;
-            this.btnExportCsv.Text = "CSV Dışa Aktar";
+            this.btnExportCsv.Text = "Dosya Kaydet";
             this.btnExportCsv.UseVisualStyleBackColor = true;
             this.btnExportCsv.Click += new System.EventHandler(this.btnExportCsv_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(1624, 6);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(253, 273);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 31;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(1898, 909);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btnExportCsv);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnDfs);
-            this.Controls.Add(this.btnNodeAddMode);
             this.Controls.Add(this.listBox1);
-            this.Controls.Add(this.btnReset);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnDeleteEdge);
-            this.Controls.Add(this.btnBfs);
-            this.Controls.Add(this.label18);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.btnDijkstra);
             this.Controls.Add(this.pnlCanvas);
-            this.Controls.Add(this.cmbStart);
-            this.Controls.Add(this.cmbTarget);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.btnAStar);
             this.Controls.Add(this.grpNode);
-            this.Controls.Add(this.btnComponents);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.btnCentrality);
             this.Controls.Add(this.label13);
-            this.Controls.Add(this.btnColoring);
             this.Controls.Add(this.cmbEdgeA);
-            this.Controls.Add(this.btnLoadCsv);
             this.Controls.Add(this.cmbEdgeB);
             this.Controls.Add(this.btnAddEdge);
             this.Name = "Form1";
@@ -614,7 +588,6 @@
             this.grpNode.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -628,7 +601,6 @@
         private System.Windows.Forms.Button btnDijkstra;
         private System.Windows.Forms.ComboBox cmbStart;
         private System.Windows.Forms.ComboBox cmbTarget;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnAStar;
         private System.Windows.Forms.Button btnComponents;
@@ -658,7 +630,6 @@
         private System.Windows.Forms.Button btnAddEdge;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button btnDeleteEdge;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button btnNodeAddMode;
@@ -667,12 +638,10 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label lblAvgWeight;
         private System.Windows.Forms.Label lblAvgDegree;
         private System.Windows.Forms.Label lblEdgeCount;
         private System.Windows.Forms.Label lblNodeCount;
         private System.Windows.Forms.Button btnExportCsv;
-        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

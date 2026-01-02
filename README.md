@@ -599,12 +599,30 @@ Ağırlık(i,j) = 1 / (1 + (Activity_i - Activity_j)² + (Interaction_i - Intera
  **Ana Ekran:** Graf görselleştirmesi, algoritma butonları, düğüm yönetim paneli
  ![WhatsApp Image 2026-01-02 at 16 12 07](https://github.com/user-attachments/assets/c2082d77-91cc-454f-b1fa-19abf5028bdd)
 
-3. **BFS/DFS Sonuçları:** Ziyaret sırası listesi
-4. **Dijkstra/A* Sonuçları:** Bulunan yol, maliyet bilgisi, animasyonlu gösterim
-5. **Bağlı Bileşenler:** Bileşen listesi
-6. **Merkezilik Analizi:** Top 5 düğüm tablosu
-7. **Renklendirme:** Renklendirilmiş graf görseli
-8. **CSV İçe/Dışa Aktarım:** Dosya seçim diyalogları
+ **BFS/DFS Sonuçları:** Ziyaret sırası listesi
+![bfs](https://github.com/user-attachments/assets/59760c23-0ac5-410a-ad55-cc69c23294a5)
+
+![dfs](https://github.com/user-attachments/assets/bf45a798-d843-4a1c-bf7e-7a9efc117ed5)
+
+ **Dijkstra/A* Sonuçları:**  Bulunan yol, maliyet bilgisi, animasyonlu gösterim
+ ![dj](https://github.com/user-attachments/assets/e99222a2-ed0c-483c-9407-a2897ee82d3f)
+![s](https://github.com/user-attachments/assets/e93f9982-2888-406d-b61b-d526fbe8417a)
+
+   
+**Bağlı Bileşenler:** Bileşen listesi
+![c](https://github.com/user-attachments/assets/7f0c7d93-6bcf-4675-a4f3-2ce253195a5c)
+
+**Merkezilik Analizi:** Top 5 düğüm tablosu
+![top5](https://github.com/user-attachments/assets/d74e108a-8759-4dac-b965-8a89a3e07d41)
+
+ **Renklendirme:** Renklendirilmiş graf görseli
+ ![welspo](https://github.com/user-attachments/assets/759a0342-8a5b-43a6-8ad7-23d086cdc206)
+
+ **CSV İçe/Dışa Aktarım:** Dosya seçim diyalogları
+ ![lo](https://github.com/user-attachments/assets/f63ea8d0-fe8c-4f8a-bb49-b11df484beab)
+ ![dı](https://github.com/user-attachments/assets/ac55c845-cb71-4e73-bdf9-b9d528aa05fa)
+
+
 
 ---
 

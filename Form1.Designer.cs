@@ -80,9 +80,7 @@
             this.pnlAlgorithms.SuspendLayout();
             this.pnlRightTop.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // listBox1
-            // 
+            
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 16;
             this.listBox1.Location = new System.Drawing.Point(649, 526);
@@ -90,9 +88,7 @@
             this.listBox1.Size = new System.Drawing.Size(223, 180);
             this.listBox1.TabIndex = 0;
             this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
-            // 
-            // btnBfs
-            // 
+            
             this.btnBfs.Location = new System.Drawing.Point(0, 36);
             this.btnBfs.Name = "btnBfs";
             this.btnBfs.Size = new System.Drawing.Size(200, 30);
@@ -100,9 +96,7 @@
             this.btnBfs.Text = "BFS";
             this.btnBfs.UseVisualStyleBackColor = true;
             this.btnBfs.Click += new System.EventHandler(this.btnBfs_Click);
-            // 
-            // btnDfs
-            // 
+            
             this.btnDfs.Location = new System.Drawing.Point(0, 0);
             this.btnDfs.Name = "btnDfs";
             this.btnDfs.Size = new System.Drawing.Size(200, 30);
@@ -110,9 +104,7 @@
             this.btnDfs.Text = "DFS";
             this.btnDfs.UseVisualStyleBackColor = true;
             this.btnDfs.Click += new System.EventHandler(this.btnDfs_Click);
-            // 
-            // btnDijkstra
-            // 
+             
             this.btnDijkstra.Location = new System.Drawing.Point(0, 109);
             this.btnDijkstra.Name = "btnDijkstra";
             this.btnDijkstra.Size = new System.Drawing.Size(200, 30);
@@ -120,18 +112,14 @@
             this.btnDijkstra.Text = "Dijkstra";
             this.btnDijkstra.UseVisualStyleBackColor = true;
             this.btnDijkstra.Click += new System.EventHandler(this.btnDijkstra_Click);
-            // 
-            // cmbStart
-            // 
+             
             this.cmbStart.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbStart.FormattingEnabled = true;
             this.cmbStart.Location = new System.Drawing.Point(0, 296);
             this.cmbStart.Name = "cmbStart";
             this.cmbStart.Size = new System.Drawing.Size(200, 24);
             this.cmbStart.TabIndex = 4;
-            // 
-            // cmbTarget
-            // 
+            
             this.cmbTarget.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTarget.FormattingEnabled = true;
             this.cmbTarget.Location = new System.Drawing.Point(0, 326);
@@ -139,9 +127,7 @@
             this.cmbTarget.Size = new System.Drawing.Size(200, 24);
             this.cmbTarget.TabIndex = 5;
             this.cmbTarget.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
-            // 
-            // label2
-            // 
+           
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.White;
             this.label2.Location = new System.Drawing.Point(45, 299);
@@ -150,9 +136,7 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "Başlangıç Node\'u";
             this.label2.Click += new System.EventHandler(this.label2_Click);
-            // 
-            // btnAStar
-            // 
+            
             this.btnAStar.Location = new System.Drawing.Point(0, 72);
             this.btnAStar.Name = "btnAStar";
             this.btnAStar.Size = new System.Drawing.Size(200, 30);
@@ -160,9 +144,7 @@
             this.btnAStar.Text = "A*";
             this.btnAStar.UseVisualStyleBackColor = true;
             this.btnAStar.Click += new System.EventHandler(this.btnAStar_Click);
-            // 
-            // btnComponents
-            // 
+            
             this.btnComponents.Location = new System.Drawing.Point(0, 182);
             this.btnComponents.Name = "btnComponents";
             this.btnComponents.Size = new System.Drawing.Size(200, 30);
@@ -170,9 +152,7 @@
             this.btnComponents.Text = "Components";
             this.btnComponents.UseVisualStyleBackColor = true;
             this.btnComponents.Click += new System.EventHandler(this.btnComponents_Click);
-            // 
-            // btnCentrality
-            // 
+            
             this.btnCentrality.Location = new System.Drawing.Point(0, 218);
             this.btnCentrality.Name = "btnCentrality";
             this.btnCentrality.Size = new System.Drawing.Size(200, 30);
@@ -180,9 +160,7 @@
             this.btnCentrality.Text = "Top5 Centrality";
             this.btnCentrality.UseVisualStyleBackColor = true;
             this.btnCentrality.Click += new System.EventHandler(this.btnCentrality_Click);
-            // 
-            // btnColoring
-            // 
+            
             this.btnColoring.Location = new System.Drawing.Point(0, 146);
             this.btnColoring.Name = "btnColoring";
             this.btnColoring.Size = new System.Drawing.Size(200, 30);
@@ -190,9 +168,7 @@
             this.btnColoring.Text = "Welsh-Powell";
             this.btnColoring.UseVisualStyleBackColor = true;
             this.btnColoring.Click += new System.EventHandler(this.btnColoring_Click);
-            // 
-            // pnlCanvas
-            // 
+            
             this.pnlCanvas.BackColor = System.Drawing.Color.Gainsboro;
             this.pnlCanvas.Location = new System.Drawing.Point(12, 6);
             this.pnlCanvas.Name = "pnlCanvas";
@@ -203,9 +179,7 @@
             this.pnlCanvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlCanvas_MouseDown);
             this.pnlCanvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pnlCanvas_MouseMove);
             this.pnlCanvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pnlCanvas_MouseUp);
-            // 
-            // btnDeleteEdge
-            // 
+            
             this.btnDeleteEdge.BackColor = System.Drawing.SystemColors.Control;
             this.btnDeleteEdge.Location = new System.Drawing.Point(478, 641);
             this.btnDeleteEdge.Name = "btnDeleteEdge";
@@ -214,9 +188,7 @@
             this.btnDeleteEdge.Text = "Bağlantı Sil";
             this.btnDeleteEdge.UseVisualStyleBackColor = false;
             this.btnDeleteEdge.Click += new System.EventHandler(this.btnDeleteEdge_Click);
-            // 
-            // label11
-            // 
+             
             this.label11.AutoSize = true;
             this.label11.BackColor = System.Drawing.Color.White;
             this.label11.Location = new System.Drawing.Point(483, 587);
@@ -224,9 +196,7 @@
             this.label11.Size = new System.Drawing.Size(86, 16);
             this.label11.TabIndex = 24;
             this.label11.Text = "Diğer Düğüm";
-            // 
-            // label13
-            // 
+            
             this.label13.AutoSize = true;
             this.label13.BackColor = System.Drawing.SystemColors.Control;
             this.label13.Location = new System.Drawing.Point(483, 557);
@@ -234,9 +204,7 @@
             this.label13.Size = new System.Drawing.Size(97, 16);
             this.label13.TabIndex = 23;
             this.label13.Text = "Merkez Düğüm";
-            // 
-            // btnAddEdge
-            // 
+            
             this.btnAddEdge.BackColor = System.Drawing.SystemColors.Control;
             this.btnAddEdge.Location = new System.Drawing.Point(478, 614);
             this.btnAddEdge.Name = "btnAddEdge";
@@ -245,9 +213,7 @@
             this.btnAddEdge.Text = "Bağlantı Ekle";
             this.btnAddEdge.UseVisualStyleBackColor = false;
             this.btnAddEdge.Click += new System.EventHandler(this.btnAddEdge_Click);
-            // 
-            // label9
-            // 
+             
             this.label9.AutoSize = true;
             this.label9.BackColor = System.Drawing.SystemColors.Control;
             this.label9.Location = new System.Drawing.Point(483, 526);
@@ -255,25 +221,19 @@
             this.label9.Size = new System.Drawing.Size(116, 16);
             this.label9.TabIndex = 21;
             this.label9.Text = "Bağlantı Durumları";
-            // 
-            // cmbEdgeB
-            // 
+            
             this.cmbEdgeB.FormattingEnabled = true;
             this.cmbEdgeB.Location = new System.Drawing.Point(478, 584);
             this.cmbEdgeB.Name = "cmbEdgeB";
             this.cmbEdgeB.Size = new System.Drawing.Size(121, 24);
             this.cmbEdgeB.TabIndex = 20;
-            // 
-            // cmbEdgeA
-            // 
+             
             this.cmbEdgeA.FormattingEnabled = true;
             this.cmbEdgeA.Location = new System.Drawing.Point(478, 554);
             this.cmbEdgeA.Name = "cmbEdgeA";
             this.cmbEdgeA.Size = new System.Drawing.Size(121, 24);
             this.cmbEdgeA.TabIndex = 17;
-            // 
-            // label3
-            // 
+            
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.White;
             this.label3.Location = new System.Drawing.Point(12, 507);
@@ -281,9 +241,7 @@
             this.label3.Size = new System.Drawing.Size(97, 16);
             this.label3.TabIndex = 16;
             this.label3.Text = "Düğüm Bilgileri";
-            // 
-            // grpNode
-            // 
+            
             this.grpNode.BackColor = System.Drawing.Color.White;
             this.grpNode.Controls.Add(this.btnDeleteNode);
             this.grpNode.Controls.Add(this.btnClearNode);
@@ -304,9 +262,7 @@
             this.grpNode.Size = new System.Drawing.Size(444, 180);
             this.grpNode.TabIndex = 15;
             this.grpNode.Paint += new System.Windows.Forms.PaintEventHandler(this.grpNode_Paint);
-            // 
-            // btnDeleteNode
-            // 
+             
             this.btnDeleteNode.Location = new System.Drawing.Point(266, 93);
             this.btnDeleteNode.Name = "btnDeleteNode";
             this.btnDeleteNode.Size = new System.Drawing.Size(78, 71);
@@ -314,9 +270,7 @@
             this.btnDeleteNode.Text = "Sil";
             this.btnDeleteNode.UseVisualStyleBackColor = true;
             this.btnDeleteNode.Click += new System.EventHandler(this.btnDeleteNode_Click);
-            // 
-            // btnClearNode
-            // 
+            
             this.btnClearNode.Location = new System.Drawing.Point(360, 93);
             this.btnClearNode.Name = "btnClearNode";
             this.btnClearNode.Size = new System.Drawing.Size(78, 71);
@@ -324,9 +278,7 @@
             this.btnClearNode.Text = "Temizle";
             this.btnClearNode.UseVisualStyleBackColor = true;
             this.btnClearNode.Click += new System.EventHandler(this.btnClearNode_Click);
-            // 
-            // btnUpdateNode
-            // 
+            
             this.btnUpdateNode.Location = new System.Drawing.Point(360, 3);
             this.btnUpdateNode.Name = "btnUpdateNode";
             this.btnUpdateNode.Size = new System.Drawing.Size(78, 71);
@@ -334,9 +286,7 @@
             this.btnUpdateNode.Text = "Güncelle";
             this.btnUpdateNode.UseVisualStyleBackColor = true;
             this.btnUpdateNode.Click += new System.EventHandler(this.btnUpdateNode_Click);
-            // 
-            // btnAddNode
-            // 
+             
             this.btnAddNode.Location = new System.Drawing.Point(266, 3);
             this.btnAddNode.Name = "btnAddNode";
             this.btnAddNode.Size = new System.Drawing.Size(78, 71);
@@ -344,89 +294,67 @@
             this.btnAddNode.Text = "Ekle";
             this.btnAddNode.UseVisualStyleBackColor = true;
             this.btnAddNode.Click += new System.EventHandler(this.btnAddNode_Click);
-            // 
-            // label8
-            // 
+            
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(66, 151);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(99, 16);
             this.label8.TabIndex = 9;
             this.label8.Text = "Bağlantı Sayısı:";
-            // 
-            // label7
-            // 
+             
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(66, 115);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(53, 16);
             this.label7.TabIndex = 8;
             this.label7.Text = "Aktivite:";
-            // 
-            // label6
-            // 
+             
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(66, 79);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(61, 16);
             this.label6.TabIndex = 7;
             this.label6.Text = "Etkileşim";
-            // 
-            // label5
-            // 
+             
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(66, 43);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(34, 16);
             this.label5.TabIndex = 6;
             this.label5.Text = "İsim:";
-            // 
-            // label4
-            // 
+             
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(66, 8);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(23, 16);
             this.label4.TabIndex = 5;
             this.label4.Text = "ID:";
-            // 
-            // txtConnCount
-            // 
+             
             this.txtConnCount.Location = new System.Drawing.Point(150, 148);
             this.txtConnCount.Name = "txtConnCount";
             this.txtConnCount.Size = new System.Drawing.Size(100, 22);
             this.txtConnCount.TabIndex = 4;
-            // 
-            // txtActivity
-            // 
+             
             this.txtActivity.Location = new System.Drawing.Point(150, 112);
             this.txtActivity.Name = "txtActivity";
             this.txtActivity.Size = new System.Drawing.Size(100, 22);
             this.txtActivity.TabIndex = 3;
-            // 
-            // txtInteraction
-            // 
+             
             this.txtInteraction.Location = new System.Drawing.Point(150, 76);
             this.txtInteraction.Name = "txtInteraction";
             this.txtInteraction.Size = new System.Drawing.Size(100, 22);
             this.txtInteraction.TabIndex = 2;
-            // 
-            // txtName
-            // 
+            
             this.txtName.Location = new System.Drawing.Point(150, 40);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(100, 22);
             this.txtName.TabIndex = 1;
-            // 
-            // txtId
-            // 
+             
             this.txtId.Location = new System.Drawing.Point(150, 3);
             this.txtId.Name = "txtId";
             this.txtId.Size = new System.Drawing.Size(100, 22);
             this.txtId.TabIndex = 0;
-            // 
-            // btnLoadCsv
-            // 
+             
             this.btnLoadCsv.Location = new System.Drawing.Point(0, 58);
             this.btnLoadCsv.Name = "btnLoadCsv";
             this.btnLoadCsv.Size = new System.Drawing.Size(197, 23);
@@ -434,9 +362,7 @@
             this.btnLoadCsv.Text = "Dosya Yükle";
             this.btnLoadCsv.UseVisualStyleBackColor = true;
             this.btnLoadCsv.Click += new System.EventHandler(this.btnLoadCsv_Click);
-            // 
-            // btnReset
-            // 
+             
             this.btnReset.ForeColor = System.Drawing.Color.Black;
             this.btnReset.Location = new System.Drawing.Point(0, 0);
             this.btnReset.Name = "btnReset";
@@ -445,9 +371,7 @@
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
-            // 
-            // btnNodeAddMode
-            // 
+             
             this.btnNodeAddMode.Location = new System.Drawing.Point(0, 29);
             this.btnNodeAddMode.Name = "btnNodeAddMode";
             this.btnNodeAddMode.Size = new System.Drawing.Size(200, 23);
@@ -455,9 +379,7 @@
             this.btnNodeAddMode.Text = "Node Ekle (Tıkla)";
             this.btnNodeAddMode.UseVisualStyleBackColor = true;
             this.btnNodeAddMode.Click += new System.EventHandler(this.btnNodeAddMode_Click);
-            // 
-            // groupBox1
-            // 
+            
             this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
             this.groupBox1.Controls.Add(this.lblAvgWeight);
             this.groupBox1.Controls.Add(this.lblAvgDegree);
@@ -473,81 +395,63 @@
             this.groupBox1.TabIndex = 29;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Graph İstatistikleri";
-            // 
-            // lblAvgWeight
-            // 
+             
             this.lblAvgWeight.AutoSize = true;
             this.lblAvgWeight.Location = new System.Drawing.Point(128, 112);
             this.lblAvgWeight.Name = "lblAvgWeight";
             this.lblAvgWeight.Size = new System.Drawing.Size(87, 16);
             this.lblAvgWeight.TabIndex = 7;
             this.lblAvgWeight.Text = "lblAvgWeight";
-            // 
-            // lblAvgDegree
-            // 
+             
             this.lblAvgDegree.AutoSize = true;
             this.lblAvgDegree.Location = new System.Drawing.Point(128, 85);
             this.lblAvgDegree.Name = "lblAvgDegree";
             this.lblAvgDegree.Size = new System.Drawing.Size(91, 16);
             this.lblAvgDegree.TabIndex = 6;
             this.lblAvgDegree.Text = "lblAvgDegree";
-            // 
-            // lblEdgeCount
-            // 
+            
             this.lblEdgeCount.AutoSize = true;
             this.lblEdgeCount.Location = new System.Drawing.Point(128, 56);
             this.lblEdgeCount.Name = "lblEdgeCount";
             this.lblEdgeCount.Size = new System.Drawing.Size(88, 16);
             this.lblEdgeCount.TabIndex = 5;
             this.lblEdgeCount.Text = "lblEdgeCount";
-            // 
-            // lblNodeCount
-            // 
+             
             this.lblNodeCount.AutoSize = true;
             this.lblNodeCount.Location = new System.Drawing.Point(128, 26);
             this.lblNodeCount.Name = "lblNodeCount";
             this.lblNodeCount.Size = new System.Drawing.Size(89, 16);
             this.lblNodeCount.TabIndex = 4;
             this.lblNodeCount.Text = "lblNodeCount";
-            // 
-            // label17
-            // 
+            
             this.label17.AutoSize = true;
             this.label17.Location = new System.Drawing.Point(10, 112);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(105, 16);
             this.label17.TabIndex = 3;
             this.label17.Text = "Ortalama Ağırlık:";
-            // 
-            // label16
-            // 
+             
             this.label16.AutoSize = true;
             this.label16.Location = new System.Drawing.Point(10, 85);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(113, 16);
             this.label16.TabIndex = 2;
             this.label16.Text = "Ortalama Derece:";
-            // 
-            // label15
-            // 
+            
             this.label15.AutoSize = true;
             this.label15.Location = new System.Drawing.Point(10, 56);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(83, 16);
             this.label15.TabIndex = 1;
             this.label15.Text = "Edge Sayısı:";
-            // 
-            // label14
-            // 
+            
             this.label14.AutoSize = true;
             this.label14.Location = new System.Drawing.Point(10, 27);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(84, 16);
             this.label14.TabIndex = 0;
             this.label14.Text = "Node Sayısı:";
-            // 
-            // btnExportCsv
-            // 
+            
             this.btnExportCsv.Location = new System.Drawing.Point(0, 87);
             this.btnExportCsv.Name = "btnExportCsv";
             this.btnExportCsv.Size = new System.Drawing.Size(200, 23);
@@ -555,9 +459,7 @@
             this.btnExportCsv.Text = "Dosya Kaydet";
             this.btnExportCsv.UseVisualStyleBackColor = true;
             this.btnExportCsv.Click += new System.EventHandler(this.btnExportCsv_Click);
-            // 
-            // pnlRight
-            // 
+            
             this.pnlRight.BackColor = System.Drawing.Color.WhiteSmoke;
             this.pnlRight.Controls.Add(this.pnlRightContent);
             this.pnlRight.Controls.Add(this.pnlRightTop);
@@ -566,9 +468,7 @@
             this.pnlRight.Name = "pnlRight";
             this.pnlRight.Size = new System.Drawing.Size(200, 909);
             this.pnlRight.TabIndex = 31;
-            // 
-            // pnlRightContent
-            // 
+            
             this.pnlRightContent.Controls.Add(this.pnlToolbox);
             this.pnlRightContent.Controls.Add(this.pnlAlgorithms);
             this.pnlRightContent.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -576,9 +476,7 @@
             this.pnlRightContent.Name = "pnlRightContent";
             this.pnlRightContent.Size = new System.Drawing.Size(200, 847);
             this.pnlRightContent.TabIndex = 1;
-            // 
-            // pnlToolbox
-            // 
+            
             this.pnlToolbox.BackColor = System.Drawing.Color.Brown;
             this.pnlToolbox.Controls.Add(this.btnReset);
             this.pnlToolbox.Controls.Add(this.btnExportCsv);
@@ -590,9 +488,7 @@
             this.pnlToolbox.Size = new System.Drawing.Size(200, 847);
             this.pnlToolbox.TabIndex = 15;
             this.pnlToolbox.Visible = false;
-            // 
-            // pnlAlgorithms
-            // 
+            
             this.pnlAlgorithms.BackColor = System.Drawing.Color.Brown;
             this.pnlAlgorithms.Controls.Add(this.btnDfs);
             this.pnlAlgorithms.Controls.Add(this.label19);
@@ -610,9 +506,7 @@
             this.pnlAlgorithms.Name = "pnlAlgorithms";
             this.pnlAlgorithms.Size = new System.Drawing.Size(200, 847);
             this.pnlAlgorithms.TabIndex = 0;
-            // 
-            // label19
-            // 
+            
             this.label19.AutoSize = true;
             this.label19.BackColor = System.Drawing.Color.White;
             this.label19.Location = new System.Drawing.Point(66, 329);
@@ -620,9 +514,7 @@
             this.label19.Size = new System.Drawing.Size(81, 16);
             this.label19.TabIndex = 32;
             this.label19.Text = "Hedef Node";
-            // 
-            // pnlRightTop
-            // 
+            
             this.pnlRightTop.Controls.Add(this.btnShowAlgorithms);
             this.pnlRightTop.Controls.Add(this.btnShowToolbox);
             this.pnlRightTop.Dock = System.Windows.Forms.DockStyle.Top;
@@ -631,9 +523,7 @@
             this.pnlRightTop.Size = new System.Drawing.Size(200, 62);
             this.pnlRightTop.TabIndex = 0;
             this.pnlRightTop.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlRightTop_Paint);
-            // 
-            // btnShowAlgorithms
-            // 
+            
             this.btnShowAlgorithms.BackColor = System.Drawing.Color.IndianRed;
             this.btnShowAlgorithms.Location = new System.Drawing.Point(99, 0);
             this.btnShowAlgorithms.Name = "btnShowAlgorithms";
@@ -643,9 +533,7 @@
             this.btnShowAlgorithms.Text = "Algoritmalar";
             this.btnShowAlgorithms.UseVisualStyleBackColor = false;
             this.btnShowAlgorithms.Click += new System.EventHandler(this.btnShowAlgorithms_Click);
-            // 
-            // btnShowToolbox
-            // 
+            
             this.btnShowToolbox.BackColor = System.Drawing.Color.IndianRed;
             this.btnShowToolbox.Location = new System.Drawing.Point(0, 0);
             this.btnShowToolbox.Name = "btnShowToolbox";
@@ -655,9 +543,7 @@
             this.btnShowToolbox.Text = "Toolbox";
             this.btnShowToolbox.UseVisualStyleBackColor = false;
             this.btnShowToolbox.Click += new System.EventHandler(this.btnShowToolbox_Click);
-            // 
-            // Form1
-            // 
+             
             this.BackColor = System.Drawing.Color.Brown;
             this.ClientSize = new System.Drawing.Size(1487, 909);
             this.Controls.Add(this.pnlRight);

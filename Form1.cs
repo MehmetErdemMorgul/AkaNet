@@ -17,14 +17,14 @@ namespace AkaNet
     public partial class Form1 : Form
     {
 
-        // EDGE ÇİZME DURUMU
+        
         private bool isEdgeDrawing = false;
         private int edgeStartNodeId = -1;
         private Point currentMouse;
 
         private (int from, int to)? hoveredEdge = null;
 
-        // === PATH ANİMASYONU İÇİN ===
+        
         private List<int> animatedPath = new List<int>();
         private int animationIndex = -1;
         private System.Windows.Forms.Timer pathTimer;
@@ -39,10 +39,10 @@ namespace AkaNet
         private List<int> currentPath = new List<int>();
         private HashSet<(int, int)> pathEdges = new HashSet<(int, int)>();
 
-        // ✅ Welsh–Powell renkleri: NodeId -> ColorIndex
+        
         private Dictionary<int, int> nodeColors = new Dictionary<int, int>();
 
-        // ✅ Renk paleti
+        
         private readonly Color[] palette = new Color[]
         {
             Color.DeepSkyBlue, Color.Orange, Color.MediumSeaGreen, Color.MediumPurple,
@@ -61,13 +61,13 @@ namespace AkaNet
 
 
             g = new Graph();
-            ReloadUIAfterGraphLoad(); // bu zaten comboboxları temizler/doldurur (şu an boş olacak)
+            ReloadUIAfterGraphLoad(); 
 
             nextNodeId = g.Nodes.Any()
             ? g.Nodes.Max(n => n.Id) + 1 : 0;
 
 
-            // Boşsa SelectedIndex verme!
+            
             if (cmbStart.Items.Count > 0) cmbStart.SelectedIndex = 0;
             if (cmbTarget.Items.Count > 0) cmbTarget.SelectedIndex = 0;
 
@@ -78,7 +78,7 @@ namespace AkaNet
         }
 
         private bool addNodeMode = false;
-        private int nextNodeId = 0; // otomatik ID için
+        private int nextNodeId = 0; 
 
         
 
@@ -94,12 +94,12 @@ namespace AkaNet
             float cx = pnlCanvas.ClientSize.Width / 2f;
             float cy = pnlCanvas.ClientSize.Height / 2f;
 
-            // Panel küçükse bile taşmayacak şekilde radius
+            
             float radius = Math.Min(pnlCanvas.ClientSize.Width, pnlCanvas.ClientSize.Height) * 0.35f;
             radius = Math.Max(radius, 120f);
 
-            // Küçük bir rastgele kaydırma (daha doğal dursun)
-            var rnd = new Random(123); // sabit seed: her çalıştırmada aynı dağılım
+            
+            var rnd = new Random(123);
 
             for (int i = 0; i < nCount; i++)
             {
@@ -108,11 +108,11 @@ namespace AkaNet
                 float x = cx + (float)(radius * Math.Cos(ang));
                 float y = cy + (float)(radius * Math.Sin(ang));
 
-                // Hafif jitter
+                
                 x += rnd.Next(-25, 26);
                 y += rnd.Next(-25, 26);
 
-                // Node merkezden çizildiği için sol-üst köşeye kaydır (30x30 node)
+                
                 nodePos[nodes[i].Id] = new PointF(x - 15, y - 15);
             }
         }
@@ -195,19 +195,19 @@ namespace AkaNet
 
             for (int i = 0; i < comps.Count; i++)
             {
-                var colorMap = wp.Color(g, comps[i]); // NodeId -> ColorIndex
+                var colorMap = wp.Color(g, comps[i]); 
 
-                // listBox çıktısı (kalsın)
+                
                 listBox1.Items.Add($"Component C{i + 1} coloring (NodeId -> Color):");
                 foreach (var kv in colorMap.OrderBy(x => x.Key))
                 {
-                    nodeColors[kv.Key] = kv.Value; // ✅ canvas için kaydet
+                    nodeColors[kv.Key] = kv.Value; 
                     listBox1.Items.Add($"{kv.Key} -> {kv.Value}");
                 }
                 listBox1.Items.Add("-----");
             }
 
-            pnlCanvas.Invalidate(); // ✅ renklere göre yeniden çiz
+            pnlCanvas.Invalidate(); 
         }
 
         private async void btnDijkstra_Click(object sender, EventArgs e)
@@ -267,7 +267,7 @@ namespace AkaNet
 
             pathTimer = new Timer();
             pathTimer.Interval = 1000;
-            // 2 saniye
+            
             pathTimer.Tick += PathTimer_Tick;
             pathTimer.Start();
 
@@ -313,7 +313,7 @@ namespace AkaNet
 
             pathTimer = new Timer();
             pathTimer.Interval = 1000;
-            // 2 saniye
+            
             pathTimer.Tick += PathTimer_Tick;
             pathTimer.Start();
 
@@ -331,7 +331,7 @@ namespace AkaNet
                 int a = currentPath[i];
                 int b = currentPath[i + 1];
                 pathEdges.Add((a, b));
-                pathEdges.Add((b, a)); // yönsüz
+                pathEdges.Add((b, a)); 
             }
 
             pnlCanvas.Invalidate();
@@ -347,7 +347,7 @@ namespace AkaNet
 
             var gr = e.Graphics;
 
-            // 1) NORMAL EDGE'LERİ ÇİZ (hepsi siyah)
+            
             foreach (var node in g.Nodes)
             {
                 int u = node.Id;
@@ -368,7 +368,7 @@ namespace AkaNet
                         gr.DrawLine(pen, pu, pv);
                     }
 
-                    // ağırlık yazısı
+                    
                     double w = g.GetWeight(u, v);
                     string txt = w.ToString("0.###");
 
@@ -384,7 +384,7 @@ namespace AkaNet
 
             }
 
-            // 2) PATH'İ EN ÜSTE KIRMIZI/KALIN ÇİZ
+            
             if (currentPath != null && currentPath.Count >= 2)
             {
                 using (var penPath = new Pen(Color.Red, 7f))
@@ -407,7 +407,7 @@ namespace AkaNet
                 }
             }
 
-            // 3) NODE'LARI ÇİZ (Welsh–Powell rengine göre)
+            
             foreach (var kv in nodePos)
             {
                 int id = kv.Key;
@@ -416,12 +416,12 @@ namespace AkaNet
                 int cidx = nodeColors.ContainsKey(id) ? nodeColors[id] : -1;
                 Color c = Color.DodgerBlue;
 
-                // 🔥 1️⃣ Path animasyonu varsa EN ÖNCE O
+                
                 if (animatedNodes.Contains(id))
                 {
                     c = Color.Red;
                 }
-                // 2️⃣ Yoksa Welsh–Powell
+                
                 else if (nodeColors.ContainsKey(id))
                 {
                     int idx = nodeColors[id] % palette.Length;
@@ -445,8 +445,7 @@ namespace AkaNet
                 gr.DrawString(id.ToString(), this.Font, Brushes.White, p.X + 8, p.Y + 6);
             }
 
-            // EDGE ÇİZME PREVIEW (SHIFT BASILIYKEN)
-            // EDGE ÇİZME PREVIEW (SHIFT BASILIYKEN)
+            
             if (isEdgeDrawing && edgeStartNodeId >= 0 && nodePos.ContainsKey(edgeStartNodeId))
             {
                 PointF start = nodePos[edgeStartNodeId];
@@ -463,7 +462,7 @@ namespace AkaNet
         }
         private void ReloadUIAfterGraphLoad()
         {
-            // seçimleri temizle
+            
             cmbStart.Items.Clear();
             cmbTarget.Items.Clear();
 
@@ -488,7 +487,7 @@ namespace AkaNet
             if (cmbEdgeA.Items.Count > 0) cmbEdgeA.SelectedIndex = 0;
             if (cmbEdgeB.Items.Count > 0) cmbEdgeB.SelectedIndex = 0;
 
-            // eski çizimleri temizle
+            
             currentPath.Clear();
             pathEdges.Clear();
             nodeColors.Clear();
@@ -511,21 +510,21 @@ namespace AkaNet
                 {
                     g = CsvGraphLoader.Load(ofd.FileName);
 
-                    // 🔥 ÇOK ÖNEMLİ: eski çizimleri sıfırla
+                    
                     nodePos.Clear();
                     currentPath.Clear();
                     pathEdges.Clear();
                     nodeColors.Clear();
 
-                    // 🔥 nextNodeId CSV’ye göre ayarla
+                    
                     nextNodeId = g.Nodes.Any()
                         ? g.Nodes.Max(n => n.Id) + 1
                         : 0;
 
-                    // 🔥 node pozisyonlarını yeniden üret
+                    
                     BuildLayout();
 
-                    // UI yenile
+                    
                     ReloadUIAfterGraphLoad();
 
                     listBox1.Items.Clear();
@@ -541,7 +540,7 @@ namespace AkaNet
         }
         private int FindNodeAt(Point p)
         {
-            const int r = 15; // node yarıçap (30x30 çiziyorduk)
+            const int r = 15; 
             foreach (var kv in nodePos)
             {
                 float cx = kv.Value.X + r;
@@ -559,17 +558,13 @@ namespace AkaNet
             if (e.Button == MouseButtons.Right)
                 return;
 
-            // ===============================
-            // SAĞ TIK → EDGE SİLME
-            // ===============================
+            
 
 
             if (isDragging)
                 return;
 
-            // ===============================
-            // NODE EKLEME MODU
-            // ===============================
+            
             if (addNodeMode)
             {
                 int newId = nextNodeId++;
@@ -577,14 +572,14 @@ namespace AkaNet
                 var node = new Node(
                     newId,
                     $"N{newId}",
-                    0, // Activity
-                    0, // Interaction
-                    0  // ConnectionCount
+                    0, 
+                    0, 
+                    0  
                 );
 
                 g.AddNode(node);
 
-                // Tıklanan yere node koy
+                
                 nodePos[newId] = new PointF(e.X - 15, e.Y - 15);
 
                 ReloadUIAfterGraphLoad();
@@ -593,16 +588,14 @@ namespace AkaNet
                 addNodeMode = false;
                 Cursor = Cursors.Default;
 
-                // Sağ paneli doldurt
+                
                 FillNodePanel(newId);
 
                 MessageBox.Show("Node eklendi. Bilgileri doldurman gerekiyor.");
                 return;
             }
 
-            // ===============================
-            // NORMAL NODE SEÇME DAVRANIŞI
-            // ===============================
+            
             int clickedId = FindNodeAt(e.Location);
             if (clickedId < 0) return;
 
@@ -671,7 +664,7 @@ namespace AkaNet
                     System.Globalization.CultureInfo.InvariantCulture
                 );
 
-                // ConnCount bence otomatik olmalı; yeni node için 0 bırakıyoruz
+                
                 int cc = 0;
 
                 if (g.GetNode(id) != null)
@@ -682,7 +675,7 @@ namespace AkaNet
 
                 g.AddNode(new Node(id, name, activity, interaction, cc));
 
-                // UI yenile
+                
                 ReloadUIAfterGraphLoad();
 
                 MessageBox.Show($"Node eklendi: {id}");
@@ -708,7 +701,7 @@ namespace AkaNet
                     return;
                 }
 
-                // değerleri güncelle
+                
                 n.Name = string.IsNullOrWhiteSpace(txtName.Text) ? n.Name : txtName.Text.Trim();
 
                 n.Interaction = double.Parse(txtInteraction.Text.Trim().Replace(',', '.'),
@@ -717,10 +710,10 @@ namespace AkaNet
                 n.Activity = double.Parse(txtActivity.Text.Trim().Replace(',', '.'),
                     System.Globalization.CultureInfo.InvariantCulture);
 
-                // ConnCount'u elle alma; otomatik kalsın (istersen açıkça güncelle)
+                
                 n.ConnectionCount = g.NeighborsOf(id).Count();
 
-                // weight'ler bu alanlardan beslendiği için çizim + algoritmalar artık güncel
+                
                 pnlCanvas.Invalidate();
 
                 MessageBox.Show($"Node güncellendi: {id}");
@@ -744,14 +737,14 @@ namespace AkaNet
                     return;
                 }
 
-                // çizimleri temizle
+                
                 ClearPath();
                 ClearColoring();
 
-                // seçimi temizle
+                
                 btnClearNode_Click(null, null);
 
-                // UI + canvas yenile
+                
                 ReloadUIAfterGraphLoad();
 
                 MessageBox.Show($"Node silindi: {id}");
@@ -777,7 +770,7 @@ namespace AkaNet
             if (!g.HasEdge(a, b))
                 g.AddEdge(a, b);
 
-            // ConnCount'ları da güncelle (istersen)
+            
             var na = g.GetNode(a); if (na != null) na.ConnectionCount = g.NeighborsOf(a).Count();
             var nb = g.GetNode(b); if (nb != null) nb.ConnectionCount = g.NeighborsOf(b).Count();
 
@@ -802,11 +795,11 @@ namespace AkaNet
                 return;
             }
 
-            // ConnCount güncelle
+            
             var na = g.GetNode(a); if (na != null) na.ConnectionCount = g.NeighborsOf(a).Count();
             var nb = g.GetNode(b); if (nb != null) nb.ConnectionCount = g.NeighborsOf(b).Count();
 
-            // Path ve renklendirmeyi temizle
+            
             ClearPath();
             ClearColoring();
 
@@ -826,31 +819,31 @@ namespace AkaNet
             if (result != DialogResult.Yes)
                 return;
 
-            // 1) Yeni boş graph
+            
             g = new Graph();
 
             nextNodeId = 0;
 
-            // 2) Çizim ve algoritma durumlarını temizle
+            
             nodePos.Clear();
             currentPath.Clear();
             pathEdges.Clear();
             nodeColors.Clear();
 
-            // 3) ComboBox'ları temizle
+            
             cmbStart.Items.Clear();
             cmbTarget.Items.Clear();
             cmbEdgeA.Items.Clear();
             cmbEdgeB.Items.Clear();
 
-            // 4) Sağ paneli temizle
+            
             btnClearNode_Click(null, null);
 
-            // 5) Canvas yeniden çiz
+            
             BuildLayout();
             pnlCanvas.Invalidate();
 
-            // 6) Bilgi mesajı (opsiyonel ama güzel)
+            
             listBox1.Items.Clear();
             listBox1.Items.Add("Graph resetlendi. Yeni bir graph oluşturabilirsiniz.");
             UpdateStatsUI();
@@ -882,15 +875,15 @@ namespace AkaNet
 
             lastMouse = e.Location;
 
-            // 👉 SAĞ TIK → EDGE SİL (TEK YER)
+            
             if (e.Button == MouseButtons.Right)
             {
                 HandleRightClickDelete(e.Location);
-                return; // 🔥 ÇOK ÖNEMLİ
+                return; 
             }
 
 
-            // 1️⃣ SHIFT BASILIYSA → EDGE ÇİZME MODU
+            
             if (ModifierKeys == Keys.Shift)
             {
                 int id = FindNodeAt(e.Location);
@@ -900,10 +893,10 @@ namespace AkaNet
                     edgeStartNodeId = id;
                     currentMouse = e.Location;
                 }
-                return; // 👈 ÇOK ÖNEMLİ (drag'e girmesin)
+                return; 
             }
 
-            // 2️⃣ NORMAL → NODE SÜRÜKLEME
+            
             int dragId = FindNodeAt(e.Location);
             if (dragId >= 0)
             {

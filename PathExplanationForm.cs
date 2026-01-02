@@ -9,27 +9,27 @@ namespace AkaNet
 {
     public partial class PathExplanationForm : Form
     {
-        // 1️⃣ PARAMETRESİZ constructor (ŞART)
+        
         public PathExplanationForm()
         {
             InitializeComponent();
             rtbExplain.Clear();
         }
 
-        // 2️⃣ DIŞARIDAN TEXT GÖNDERMEK İÇİN
+        
         public PathExplanationForm(string text) : this()
         {
             WriteColoredExplanation(text);
         }
 
-        // 3️⃣ GRAPH + PATH İLE OTOMATİK AÇIKLAMA
+        
         public PathExplanationForm(Graph g, List<int> path) : this()
         {
             string text = BuildExplanation(g, path);
             WriteColoredExplanation(text);
         }
 
-        // --------------------------------------------------
+        
 
         private string BuildExplanation(Graph g, List<int> path)
         {
@@ -66,7 +66,7 @@ namespace AkaNet
             return sb.ToString();
         }
 
-        // --------------------------------------------------
+       
 
         private void WriteColoredExplanation(string text)
         {

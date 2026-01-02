@@ -2,8 +2,8 @@
 **Sosyal Ağ Analizi Uygulaması**
 
 ## 👥 Ekip Üyeleri
-- Oğuzhan Atılkan  
-- Mehmet Morgül  
+- Oğuzhan Atılkan  231307085
+- Mehmet Morgül  231307099
 
 ## 📅 Tarih
 2 Ocak 2026
@@ -533,6 +533,123 @@ CSV dosyalarından graf verilerini yükler. Format:
 ```
 DugumId;Aktivite;Etkilesim;BaglantiSayisi;Komsular
 1;0.8;12;3;2|4|5
+```
+
+**Data Modülü - CSV Yükleme Süreci:**
+
+```mermaid
+flowchart TD
+    A[CSV Dosyası] --> B[CsvGraphLoader.Load]
+    B --> C{Dosya Kontrolü}
+    C -->|Dosya Yok| D[Hata: FileNotFoundException]
+    C -->|Dosya Var| E[Header Satırını Oku]
+    E --> F[Kolon Ayıracı Tespit Et<br/>DetectColumnSeparator]
+    F --> G{',' veya ';'?}
+    G --> H[Satırları Parse Et]
+    
+    H --> I[Her Satır İçin Döngü]
+    I --> J[Kolonları Ayır<br/>SplitCols]
+    J --> K[Node Bilgilerini Parse Et]
+    K --> L[ParseInt: DugumId]
+    K --> M[ParseDouble: Aktivite]
+    K --> N[ParseDouble: Etkilesim]
+    K --> O[ParseInt: BaglantiSayisi]
+    
+    L --> P[Node Nesnesi Oluştur]
+    M --> P
+    N --> P
+    O --> P
+    
+    P --> Q[Graph.AddNode]
+    
+    I --> R[Komşuları Parse Et<br/>SplitNeighbors]
+    R --> S{Komşu Var mı?}
+    S -->|Evet| T[Her Komşu İçin]
+    S -->|Hayır| U[Sonraki Satıra Geç]
+    T --> V[ParseInt: Komşu ID]
+    V --> W[Graph.AddEdge]
+    W --> U
+    
+    U --> X{Tüm Satırlar<br/>İşlendi mi?}
+    X -->|Hayır| I
+    X -->|Evet| Y[Graph Nesnesi Döndür]
+    
+    style A fill:#ffcccc
+    style B fill:#ccffcc
+    style P fill:#ccccff
+    style Q fill:#ffffcc
+    style Y fill:#ccffff
+```
+
+**Data Modülü - Veri Dönüşüm Akışı:**
+
+```mermaid
+graph LR
+    A[CSV Dosyası<br/>Text Format] --> B[CsvGraphLoader]
+    
+    B --> C[Parse İşlemleri]
+    C --> C1[DetectColumnSeparator]
+    C --> C2[SplitCols]
+    C --> C3[SplitNeighbors]
+    C --> C4[ParseInt]
+    C --> C5[ParseDouble]
+    
+    C1 --> D[Node Verileri]
+    C2 --> D
+    C3 --> E[Edge Verileri]
+    C4 --> D
+    C5 --> D
+    
+    D --> F[Node Nesneleri]
+    E --> G[Edge Bilgileri]
+    
+    F --> H[Graph Nesnesi]
+    G --> H
+    
+    H --> I[Models Modülü]
+    
+    style A fill:#ffcccc
+    style B fill:#ccffcc
+    style C fill:#ccccff
+    style H fill:#ffffcc
+    style I fill:#ccffff
+```
+
+**Data Modülü - Hata Yönetimi ve Validasyon:**
+
+```mermaid
+flowchart TD
+    A[CSV Yükleme Başlat] --> B{Dosya Var mı?}
+    B -->|Hayır| C[FileNotFoundException]
+    B -->|Evet| D{Dosya Boş mu?}
+    D -->|Evet| E[Hata: CSV boş]
+    D -->|Hayır| F[Header Kontrolü]
+    
+    F --> G{Header Geçerli mi?}
+    G -->|Hayır| H[Hata: Header formatı hatalı]
+    G -->|Evet| I[Satır Parse Et]
+    
+    I --> J{Kolon Sayısı<br/>Yeterli mi?}
+    J -->|Hayır| K[Hata: Beklenen en az 4 kolon]
+    J -->|Evet| L{Node ID<br/>Geçerli mi?}
+    
+    L -->|Hayır| M[Hata: ID parse edilemedi]
+    L -->|Evet| N{Self-loop<br/>Var mı?}
+    N -->|Evet| O[Self-loop Atlandı]
+    N -->|Hayır| P[Node/Edge Ekle]
+    
+    O --> Q[Sonraki Satıra]
+    P --> Q
+    Q --> R{Tüm Satırlar<br/>İşlendi mi?}
+    R -->|Hayır| I
+    R -->|Evet| S[Başarılı: Graph Oluşturuldu]
+    
+    style C fill:#ffcccc
+    style E fill:#ffcccc
+    style H fill:#ffcccc
+    style K fill:#ffcccc
+    style M fill:#ffcccc
+    style S fill:#ccffcc
 ```
 
 #### 3.2.4 Results Modülü

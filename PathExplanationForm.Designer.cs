@@ -40,7 +40,7 @@
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.MaximumSize = new System.Drawing.Size(0, 35);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(223, 28);
+            this.label1.Size = new System.Drawing.Size(180, 21);
             this.label1.TabIndex = 1;
             this.label1.Text = "Seçilen Yolun Açıklaması";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -51,17 +51,17 @@
             this.rtbExplain.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rtbExplain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rtbExplain.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.rtbExplain.Location = new System.Drawing.Point(0, 28);
+            this.rtbExplain.Location = new System.Drawing.Point(0, 21);
             this.rtbExplain.Name = "rtbExplain";
             this.rtbExplain.ReadOnly = true;
             this.rtbExplain.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.rtbExplain.Size = new System.Drawing.Size(767, 623);
+            this.rtbExplain.Size = new System.Drawing.Size(767, 630);
             this.rtbExplain.TabIndex = 2;
             this.rtbExplain.Text = "";
             // 
             // PathExplanationForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 23F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(767, 651);

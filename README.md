@@ -596,13 +596,15 @@ Ağırlık(i,j) = 1 / (1 + (Activity_i - Activity_j)² + (Interaction_i - Intera
 
 
 
-1. **Ana Ekran:** Graf görselleştirmesi, algoritma butonları, düğüm yönetim paneli
-2. **BFS/DFS Sonuçları:** Ziyaret sırası listesi
-3. **Dijkstra/A* Sonuçları:** Bulunan yol, maliyet bilgisi, animasyonlu gösterim
-4. **Bağlı Bileşenler:** Bileşen listesi
-5. **Merkezilik Analizi:** Top 5 düğüm tablosu
-6. **Renklendirme:** Renklendirilmiş graf görseli
-7. **CSV İçe/Dışa Aktarım:** Dosya seçim diyalogları
+ **Ana Ekran:** Graf görselleştirmesi, algoritma butonları, düğüm yönetim paneli
+ ![WhatsApp Image 2026-01-02 at 16 12 07](https://github.com/user-attachments/assets/c2082d77-91cc-454f-b1fa-19abf5028bdd)
+
+3. **BFS/DFS Sonuçları:** Ziyaret sırası listesi
+4. **Dijkstra/A* Sonuçları:** Bulunan yol, maliyet bilgisi, animasyonlu gösterim
+5. **Bağlı Bileşenler:** Bileşen listesi
+6. **Merkezilik Analizi:** Top 5 düğüm tablosu
+7. **Renklendirme:** Renklendirilmiş graf görseli
+8. **CSV İçe/Dışa Aktarım:** Dosya seçim diyalogları
 
 ---
 
